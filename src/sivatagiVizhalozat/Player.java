@@ -23,7 +23,6 @@ public abstract class Player extends Steppable {
 	
 	/** */
 	public void PlayerMove(FieldElement f) {
-		if(1==1) System.out.println("Test");
 	}
 	
 	/** */
