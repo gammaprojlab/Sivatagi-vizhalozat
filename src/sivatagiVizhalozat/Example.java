@@ -53,7 +53,7 @@ public class Example
 
 
 	/**
-	 * B.
+	 * B
 	 *
 	 * @return the int
 	 */
