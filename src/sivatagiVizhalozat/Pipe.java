@@ -29,10 +29,12 @@ public class Pipe extends FieldElement {
 	
 	/** */
 	public boolean Puncture() {
+		return false;
 	}
 	
 	/** */
 	public boolean Split(Pump p) {
+		return false;
 	}
 	
 	/** */
@@ -41,29 +43,36 @@ public class Pipe extends FieldElement {
 	
 	/** */
 	public boolean StepOn() {
+		return false;
 	}
 	
 	/** */
 	public boolean StepOff() {
+		return false;
 	}
 	
 	/** */
 	public Pipe Grab() {
+		return null;
 	}
 	
 	/** */
 	public boolean Drop() {
+		return false;
 	}
 	
 	/** */
 	public boolean Repair() {
+		return false;
 	}
 	
 	/** */
 	public int SuckWater(int water) {
+		return water;
 	}
 	
 	/** */
 	public int PumpWater(int water) {
+		return water;
 	}
 }

@@ -20,6 +20,7 @@ public class Cistern {
 	
 	/** */
 	public Pump ProvidePump() {
+		return null;
 	}
 	
 	/** */
