@@ -4,15 +4,12 @@ import java.util.Scanner;
 
 /**
  * The Class Example.
- * An example of how a class should look to work with Skeleton tests
  */
 public class Example
 {
 	
 	/**
 	 * Instantiates a new example.
-	 *
-	 *
 	 */
 	
 	Example()
@@ -36,6 +33,9 @@ public class Example
 	
 	/**
 	 * A.
+	 *
+	 * @param i the i
+	 * @return the int
 	 */
 	public int A(int i)
 	{
@@ -53,7 +53,9 @@ public class Example
 
 
 	/**
-	 * B.
+	 * B
+	 *
+	 * @return the int
 	 */
 	private int B()
 	{
@@ -67,6 +69,8 @@ public class Example
 	
 	/**
 	 * C.
+	 *
+	 * @return the string
 	 */
 	private String C() {
 		Skeleton.Println(this.toString()+"C()");
