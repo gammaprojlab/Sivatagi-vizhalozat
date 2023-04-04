@@ -29,54 +29,67 @@ public abstract class FieldElement implements Steppable {
 	
 	/** */
 	public FieldElement[] GetNeighbor() {
+		return null;
 	}
 	
 	/** */
 	public boolean StepOn(Player p) {
+		return false;
 	}
 	
 	/** */
 	public boolean StepOff(Player p) {
+		return false;
 	}
 	
 	/** */
 	public boolean Connect(Pipe p) {
+		return false;
 	}
 	
 	/** */
 	public Pipe Disconnect(int f) {
+		return null;
 	}
 	
 	/** */
 	public boolean Puncture() {
+		return false;
 	}
 	
 	/** */
 	public boolean Split(Pump p) {
+		return false;
 	}
 	
 	/** */
 	public Pipe Grab() {
+		return null;
 	}
 	
 	/** */
 	public boolean Repair() {
+		return false;
 	}
 	
 	/** */
 	public int SuckWater(int water) {
+		return 0;
 	}
 	
 	/** */
 	public int PumpWater(int water) {
+		return 0;
 	}
 	
 	/** */
 	public Pump ProvidePump() {
+		return null;
 	}
 	
 	/** */
 	public boolean ChangeDirection(int p1, int p2) {
+		return false;
 	}
 	
 	/** */

@@ -35,6 +35,7 @@ public class Pump extends FieldElement implements Steppable {
 	
 	/** */
 	public boolean ChangeDirection(int input, int output) {
+		return false;
 	}
 	
 	/** */
@@ -51,5 +52,6 @@ public class Pump extends FieldElement implements Steppable {
 	
 	/** */
 	public boolean Repair() {
+		return false;
 	}
 }

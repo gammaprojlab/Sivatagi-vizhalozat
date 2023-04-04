@@ -14,7 +14,7 @@ package sivatagiVizhalozat;
 
 
 /** */
-public abstract class Player extends Steppable {
+public abstract class Player implements Steppable {
 	/** */
 	private FieldElement location;
 	
