@@ -16,5 +16,18 @@ package sivatagiVizhalozat;
 /** */
 public class Saboteur extends Player {
     /** */
-    private void PuncturePipe();
+    private void PuncturePipe() {
+	}
+
+	@Override
+	public void Step1() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void Step2() {
+		// TODO Auto-generated method stub
+		
+	}
 }

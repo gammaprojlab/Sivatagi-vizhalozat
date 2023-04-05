@@ -57,4 +57,16 @@ public class Plumber extends Player {
 	/** */
 	public void setHeldPump(Pump p) {
 	}
+
+	@Override
+	public void Step1() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void Step2() {
+		// TODO Auto-generated method stub
+		
+	}
 }
