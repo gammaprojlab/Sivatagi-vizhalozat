@@ -15,64 +15,238 @@ package sivatagiVizhalozat;
 
 /** */
 public class Pipe extends FieldElement {
-	/** */
+
+	/**
+	 * Stores the state of the Pipe if it is punctured or not
+	*/
 	private boolean isPunctured;
 	
-	/** */
+	/**
+	 * Stores the state of the Pipe if it is grabbed or not
+	*/
 	private boolean isGrabbed;
 	
-	/** */
+	/**
+	 * Stores the maximum amount of water the Pipe can keep
+	*/
 	private int capacity;
 	
-	/** */
+	/**
+	 * Stores how much water is in the Pipe
+	*/
 	private int water;
-	
-	/** */
+
+	/**
+	 * Sets the value of the isPunctured variable
+	 * @param value The value to be set
+	 */
+	public void setIsPunctured(boolean value) {
+		Skeleton.Println(this.toString()+"setIsPunctured("+boolean.class.getSimpleName()+" "+value+")");
+		isPunctured = value;
+	}
+
+	/**
+	 * Sets the value of the isPunctured variable
+	 * @param value The value to be set
+	 */
+	public void setIsGrabbed(boolean value) {
+		Skeleton.Println(this.toString()+"setIsGrabbed("+boolean.class.getSimpleName()+" "+value+")");
+		isGrabbed = value;
+	}
+	/**
+	 * 
+	 * @param w The value of how much water is in the pipe
+	 */
+	public void setWater(int w) {
+		Skeleton.Println(this.toString()+"setWater("+int.class.getSimpleName()+" "+w+")");
+		water = w;
+	}
+
+	/**
+	 * The player tries to puncture the pipe it is standing on
+	 * @return The successfulness of the command, if it was able to puncture the pipe
+	*/
 	public boolean Puncture() {
+		Skeleton.Println(this.toString()+"Puncture()");
+		Skeleton.indentation++;
+		if(!isPunctured) {
+			setIsPunctured(true);
+			Skeleton.Println("return true");
+			Skeleton.indentation--;
+			return true;
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return false");
 		return false;
 	}
 	
-	/** */
+	/**
+	 * @param p The pump the player will place between the pipe it is standing on
+	 * @return The successfulness of the command, if it was able to split the pipe and place the pump in-between the pipes
+	*/
 	public boolean Split(Pump p) {
+		Skeleton.Println(this.toString()+"Split("+Pump.class.getSimpleName()+" "+p+")");
+		Skeleton.indentation++;
+		if(p != null && GetNeighbor().size() == 2 && !isGrabbed) {
+			Pipe newPipe = new Pipe();
+			FieldElement a = GetNeighbor().get(0);
+			if(a.Remove(this) && Remove(a)) {
+				p.Add(newPipe); p.Add(this);
+				a.Add(newPipe);
+				newPipe.Add(a); newPipe.Add(p);
+				Skeleton.indentation--;
+				Skeleton.Println("return true");
+				return true;
+			}
+			a.Add(this); Add(this);
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return false");
 		return false;
 	}
 	
-	/** */
-	public void Step1() {
-	}
-	
-	/** */
-	public boolean StepOn() {
-		return false;
-	}
-	
-	/** */
-	public boolean StepOff() {
-		return false;
-	}
-	
-	/** */
+	/**
+	 * If this pipe can be grabbed it returns itself to be Grabbed,
+	 * @return The grabbed pipe
+	*/
 	public Pipe Grab() {
+		Skeleton.Println(this.toString()+"Grab()");
+		Skeleton.indentation++;
+		if(!isGrabbed && GetNeighbor().size() == 1 && GetPlayers().size() == 0) {
+			setIsGrabbed(true);
+			Skeleton.indentation--;
+			Skeleton.Println("return " + this);
+			return this;
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return null");
 		return null;
 	}
 	
-	/** */
-	public boolean Drop() {
-		return false;
-	}
-	
-	/** */
+	/**
+	 * If the Pipe is punctured it repairs it
+	 * @return The successfulness of the command, if it was able to repair this Pipe
+	*/
 	public boolean Repair() {
+		Skeleton.Println(this.toString()+"Repair()");
+		Skeleton.indentation++;
+		if(isPunctured && !isGrabbed) {
+			setIsPunctured(false);
+			Skeleton.indentation--;
+			Skeleton.Println("return true");
+			return true;
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return false");
 		return false;
 	}
 	
-	/** */
-	public int SuckWater(int water) {
-		return water;
+	/**
+	 * @param w The amount of water the element is able to receive
+	 * @return The amount of water the pipe was able to pump into the element
+	*/
+	public int SuckWater(int w) {
+		Skeleton.Println(this.toString()+"SuckWater("+int.class.getSimpleName()+" "+w+")");
+		Skeleton.indentation++;
+		if(water > 0) {
+			if(w >= water) {
+				int ret = water;
+				setWater(0);
+				Skeleton.indentation--;
+				Skeleton.Println("return " + ret);
+				return ret;
+			}
+			// The water that the element can accept is less than what's in the pipe
+			else {
+				setWater(water - w);
+				Skeleton.indentation--;
+				Skeleton.Println("return " + w);
+				return w;
+			}
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return 0");
+		return 0;
 	}
 	
-	/** */
-	public int PumpWater(int water) {
-		return water;
+	/**
+	 * @param w The amount of water an element can pump water into a pipe
+	 * @return The amount of water the pipe was able to accept 
+	*/
+	public int PumpWater(int w) {
+		Skeleton.Println(this.toString()+"PumpWater("+int.class.getSimpleName()+" "+water+")");
+		Skeleton.indentation++;
+		if(w > 0 && capacity > water) {
+			if(capacity - (water + w) >= 0) {
+				setWater(water + w);
+				Skeleton.indentation--;
+				Skeleton.Println("return " + w);
+				return w;
+			}
+			else {
+				int ret = w - (capacity - water);
+				setWater(capacity);
+				Skeleton.indentation--;
+				Skeleton.Println("return " + ret);
+				return ret;
+			}
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return 0");
+		return 0;
+	}
+	
+	/**
+	 * The implementation of the Step1 function of the Steppable interface
+	*/
+	public void Step1() {
+		Skeleton.Println(this.toString()+"Step1()");
+		Skeleton.indentation++;
+		Game g = getGame();
+		if(g != null && !isGrabbed && (isPunctured || GetNeighbor().size() == 1)) {
+			g.WaterSpilled(water);
+			setWater(0);
+		}
+		Skeleton.indentation--;
+	}
+	
+	/**
+	 * @param p A player that tries to step on this field
+	 * @return The successfulness of the player stepping on this field
+	*/
+	public boolean StepOn(Player p) {
+		Skeleton.Println(this.toString()+"StepOn("+Player.class.getSimpleName()+" "+p+")");
+		if(p != null) {
+		Skeleton.indentation++;
+			if(GetPlayers().size() == 0) {
+				GetPlayers().add(p);
+				Skeleton.indentation--;
+				Skeleton.Println("return true");
+				return true;
+			}
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return false");
+		return false;
+	}
+	
+	/**
+	 * @param f The index of the connected element the player wants to remove the pipe from
+	 * @return The disconnected pipe
+	*/
+	public Pipe Disconnect(int f) {
+		Skeleton.Println(this.toString()+"Disconnect("+int.class.getSimpleName()+" "+f+")");
+		Skeleton.indentation++;
+		if(GetPlayers().get(0).GetLocation() != this) {
+			if(f >= 0 && f < GetNeighbor().size() && GetNeighbor().size() == 2) {
+				Remove(GetNeighbor().get(f));
+				Skeleton.indentation--;
+				Skeleton.Println("return " + this);
+				return this;
+			}
+		}
+		Skeleton.indentation--;
+		Skeleton.Println("return null");
+		return null;
 	}
 }
