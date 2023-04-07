@@ -11,10 +11,10 @@ package sivatagiVizhalozat;
 //
 
 
-
+/* TODO Comments, Constructors, Getters/Setters, Functions */
 
 /** */
-public class Pump extends FieldElement implements Steppable {
+public class Pump extends FieldElement {
 	/** */
 	private boolean isWorking;
 	

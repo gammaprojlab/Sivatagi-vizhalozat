@@ -12,8 +12,6 @@ import java.util.ArrayList;
 //
 
 
-
-
 /**
  * FieldElement:
  * An abstract class for all the placed elements on the board.
@@ -27,22 +25,140 @@ public abstract class FieldElement implements Steppable {
 	 * It stores how many connections a this element can have
 	*/
 	private int maxConections;
-	
+
+	/**
+	 * Set the maxConnections variable
+	 * @param c The new value
+	 */
+	public void setMaxConnections(int c) {
+		Skeleton.Println(this.toString()+"setMaxConnections("+int.class.getSimpleName()+" "+c+")");
+		if(c >= 0) maxConections = c;
+	}
+
+	/**
+	 * Get the value of maxConnections
+	 * @return The number of connections this element can have
+	 */
+	public int getMaxConnections() {
+		Skeleton.Println(this.toString()+"getMaxConnections()");
+		Skeleton.Println("return " + maxConections);
+		return maxConections;
+	}
+
 	/**
 	 * It stores the fields that are connected to this element
 	*/
 	private ArrayList<FieldElement> connections;
+
+	/**
+	 * It sets the ArrayList for connections
+	 * @param c The new ArrayList to be set for connections
+	 */
+	public void setConnections(ArrayList<FieldElement> c) {
+		Skeleton.Println(this.toString()+"setConnections("+ArrayList.class.getSimpleName()+" "+c+")");
+		if(c != null) connections = c;
+	}
+	
+	/**
+	 * @return A FieldElement ArrayList containing all the fields that are connected to this element
+	*/
+	public ArrayList<FieldElement> GetNeighbor() {
+		Skeleton.Println(this.toString()+"GetNeighbor()");
+		if(connections != null) {
+			Skeleton.Println("return " + connections);
+			return connections;
+		}
+		Skeleton.Println("return null");
+		return null;
+	}
 	
 	/**
 	 * It stores the game pbject
 	*/
 	private Game game;
+
+	/**
+	 * It sets the value for the game variable
+	 * @param g The value for the game variable
+	 */
+	public void setGame(Game g) {
+		Skeleton.Println(this.toString()+"setGame("+Game.class.getSimpleName()+" "+g+")");
+		if(g != null) game = g;
+	}
 	
+	/**
+	 * 
+	 * @return The Game object
+	 */
+	public Game getGame() {
+		Skeleton.Println(this.toString()+"GetGame()");
+		if(game != null) {
+			Skeleton.Println("return " + game);
+			return game;
+		}
+		Skeleton.Println("return null");
+		return null;
+	}
+
 	/**
 	 * It stores players standing on this element
 	*/
 	private ArrayList<Player> players;
-	
+
+	/**
+	 * It sets the ArrayList for the players variable
+	 * @param p The new ArrayList to be set
+	 */
+	public void setPlayers(ArrayList<Player> p) {
+		Skeleton.Println(this.toString()+"setPlayers("+ArrayList.class.getSimpleName()+" "+p+")");
+		if(p != null) {
+			players = p;
+		}
+	}
+
+	/**
+	 * @return The ArrayList of players
+	 */
+	public ArrayList<Player> GetPlayers() {
+		Skeleton.Println(this.toString()+"GetPlayers()");
+		if(players != null) {
+			Skeleton.Println("return " + players);
+			return players;
+		}
+		Skeleton.Println("return null");
+		return null;
+	}
+
+	/**
+	 * Default constructor
+	 */
+	public FieldElement() {
+		Skeleton.Println(this.toString()+"FieldElement()");
+		players = new ArrayList<Player>();
+		connections = new ArrayList<FieldElement>();
+		maxConections = 0;
+		game = null;
+	}
+
+	/**
+	 * Two parameter constructor
+	 * @param mc The maximum number of connections this element can have
+	 * @param g The Game object where this element is being used
+	 */
+	public FieldElement(int mc, Game g) {
+		Skeleton.Println(this.toString()+"FieldElement("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g +")");
+		players = new ArrayList<Player>();
+		connections = new ArrayList<FieldElement>();
+		if(mc >= 0 && g != null) {
+			maxConections = mc;
+			game = g;
+		}
+		else {
+			maxConections = 0;
+			game = null;
+		}
+	}
+
 	/**
 	 * Add a new field to connections
 	 * @param field The field to be added
@@ -84,46 +200,6 @@ public abstract class FieldElement implements Steppable {
 		return false;
 	}
 
-	/**
-	 * @return A FieldElement ArrayList containing all the fields that are connected to this element
-	*/
-	public ArrayList<FieldElement> GetNeighbor() {
-		Skeleton.Println(this.toString()+"GetNeighbor()");
-		if(connections != null) {
-			Skeleton.Println("return " + connections);
-			return connections;
-		}
-		Skeleton.Println("return null");
-		return null;
-	}
-
-	/**
-	 * 
-	 * @return The ArrayList of players
-	 */
-	public ArrayList<Player> GetPlayers() {
-		Skeleton.Println(this.toString()+"GetPlayers()");
-		if(players != null) {
-			Skeleton.Println("return " + players);
-			return players;
-		}
-		Skeleton.Println("return null");
-		return null;
-	}
-	
-	/**
-	 * 
-	 * @return The Game object
-	 */
-	public Game getGame() {
-		Skeleton.Println(this.toString()+"GetGame()");
-		if(game != null) {
-			Skeleton.Println("return " + game);
-			return game;
-		}
-		Skeleton.Println("return null");
-		return null;
-	}
 
 	/**
 	 * @param p A player that tries to step on this field

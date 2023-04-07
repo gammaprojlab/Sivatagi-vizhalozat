@@ -11,7 +11,7 @@ package sivatagiVizhalozat;
 //
 
 
-
+/* TODO CONSTRUCTORS and Getters/Setters */
 
 /** */
 public class Pipe extends FieldElement {

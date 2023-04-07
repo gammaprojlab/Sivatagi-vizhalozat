@@ -12,11 +12,15 @@ package sivatagiVizhalozat;
 
 
 
+/* TODO Comments and Constructors and Step2()*/
 
 /** */
 public class Spring extends FieldElement {
 	
-	/** */
+	/** 
+	 * The implementation of the Step2 function of the Steppable interface
+	*/
 	public void Step2() {
+		Skeleton.Println(this.toString()+"Step2()");
 	}
 }
