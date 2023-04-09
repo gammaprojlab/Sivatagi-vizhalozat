@@ -12,15 +12,60 @@ package sivatagiVizhalozat;
 
 
 
-/* TODO Comments and Constructors and Step2()*/
-
 /** */
 public class Spring extends FieldElement {
+
+	/**
+	 * How much water it can provide for each connection preferable "infinite" TODO To be specified later
+	 */
+	private int water;
+
+	/**
+	 * Returns how much water it can provide
+	 * @return The amount of water it can provide for a pipe
+	 */
+	public int getWater() {
+		Skeleton.Println(this.toString() + "getWater()");
+		Skeleton.Println("return " + water);
+		return water;
+	}
+
+	/**
+	 * Set how much water it can provide
+	 * @param w An interger of how much water it can provide
+	 */
+	public void setWater(int w) {
+		Skeleton.Println(this.toString() + "setWater(" + int.class.getSimpleName() + w + ")");
+		if(w >= 0) water = w;
+	}
+	
+	/**
+	 * Default constructor
+	 */
+	public Spring() {
+		super();
+		Skeleton.Println(this.toString()+"Spring()");
+	}
+
+	/**
+	 * Two parameter constructor
+	 * @param mc The maximum number of connections this element can have
+	 * @param g The Game object where this element is being used
+	 */
+	public Spring(int mc, Game g) {
+		super(mc, g);
+		Skeleton.Println(this.toString()+"Spring("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g +")");
+	}
 	
 	/** 
 	 * The implementation of the Step2 function of the Steppable interface
 	*/
 	public void Step2() {
 		Skeleton.Println(this.toString()+"Step2()");
+		Skeleton.indentation++;
+		for (var connection : GetNeighbor()) {
+			connection.PumpWater(water);
+		}
+		Skeleton.indentation--;
 	}
 }

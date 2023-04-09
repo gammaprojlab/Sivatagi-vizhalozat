@@ -11,7 +11,7 @@ package sivatagiVizhalozat;
 //
 
 
-/* TODO CONSTRUCTORS and Getters/Setters */
+/* TODO Decide wether I need constructor with booleans */
 
 /** */
 public class Pipe extends FieldElement {
@@ -20,7 +20,7 @@ public class Pipe extends FieldElement {
 	 * Stores the state of the Pipe if it is punctured or not
 	*/
 	private boolean isPunctured;
-	
+
 	/**
 	 * Stores the state of the Pipe if it is grabbed or not
 	*/
@@ -46,19 +46,127 @@ public class Pipe extends FieldElement {
 	}
 
 	/**
-	 * Sets the value of the isPunctured variable
+	 * Get the value of the isPunctured variable
+	 * @return True or false depending if it is punctured or not
+	 */
+	public boolean getIsPunctured() {
+		Skeleton.Println(this.toString()+"getIsPunctured()");
+		Skeleton.Println("return " + ((isPunctured) ? "true" : "false"));
+		return this.isPunctured;
+	}
+
+	/**
+	 * Sets the value of the isGrabbed variable
 	 * @param value The value to be set
 	 */
 	public void setIsGrabbed(boolean value) {
 		Skeleton.Println(this.toString()+"setIsGrabbed("+boolean.class.getSimpleName()+" "+value+")");
 		isGrabbed = value;
 	}
+
 	/**
-	 * 
+	 * Get the value of the usGrabbed variable
+	 * @return True or false depemding if it is grabbed or not
+	 */
+	public boolean getIsGrabbed() {
+		Skeleton.Println(this.toString() + "getIsGrabbed()");
+		return this.isGrabbed;
+	}
+
+	/**
+	 * Returns how much water is in the Pipe currently
+	 * @return The amount of water that's in the pipe
+	 */
+	public int getWater() {
+		Skeleton.Println(this.toString() + "getWater()");
+		Skeleton.Println("return " + water);
+		return water;
+	}
+
+	/**
+	 * Set how much water is in the Pipe 
 	 * @param w The value of how much water is in the pipe
 	 */
 	public void setWater(int w) {
 		Skeleton.Println(this.toString()+"setWater("+int.class.getSimpleName()+" "+w+")");
+		water = w;
+	}
+
+	/**
+	 * Set how much water can be in this pipe
+	 * @param c The amount of water the pipe can hold
+	 */
+	public void setCapacity(int c) {
+		Skeleton.Println(this.toString() + "setCapacity(" + int.class.getSimpleName() + c + ")");
+		capacity = c;
+	}
+
+	/**
+	 * Get how much water can be in this pipe
+	 * @return The amount of water this pipe can hold
+	 */
+	public int getCapacity() {
+		Skeleton.Println(this.toString() + "getCapacity()");
+		Skeleton.Println("return " + capacity);
+		return capacity;
+	}
+
+	
+	/**
+	 * Default constructor
+	 */
+	public Pipe() {
+		super();
+		Skeleton.Println(this.toString()+"Pipe()");
+		isPunctured = false;
+		isGrabbed = false;
+		water = 0;
+		capacity = 0;
+	}
+
+	/**
+	 * Two parameter constructor
+	 * @param mc The maximum number of connections this element can have
+	 * @param g The Game object where this element is being used
+	 */
+	public Pipe(int mc, Game g) {
+		super(mc, g);
+		Skeleton.Println(this.toString()+"FieldElement("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g +")");
+		isPunctured = false;
+		isGrabbed = false;
+		water = 0;
+		capacity = 0;
+	}
+
+	/**
+	 * Three parameter constructor
+	 * @param mc The maximum number of connections this element can have
+	 * @param g The Game object where this element is being used
+	 * @param c The maximum amount of water that the pipe can hold
+	 */
+	public Pipe(int mc, Game g, int c) {
+		super(mc, g);
+		Skeleton.Println(this.toString()+"FieldElement("+ int.class.getSimpleName() + " " + mc + ", " + 
+		Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ")");
+		isPunctured = false;
+		isGrabbed = false;
+		capacity = c;
+		water = 0;
+	}
+	/**
+	 * Four parameter constructor
+	 * @param mc The maximum number of connections this element can have
+	 * @param g The Game object where this element is being used
+	 * @param c The maximum amount of water that the pipe can hold
+	 * @param w The amount of water in the Pipe
+	 */
+	public Pipe(int mc, Game g, int c, int w) {
+		super(mc, g);
+		Skeleton.Println(this.toString()+"FieldElement("+ int.class.getSimpleName() + " " + mc + ", " + 
+		Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ", " + int.class.getSimpleName() + " " + w + ")");
+		isPunctured = false;
+		isGrabbed = false;
+		capacity = c;
 		water = w;
 	}
 

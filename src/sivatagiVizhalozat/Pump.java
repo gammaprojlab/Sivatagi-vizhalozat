@@ -15,8 +15,18 @@ package sivatagiVizhalozat;
 
 /** */
 public class Pump extends FieldElement {
+
 	/** */
 	private boolean isWorking;
+
+	/** */
+	public void StopWorking() {
+	}
+
+	/** */
+	public boolean Repair() {
+		return false;
+	}
 	
 	/** */
 	private int tankCapacity;
@@ -32,26 +42,72 @@ public class Pump extends FieldElement {
 	
 	/** */
 	public Pipe Pipe;
+
+	public boolean getIsWorking() {
+		return this.isWorking;
+	}
+
+	public void setIsWorking(boolean isWorking) {
+		this.isWorking = isWorking;
+	}
+
+	public int getTankCapacity() {
+		return this.tankCapacity;
+	}
+
+	public void setTankCapacity(int tankCapacity) {
+		this.tankCapacity = tankCapacity;
+	}
+
+	public int getInput() {
+		return this.input;
+	}
+
+	public void setInput(int input) {
+		this.input = input;
+	}
+
+	public int getOutput() {
+		return this.output;
+	}
+
+	public void setOutput(int output) {
+		this.output = output;
+	}
+
+	public int getWater() {
+		return this.water;
+	}
+
+	public void setWater(int water) {
+		this.water = water;
+	}
+
+	public Pipe getPipe() {
+		return this.Pipe;
+	}
+
+	public void setPipe(Pipe Pipe) {
+		this.Pipe = Pipe;
+	}
+
 	
 	/** */
 	public boolean ChangeDirection(int input, int output) {
 		return false;
 	}
 	
-	/** */
-	public void StopWorking() {
-	}
-	
-	/** */
+	/**
+	 * The implementation of the Step1 function of the Steppable interface
+	 * If Input is closed( = -1) Skip it
+	 */
 	public void Step1() {
 	}
 	
-	/** */
+	/**
+	 * The implementation of the Step2 function of the Steppable interface
+	 * If Output is closed( = -1) Skip it
+	*/
 	public void Step2() {
-	}
-	
-	/** */
-	public boolean Repair() {
-		return false;
 	}
 }
