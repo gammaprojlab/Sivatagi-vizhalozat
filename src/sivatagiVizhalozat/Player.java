@@ -26,6 +26,11 @@ public abstract class Player implements Steppable {
 	}
 	
 	/** */
+	public FieldElement GetLocation() {
+		return null;
+	}
+
+	/** */
 	public void PumpDirection(int input, int output) {
 	}
 }
