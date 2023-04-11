@@ -60,6 +60,7 @@ public abstract class FieldElement implements Steppable {
 	}
 	
 	/**
+	 * Get the ArrayList containing all the connections of this element
 	 * @return A FieldElement ArrayList containing all the fields that are connected to this element
 	*/
 	public ArrayList<FieldElement> GetNeighbor() {
@@ -117,6 +118,7 @@ public abstract class FieldElement implements Steppable {
 	}
 
 	/**
+	 * Get the ArrayList containing all the players who are standing on this element
 	 * @return The ArrayList of players
 	 */
 	public ArrayList<Player> GetPlayers() {
@@ -185,7 +187,7 @@ public abstract class FieldElement implements Steppable {
 	 * @param field The field to be removed
 	 */
 	public boolean Remove(FieldElement field) {
-		Skeleton.Println(this.toString()+"Add("+FieldElement.class.getSimpleName()+" "+field+")");
+		Skeleton.Println(this.toString()+"Remove("+FieldElement.class.getSimpleName()+" "+field+")");
 		Skeleton.indentation++;
 		if(field != null) {
 			if(GetNeighbor().contains(field)) {
