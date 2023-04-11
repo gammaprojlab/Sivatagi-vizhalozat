@@ -18,7 +18,7 @@ public class Cistern extends FieldElement {
 
 
 	/**
-	 * Defualt constructor;
+	 * Default constructor;
 	 */
 	public Cistern() {
 		super();
