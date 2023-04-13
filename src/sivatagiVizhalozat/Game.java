@@ -28,10 +28,20 @@ public class Game {
 	private Plumber plumbers;
 	
 	/** */
-	private Steppable Steppable;
+	private Steppable steppable;
+	
+	public Game() {
+		Skeleton.Println(this.toString()+"Game()");
+		spilledWater = 0;
+		collectedWater = 0;
+		saboteurs = new ArrayList<Saboteur>();
+		plumbers = new ArrayList<Plumber>();
+		steppable = new ArrayList<Steppable>();
+	}
 	
 	/** */
 	public void Tick() {
+		Skeleton.Println(this.toString()+"Tick()");
 	}
 	
 	/** */

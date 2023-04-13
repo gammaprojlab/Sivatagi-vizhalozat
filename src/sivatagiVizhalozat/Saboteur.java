@@ -15,6 +15,17 @@ package sivatagiVizhalozat;
 
 /** */
 public class Saboteur extends Player {
+	
+	public Saboteur() {
+		super();
+		Skeleton.Println(this.toString()+"Saboteur()");
+	}
+	
+	public Saboteur(Game g, FieldElement f) {
+		super();
+		Skeleton.Println(this.toString()+"Saboteur("+ Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() +" "+ f +")");
+	}
+	
     /** */
     private void PuncturePipe() {
 	}

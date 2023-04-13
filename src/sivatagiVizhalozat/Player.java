@@ -21,6 +21,18 @@ public abstract class Player implements Steppable {
 	/** */
 	private Game game;
 	
+	public Player() {
+		Skeleton.Println(this.toString()+"Player()");
+		location = null;
+		game = null;
+	}
+	
+	public Player(Game g, FieldElement f) {
+		Skeleton.Println(this.toString()+"Player(" + Game.class.getSimpleName()+ " " + g + ", " + FieldElement.class.getSimpleName() + " " + f + ")");
+		game = g;
+		location = f;
+	}
+	
 	/** */
 	public void PlayerMove(FieldElement f) {
 	}

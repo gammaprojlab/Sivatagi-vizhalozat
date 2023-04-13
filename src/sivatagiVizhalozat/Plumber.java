@@ -22,8 +22,22 @@ public class Plumber extends Player {
 	/** */
 	private Pump heldPump;
 	
+	public Plumber() {
+		super();
+		Skeleton.Println(this.toString()+"Plumber()");
+		heldPipe = null;
+		heldPump = null;
+	}
+	
+	public Plumber(Game g, FieldElement f, Pipe pi, Pump pu){
+		super(g, f);
+		Skeleton.Println(this.toString()+"Plumber(" + Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() + " " + f + ", " + Pipe.class.getSimpleName() + " " + pi + ", " + Pump.class.getSimpleName() + " " + pu +")");
+		heldPipe = pi;
+		heldPump = pu;
+	}
+	
 	/** */
-	public void Repair() {
+	public void Repair() {	
 	}
 	
 	/** */
