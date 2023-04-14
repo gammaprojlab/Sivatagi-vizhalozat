@@ -10,8 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
-
-
+import java.nio.channels.Pipe;
 
 /** */
 public class Plumber extends Player {
@@ -37,50 +36,76 @@ public class Plumber extends Player {
 	}
 	
 	/** */
-	public void Repair() {	
+	public void Repair() {
+		Skeleton.Println(this.toString()+"Repair()");
+		location.Repair();
 	}
 	
 	/** */
 	public void ConnectPipe() {
+		Skeleton.Println(this.toString()+"ConnectPipe()");
+		if(location.Connect(heldPipe)) {
+			heldPipe = null;
+		}
 	}
 	
 	/** */
 	public void DisconnectPipe(int p) {
+		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
+		ArrayList<FieldElements> neighbours = location.GetNeighbour();
+		
 	}
 	
 	/** */
 	public void TakePump() {
+		Skeleton.Println(this.toString()+"TakePump()");
 	}
 	
 	/** */
 	public void PlacePump() {
+		Skeleton.Println(this.toString()+"PlacePump()");
 	}
 	
 	/** */
 	public void GrabPipe() {
+		Skeleton.Println(this.toString()+"GrabPipe()");
 	}
 	
 	/** */
 	public void DropPipe() {
+		Skeleton.Println(this.toString()+"DropPipe()");
 	}
 	
 	/** */
 	public void setHeldPipe(Pipe p) {
+		Skeleton.Println(this.toString()+"setHeldPipe("+ Pipe.class.getSimpleName() + " " + p +")");
 	}
 	
 	/** */
 	public void setHeldPump(Pump p) {
+		Skeleton.Println(this.toString()+"setHeldPump("+ Pump.class.getSimpleName() + " " + p +")");
 	}
 
+	/** 
+	 * The implementation of the Step1 function of the Steppable interface
+	*/
 	@Override
 	public void Step1() {
-		// TODO Auto-generated method stub
-		
+		Skeleton.Println(this.toString()+"Step1()");
 	}
 
+	/** 
+	 * The implementation of the Step2 function of the Steppable interface
+	*/
 	@Override
 	public void Step2() {
-		// TODO Auto-generated method stub
-		
+		Skeleton.Println(this.toString()+"Step2()");
+	}
+	
+	/**
+	 * Used for testing
+	 */
+	public String toString() {
+		return this.getClass().getSimpleName()+"'"+Integer.toHexString(this.hashCode())+"'"+"."; 
 	}
 }

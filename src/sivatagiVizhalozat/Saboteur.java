@@ -28,17 +28,17 @@ public class Saboteur extends Player {
 	
     /** */
     private void PuncturePipe() {
+    	Skeleton.Println(this.toString()+"PuncturePipe()");
+    	location.Puncture();
 	}
 
 	@Override
 	public void Step1() {
-		// TODO Auto-generated method stub
-		
+		Skeleton.Println(this.toString()+"Step1()");
 	}
 
 	@Override
 	public void Step2() {
-		// TODO Auto-generated method stub
-		
+		Skeleton.Println(this.toString()+"Step2()");
 	}
 }
