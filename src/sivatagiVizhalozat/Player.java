@@ -96,7 +96,7 @@ public abstract class Player implements Steppable {
 		if (fields.contains(f)) {
 			if(f.StepOn(this)) {
 				if(location.StepOff(this);){
-					location = f;
+					SetLocation(f);
 				}
 				else {
 					f.StepOff(this);

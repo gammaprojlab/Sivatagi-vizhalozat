@@ -27,7 +27,7 @@ public class Saboteur extends Player {
 	}
 	
     /** */
-    private void PuncturePipe() {
+    public void PuncturePipe() {
     	Skeleton.Println(this.toString()+"PuncturePipe()");
     	location.Puncture();
 	}

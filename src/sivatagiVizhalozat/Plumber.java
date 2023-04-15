@@ -18,8 +18,18 @@ public class Plumber extends Player {
 	/** */
 	private Pipe heldPipe;
 	
+	public void SetPipe(Pipe p) {
+		heldPipe = p;
+	}
+	public Pipe GetPipe() {
+		return heldPipe;
+	}
+	
 	/** */
 	private Pump heldPump;
+	
+	public void SetPump(Pump p){heldPump = p;}
+	public Pump GetPump(){return heldPump;}
 	
 	public Plumber() {
 		super();
@@ -38,7 +48,12 @@ public class Plumber extends Player {
 	/** */
 	public void Repair() {
 		Skeleton.Println(this.toString()+"Repair()");
-		location.Repair();
+		if (location.Repair()) {
+			Skeleton.Println("The FieldElement is repaired.");
+		}
+		else {
+			Skeleton.Println("The FieldElement cannot be repaired.");
+		}
 	}
 	
 	/** */
@@ -53,7 +68,8 @@ public class Plumber extends Player {
 	public void DisconnectPipe(int p) {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
 		ArrayList<FieldElements> neighbours = location.GetNeighbour();
-		
+		pi = location.Disconnect(p);
+		SetPipe(p);
 	}
 	
 	/** */
