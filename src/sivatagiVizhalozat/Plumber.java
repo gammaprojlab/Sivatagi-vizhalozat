@@ -18,19 +18,21 @@ public class Plumber extends Player {
 	/** */
 	private Pipe heldPipe;
 	
-	public void SetPipe(Pipe p) {
-		heldPipe = p;
-	}
 	public Pipe GetPipe() {
+		Skeleton.Println(this.toString()+"GetPipe()");
 		return heldPipe;
 	}
 	
 	/** */
 	private Pump heldPump;
 	
-	public void SetPump(Pump p){heldPump = p;}
-	public Pump GetPump(){return heldPump;}
+	/** */
+	public Pump GetPump(){
+		Skeleton.Println(this.toString()+"GetPump()");
+		return heldPump;
+	}
 	
+	/** */
 	public Plumber() {
 		super();
 		Skeleton.Println(this.toString()+"Plumber()");
@@ -38,6 +40,7 @@ public class Plumber extends Player {
 		heldPump = null;
 	}
 	
+	/** */
 	public Plumber(Game g, FieldElement f, Pipe pi, Pump pu){
 		super(g, f);
 		Skeleton.Println(this.toString()+"Plumber(" + Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() + " " + f + ", " + Pipe.class.getSimpleName() + " " + pi + ", " + Pump.class.getSimpleName() + " " + pu +")");
@@ -69,37 +72,51 @@ public class Plumber extends Player {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
 		ArrayList<FieldElements> neighbours = location.GetNeighbour();
 		pi = location.Disconnect(p);
-		SetPipe(p);
+		setHeldPipe(pi);
 	}
 	
 	/** */
 	public void TakePump() {
 		Skeleton.Println(this.toString()+"TakePump()");
+		if(GetPump() == null) {
+			p = location.ProvidePump();
+			setHeldPump(p);
+		}
 	}
 	
 	/** */
 	public void PlacePump() {
 		Skeleton.Println(this.toString()+"PlacePump()");
+		if(GetPump() == null && location.getNeigbours().size() == 2) {
+			location.Split(heldPump);
+			game.addSteppable(heldPump);
+			this.PlayerMove(heldPump);
+			setHeldPump(null);
+		}
 	}
 	
 	/** */
 	public void GrabPipe() {
 		Skeleton.Println(this.toString()+"GrabPipe()");
-	}
-	
-	/** */
-	public void DropPipe() {
-		Skeleton.Println(this.toString()+"DropPipe()");
+		ArrayList<FieldElement> elements = location.GetNeighbour();
+		for(FieldElement element: elements) {
+			if (GetPipe() == null) {
+				Pipe p = location.Grab();
+				setHeldPipe(p);
+			}
+		}
 	}
 	
 	/** */
 	public void setHeldPipe(Pipe p) {
 		Skeleton.Println(this.toString()+"setHeldPipe("+ Pipe.class.getSimpleName() + " " + p +")");
+		heldPipe = p;
 	}
 	
 	/** */
 	public void setHeldPump(Pump p) {
 		Skeleton.Println(this.toString()+"setHeldPump("+ Pump.class.getSimpleName() + " " + p +")");
+		heldPump = p;
 	}
 
 	/** 
