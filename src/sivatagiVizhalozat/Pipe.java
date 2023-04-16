@@ -191,14 +191,11 @@ public class Pipe extends FieldElement {
 	*/
 	public boolean Puncture() {
 		Skeleton.Println(this.toString()+"Puncture()");
-		Skeleton.indentation++;
 		if(!isPunctured) {
-			setIsPunctured(true);
-			Skeleton.indentation--;
+			isPunctured(true);	
 			Skeleton.Println("return true");
 			return true;
 		}
-		Skeleton.indentation--;
 		Skeleton.Println("return false");
 		return false;
 	}
@@ -210,7 +207,7 @@ public class Pipe extends FieldElement {
 	public boolean Split(Pump p) {
 		Skeleton.Println(this.toString()+"Split("+Pump.class.getSimpleName()+" "+p+")");
 		Skeleton.indentation++;
-		if(p != null && GetNeighbor().size() == 2 && !isGrabbed) {
+		if(p != null && connections.size() == 2 && !isGrabbed) {
 			Pipe newPipe = new Pipe(game, capacity, water/2);
 			FieldElement a = connections.get(0);
 			if(a.Remove(this) && Remove(a)) {
@@ -238,7 +235,7 @@ public class Pipe extends FieldElement {
 		Skeleton.Println(this.toString()+"Grab()");
 		Skeleton.indentation++;
 		if(!isGrabbed && connections.size() == 1 && players.size() == 0) {
-			setIsGrabbed(true);
+			isGrabbed = true;
 			Skeleton.indentation--;
 			Skeleton.Println("return " + this);
 			return this;
@@ -254,14 +251,11 @@ public class Pipe extends FieldElement {
 	*/
 	public boolean Repair() {
 		Skeleton.Println(this.toString()+"Repair()");
-		Skeleton.indentation++;
 		if(isPunctured && !isGrabbed) {
-			setIsPunctured(false);
-			Skeleton.indentation--;
+			isPunctured = false;
 			Skeleton.Println("return true");
 			return true;
 		}
-		Skeleton.indentation--;
 		Skeleton.Println("return false");
 		return false;
 	}
@@ -272,24 +266,20 @@ public class Pipe extends FieldElement {
 	*/
 	public int SuckWater(int w) {
 		Skeleton.Println(this.toString()+"SuckWater("+int.class.getSimpleName()+" "+w+")");
-		Skeleton.indentation++;
 		if(water > 0) {
 			if(w >= water) {
 				int ret = water;
-				setWater(0);
-				Skeleton.indentation--;
+				water = 0;
 				Skeleton.Println("return " + ret);
 				return ret;
 			}
 			// The water that the element can accept is less than what's in the pipe
 			else {
-				setWater(water - w);
-				Skeleton.indentation--;
+				water =- w;
 				Skeleton.Println("return " + w);
 				return w;
 			}
 		}
-		Skeleton.indentation--;
 		Skeleton.Println("return 0");
 		return 0;
 	}
@@ -300,23 +290,19 @@ public class Pipe extends FieldElement {
 	*/
 	public int PumpWater(int w) {
 		Skeleton.Println(this.toString()+"PumpWater("+int.class.getSimpleName()+" "+w+")");
-		Skeleton.indentation++;
 		if(w > 0 && capacity > water) {
 			if(w >= (capacity - water)) {
 				int ret = capacity-water;
 				water += ret;
-				Skeleton.indentation--;
 				Skeleton.Println("return " + ret);
 				return ret;
 			}
 			else {
 				water += w;
-				Skeleton.indentation--;
 				Skeleton.Println("return " + w);
 				return w;
 			}
 		}
-		Skeleton.indentation--;
 		Skeleton.Println("return 0");
 		return 0;
 	}
@@ -329,7 +315,7 @@ public class Pipe extends FieldElement {
 		Skeleton.indentation++;
 		if(game != null && !isGrabbed && (isPunctured || connections.size() == 1)) {
 			game.WaterSpilled(water);
-			setWater(0);
+			water = 0;
 		}
 		Skeleton.indentation--;
 	}
@@ -341,15 +327,12 @@ public class Pipe extends FieldElement {
 	public boolean StepOn(Player p) {
 		Skeleton.Println(this.toString()+"StepOn("+Player.class.getSimpleName()+" "+p+")");
 		if(p != null) {
-		Skeleton.indentation++;
 			if(players.size() == 0) {
 				players.add(p);
-				Skeleton.indentation--;
 				Skeleton.Println("return true");
 				return true;
 			}
 		}
-		Skeleton.indentation--;
 		Skeleton.Println("return false");
 		return false;
 	}
