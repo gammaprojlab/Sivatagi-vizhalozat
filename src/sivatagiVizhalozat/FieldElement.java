@@ -239,7 +239,6 @@ public abstract class FieldElement implements Steppable {
 				return true;
 			}
 		}
-		Skeleton.indentation--;
 		Skeleton.Println("return false");
 		return false;
 	}
