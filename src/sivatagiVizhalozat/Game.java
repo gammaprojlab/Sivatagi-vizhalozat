@@ -10,8 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
-
-
+import java.util.ArrayList;
 
 /** */
 public class Game {
@@ -20,7 +19,7 @@ public class Game {
 	
 	/** */
 	public void SetspilledWater(int s) {
-		Skeleton.Println(this.toString()+"SetspilledWater("+ int.class.setSimpleName() + " " + s +")");
+		Skeleton.Println(this.toString()+"SetspilledWater("+ int.class.getSimpleName() + " " + s +")");
 		spilledWater = s;
 	}
 	
@@ -35,7 +34,7 @@ public class Game {
 	
 	/** */
 	public void SetcollectedWater(int c) {
-		Skeleton.Println(this.toString()+"SetcollectedWater("+ int.class.setSimpleName() + " " + c +")");
+		Skeleton.Println(this.toString()+"SetcollectedWater("+ int.class.getSimpleName() + " " + c +")");
 		collectedWater = c;
 	}
 	
@@ -50,7 +49,7 @@ public class Game {
 	
 	/** */
 	public void AddSaboteur(Saboteur s) {
-		Skeleton.Println(this.toString()+"AddSaboteur("+ Saboteur.class.setSimpleName() + " " + s +")");
+		Skeleton.Println(this.toString()+"AddSaboteur("+ Saboteur.class.getSimpleName() + " " + s +")");
 		saboteurs.add(s);
 	}
 	
@@ -65,7 +64,7 @@ public class Game {
 	
 	/** */
 	public void AddPlumber(Plumber p) {
-		Skeleton.Println(this.toString()+"AddPlumber("+ Plumber.class.setSimpleName() + " " + p +")");
+		Skeleton.Println(this.toString()+"AddPlumber("+ Plumber.class.getSimpleName() + " " + p +")");
 		plumbers.add(p);
 	}
 	
@@ -80,7 +79,7 @@ public class Game {
 	
 	/** */
 	public void AddSteppable(Steppable s) {
-		Skeleton.Println(this.toString()+"AddSteppable("+ Steppable.class.setSimpleName() + " " + s +")");
+		Skeleton.Println(this.toString()+"AddSteppable("+ Steppable.class.getSimpleName() + " " + s +")");
 		steppable.add(s);
 	}
 	
