@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Skeleton {
 	static int indentation = 0;
 	private  List<Test> tests = new ArrayList<Test>();
-	private Boolean quit = false;
+	
 	
 	Skeleton()
 	{
@@ -20,63 +20,36 @@ public class Skeleton {
 
 	public void run() {
 		tests.add(new SkeletonTest1("realTest"));
-		tests.add(new Test("test2"));
-		tests.add(new Test("test3"));
+		tests.add(new GeneratePipeTest("PipeGenerationTest"));
+		tests.add(new PumpNotWorkingTest("PumpNotWorkingTest"));
 		tests.add(new Test("test4"));
 		tests.add(new Test("test5"));
 		
-		while(!quit)
+		System.out.println("Choose the test scenario:");
+		int number = 1;
+		indentation++;
+		for(Test t : tests)
 		{
-			
-			System.out.println("Chose test scenario:");
-			int number = 1;
-			indentation++;
-			for(Test t : tests)
-			{
-				Println(number+". "+t.GetName());
-				number++;
-			}
-			indentation--;
-			System.out.println("Enter 0 to quit");
-			Scanner sc = new Scanner(System.in);
-			String str = sc.nextLine();
-			try 
-			{
-				int choice = Integer.parseInt(str)-1;
-				if(!str.isBlank())
-				{
-					if(choice == -1)
-					{
-						quit = true;
-					}
-					else
-					{
-						if(choice < tests.size())
-						{
-							tests.get(choice).Run();
-							System.out.println();
-							System.out.println("Test finished");
-							System.out.println();
-							
-						}
-						else
-						{
-							Println("Írjál ide valamit");
-						}
-					}
-				}
-			}
-			catch(Exception ex)
-			{
-				ex.printStackTrace();
-				System.out.println("Something ain't right! Check your input");
-			}
-			finally
-			{
-				
-			}
+			Println(number+". "+t.GetName());
+			number++;
 		}
+		indentation--;
+		Scanner sc = new Scanner(System.in);
+		String str = sc.nextLine();
+		
+		if(!str.isBlank() && Integer.parseInt(str)-1 < tests.size())
+		{
+			tests.get(Integer.parseInt(str)-1).Run();
+		}
+		else
+		{
+			Println("Írjál ide valamit");
+		}
+		
+		
+		
 	}
+	
 	
 	public static void Println(String str)
 	{

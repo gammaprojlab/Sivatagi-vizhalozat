@@ -15,30 +15,19 @@ package sivatagiVizhalozat;
 
 /** */
 public class Saboteur extends Player {
-	
-	public Saboteur() {
-		super();
-		Skeleton.Println(this.toString()+"Saboteur()");
-	}
-	
-	public Saboteur(Game g, FieldElement f) {
-		super();
-		Skeleton.Println(this.toString()+"Saboteur("+ Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() +" "+ f +")");
-	}
-	
     /** */
-    public void PuncturePipe() {
-    	Skeleton.Println(this.toString()+"PuncturePipe()");
-    	location.Puncture();
+    private void PuncturePipe() {
 	}
 
 	@Override
 	public void Step1() {
-		Skeleton.Println(this.toString()+"Step1()");
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void Step2() {
-		Skeleton.Println(this.toString()+"Step2()");
+		// TODO Auto-generated method stub
+		
 	}
 }
