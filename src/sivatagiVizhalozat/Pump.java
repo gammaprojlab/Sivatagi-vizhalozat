@@ -96,7 +96,7 @@ public class Pump extends FieldElement {
 	public void setInput(int i) {
 		Skeleton.Println(this.toString()+"setInput("+ int.class.getSimpleName() + " " + i +")");
 		Skeleton.indentation++;
-		if(i >= -1 && i < GetNeighbor().size()){
+		if(i >= -1 && i < connections.size()){
 			input = i;
 			Skeleton.indentation--;
 		}
@@ -119,7 +119,7 @@ public class Pump extends FieldElement {
 	public void setOutput(int o) {
 		Skeleton.Println(this.toString()+"setOutput("+ int.class.getSimpleName() + " " + o + ")");
 		Skeleton.indentation++;
-		if(o >= -1 && o < GetNeighbor().size()) {
+		if(o >= -1 && o < connections.size()) {
 			output = o;
 			Skeleton.indentation--;
 		}
@@ -246,8 +246,8 @@ public class Pump extends FieldElement {
 		Skeleton.Println(this.toString()+"Remove("+FieldElement.class.getSimpleName()+" "+pipe+")");
 		Skeleton.indentation++;
 		if(pipe != null) {
-			if(GetNeighbor().contains(pipe)) {
-				int inx = GetNeighbor().indexOf(pipe);
+			if(connections.contains(pipe)) {
+				int inx = connections.indexOf(pipe);
 				// If the removed pipe was the input pipe, close the input
 				if(inx == input) input = -1; 
 				// In this case the input pipe would get a higher index which could mean we point out of the list,
@@ -277,7 +277,7 @@ public class Pump extends FieldElement {
 	*/
 	public boolean ChangeDirection(int i, int o) {
 		Skeleton.Println(this.toString()+"ChangeDirection("+ int.class.getSimpleName() + " " + i + ", " + Game.class.getSimpleName() + " " + o +")");
-		if(i >= -1 && o >= -1 && i < GetNeighbor().size() && o < GetNeighbor().size() && i != o) {
+		if(i >= -1 && o >= -1 && i < connections.size() && o < connections.size() && i != o) {
 			input = i;
 			output = o;
 			Skeleton.Println("return true");
@@ -296,7 +296,7 @@ public class Pump extends FieldElement {
 		Skeleton.indentation++;
 		if(Math.random() * 100 < 20) StopWorking();
 		if(isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's room for water in tank
-			int w = GetNeighbor().get(input).SuckWater(tankCapacity - water);
+			int w = connections.get(input).SuckWater(tankCapacity - water);
 			if(water + w < tankCapacity) water += w;
 			else water = tankCapacity;
 		}
@@ -312,7 +312,7 @@ public class Pump extends FieldElement {
 		Skeleton.Println(this.toString()+"Step2()");
 		Skeleton.indentation++;
 		if(output != -1) { // If output is open
-			int w = GetNeighbor().get(output).PumpWater(water);
+			int w = connections.get(output).PumpWater(water);
 			if(water - w >= 0) water -= w;
 			else water = 0;
 		}
