@@ -152,12 +152,14 @@ public class Game {
 	 *  */
 	public void Tick() {
 		Skeleton.Println(this.toString()+"Tick()");
+		Skeleton.identation++;
 		for(Steppable step: steppable) {
 			step.Step1();
 		}
 		for(Steppable step: steppable) {
 			step.Step2();
 		}
+		Skeleton.identation--;
 	}
 	
 	/**

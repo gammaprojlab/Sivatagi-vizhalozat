@@ -93,16 +93,22 @@ public abstract class Player implements Steppable {
 	public void PlayerMove(FieldElement f) {
 		Skeleton.Println(this.toString()+"PlayerMove("+ FieldElement.class.getSimpleName() + " " + f +")");
 		ArrayList<FieldElement> fields = location.GetNeighbor();
+		Skeleton.identation++;
 		if (fields.contains(f)) {
+			Skeleton.identation++;
 			if(f.StepOn(this)) {
+				Skeleton.identation++;
 				if(location.StepOff(this);){
 					SetLocation(f);
 				}
 				else {
 					f.StepOff(this);
 				}
+				Skeleton.identation--;
 			}
+			Skeleton.identation--;
 		}
+		Skeleton.identation--;
 	}
 	
 	/** 

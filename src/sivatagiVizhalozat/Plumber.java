@@ -76,12 +76,14 @@ public class Plumber extends Player {
 	 *  */
 	public void Repair() {
 		Skeleton.Println(this.toString()+"Repair()");
+		Skeleton.identation++;
 		if (location.Repair()) {
 			Skeleton.Println("The FieldElement is repaired.");
 		}
 		else {
 			Skeleton.Println("The FieldElement cannot be repaired.");
 		}
+		Skeleton.identation--;
 	}
 	
 	/**
@@ -100,10 +102,12 @@ public class Plumber extends Player {
 	 *  */
 	public void DisconnectPipe(int p) {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
+		Skeleton.identation++;
 		if (GetPipe() == null) {
 			pi = location.Disconnect(p);
 			setHeldPipe(pi);
 		}
+		Skeleton.identation--;
 	}
 	
 	/**
@@ -111,10 +115,12 @@ public class Plumber extends Player {
 	 *  */
 	public void TakePump() {
 		Skeleton.Println(this.toString()+"TakePump()");
+		Skeleton.identation++;
 		if(GetPump() == null) {
 			p = location.ProvidePump();
 			setHeldPump(p);
 		}
+		Skeleton.identation--;
 	}
 	
 	/**
@@ -122,12 +128,14 @@ public class Plumber extends Player {
 	 *  */
 	public void PlacePump() {
 		Skeleton.Println(this.toString()+"PlacePump()");
+		Skeleton.identation++;
 		if(GetPump() == null && location.getNeigbours().size() == 2) {
 			location.Split(heldPump);
 			game.addSteppable(heldPump);
 			this.PlayerMove(heldPump);
 			setHeldPump(null);
 		}
+		Skeleton.identation--;
 	}
 	
 	/**
@@ -136,12 +144,14 @@ public class Plumber extends Player {
 	public void GrabPipe() {
 		Skeleton.Println(this.toString()+"GrabPipe()");
 		ArrayList<FieldElement> elements = location.GetNeighbour();
+		Skeleton.identation++;
 		for(FieldElement element: elements) {
 			if (GetPipe() == null) {
 				Pipe p = location.Grab();
 				setHeldPipe(p);
 			}
 		}
+		Skeleton.identation--;
 	}
 	
 	/**
