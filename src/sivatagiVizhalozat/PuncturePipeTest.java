@@ -18,9 +18,13 @@ public class PuncturePipeTest extends Test {
 		s.PuncturePipe();
 		
 		if(p.getIsPunctured()) {
-			Skeleton.Println("SUCCES! It is punctured.");
+			Skeleton.Println("");
+			Skeleton.Println("SUCCESS! It is punctured.");
+			Skeleton.Println("");
 		} else {
+			Skeleton.Println("");
 			Skeleton.Println("FAILURE! It is not punctured.");
+			Skeleton.Println("");
 		}
 	}
 }
