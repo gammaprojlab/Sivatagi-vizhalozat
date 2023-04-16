@@ -66,7 +66,7 @@ public abstract class FieldElement implements Steppable {
 	public ArrayList<FieldElement> GetNeighbor() {
 		Skeleton.Println(this.toString()+"GetNeighbor()");
 		if(connections != null) {
-			Skeleton.Println("return " + connections);
+			Skeleton.Println("return " + connections.getClass().getSimpleName() + "<FieldElement>" +  " neighbors");
 			return connections;
 		}
 		Skeleton.Println("return null");
