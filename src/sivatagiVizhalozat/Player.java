@@ -22,17 +22,10 @@ public abstract class Player implements Steppable {
 	/** 
 	 * The FieldElement, which the Player is on in the game.
 	 * */
-	private FieldElement location;
+	protected FieldElement location;
 	
-	/** 
-	 * Gets the Players location.
-	 * @return: location Where the Player is.
-	 * */
-	public FieldElement GetLocation() {
-		Skeleton.Println(this.toString()+"GetLocation()");
-		return location;
-	}
-	
+
+
 	/** 
 	 * Sets the Players location.
 	 * @param: f Where the Player is.
@@ -45,7 +38,7 @@ public abstract class Player implements Steppable {
 	/**
 	 * It is the Game that the Player belongs to.
 	 *  */
-	private Game game;
+	protected Game game;
 	
 	/** 
 	 * Gets the Players game.
@@ -95,7 +88,7 @@ public abstract class Player implements Steppable {
 		ArrayList<FieldElement> fields = location.GetNeighbor();
 		if (fields.contains(f)) {
 			if(f.StepOn(this)) {
-				if(location.StepOff(this);){
+				if(location.StepOff(this)){
 					SetLocation(f);
 				}
 				else {

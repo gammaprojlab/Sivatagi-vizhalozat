@@ -19,7 +19,7 @@ public class Skeleton {
 	}
 
 	public void run() {
-		tests.add(new SkeletonTest1("realTest"));
+		tests.add(new FixPumpTest("FixPumpTest"));
 		tests.add(new Test("test2"));
 		tests.add(new Test("test3"));
 		tests.add(new Test("test4"));

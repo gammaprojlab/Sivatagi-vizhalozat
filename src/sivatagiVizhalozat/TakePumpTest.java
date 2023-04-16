@@ -14,7 +14,9 @@ public class TakePumpTest extends Test{
 		Cistern cistern = new Cistern(2,game);
 		
 		//Place player on pipe
-		Plumber plumber = new Plumber(cistern,game);
+		Plumber plumber = new Plumber();
+		plumber.SetLocation(cistern);
+		plumber.SetGame(game);
 		
 		Skeleton.Println("");
 		Skeleton.Println("SETUP COMPLETE");

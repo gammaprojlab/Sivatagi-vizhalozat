@@ -294,7 +294,7 @@ public class Pump extends FieldElement {
 	public void Step1() {
 		Skeleton.Println(this.toString()+"Step1()");
 		Skeleton.indentation++;
-		if(Math.random() * 100 < 75) StopWorking(); // TODO Adjust later
+		if(Math.random() * 100 < 20) StopWorking();
 		if(isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's room for water in tank
 			int w = GetNeighbor().get(input).SuckWater(tankCapacity - water);
 			if(water + w < tankCapacity) water += w;

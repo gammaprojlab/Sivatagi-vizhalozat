@@ -10,7 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
-import java.nio.channels.Pipe;
+import java.util.ArrayList;
 
 /** */
 public class Plumber extends Player {
@@ -70,8 +70,8 @@ public class Plumber extends Player {
 	/** */
 	public void DisconnectPipe(int p) {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
-		ArrayList<FieldElements> neighbours = location.GetNeighbour();
-		pi = location.Disconnect(p);
+		ArrayList<FieldElement> neighbours = location.GetNeighbor();
+		Pipe pi = location.Disconnect(p);
 		setHeldPipe(pi);
 	}
 	
@@ -79,7 +79,7 @@ public class Plumber extends Player {
 	public void TakePump() {
 		Skeleton.Println(this.toString()+"TakePump()");
 		if(GetPump() == null) {
-			p = location.ProvidePump();
+			Pump p = location.ProvidePump();
 			setHeldPump(p);
 		}
 	}
@@ -87,9 +87,9 @@ public class Plumber extends Player {
 	/** */
 	public void PlacePump() {
 		Skeleton.Println(this.toString()+"PlacePump()");
-		if(GetPump() == null && location.getNeigbours().size() == 2) {
+		if(GetPump() == null && location.GetNeighbor().size() == 2) {
 			location.Split(heldPump);
-			game.addSteppable(heldPump);
+			game.AddSteppable(heldPump);
 			this.PlayerMove(heldPump);
 			setHeldPump(null);
 		}
@@ -98,7 +98,7 @@ public class Plumber extends Player {
 	/** */
 	public void GrabPipe() {
 		Skeleton.Println(this.toString()+"GrabPipe()");
-		ArrayList<FieldElement> elements = location.GetNeighbour();
+		ArrayList<FieldElement> elements = location.GetNeighbor();
 		for(FieldElement element: elements) {
 			if (GetPipe() == null) {
 				Pipe p = location.Grab();
