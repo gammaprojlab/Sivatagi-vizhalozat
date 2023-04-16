@@ -18,13 +18,18 @@ public class Skeleton {
 		
 	}
 
-	public void run() {
+	public void Run() {
+		tests.add(new ConnectPipeTest("ConnectPipeTest"));
 		tests.add(new FixPumpTest("FixPumpTest"));
-		tests.add(new Test("test2"));
-		tests.add(new Test("test3"));
-		tests.add(new Test("test4"));
-		tests.add(new Test("test5"));
-		
+		tests.add(new GeneratePipeTest("GeneratePipeTest"));
+		tests.add(new GrabPipeTest("GrabPipeTest"));
+		tests.add(new PlacePumpTest("PlacePumpTest"));
+		tests.add(new PumpDirectionTest("PumpDirectionTest"));
+		tests.add(new PumpNotWorkingTest("PumpNotWorkingTest"));
+		tests.add(new PuncturePipeTest("PuncturePipeTest"));
+		tests.add(new RepairPipeTest("RepairPipeTest"));
+		tests.add(new TakePumpTest("TakePumpTest"));
+
 		while(!quit)
 		{
 			
@@ -69,13 +74,14 @@ public class Skeleton {
 			catch(Exception ex)
 			{
 				ex.printStackTrace();
-				System.out.println("Something ain't right! Check your input");
+				System.out.println("Something ain't right!");
 			}
 			finally
 			{
 				
 			}
 		}
+		System.out.println("Program terminated");
 	}
 	
 	public static void Println(String str)

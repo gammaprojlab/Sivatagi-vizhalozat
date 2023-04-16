@@ -6,7 +6,7 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		Skeleton skeleton = new Skeleton();
-		skeleton.run();
+		skeleton.Run();
 
 	}
 
