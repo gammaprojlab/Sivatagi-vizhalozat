@@ -138,7 +138,7 @@ public abstract class FieldElement implements Steppable {
 		Skeleton.Println(this.toString()+"FieldElement()");
 		players = new ArrayList<Player>();
 		connections = new ArrayList<FieldElement>();
-		maxConnections = 0;
+		maxConnections = 5;
 		game = null;
 	}
 

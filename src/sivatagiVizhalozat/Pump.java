@@ -214,11 +214,12 @@ public class Pump extends FieldElement {
 		Skeleton.indentation++;
 		if(!isWorking) {
 			setIsWorking(true);
-			Skeleton.Println("return true");
 			Skeleton.indentation--;
+			Skeleton.Println("return true");
 			return true;
 		}
 		Skeleton.indentation--;
+		Skeleton.Println("return false");
 		return false;
 	}
 

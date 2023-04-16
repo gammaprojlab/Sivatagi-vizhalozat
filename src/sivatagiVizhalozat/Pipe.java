@@ -124,6 +124,7 @@ public class Pipe extends FieldElement {
 		isGrabbed = false;
 		water = 0;
 		capacity = 0;
+		maxConnections = 2;
 	}
 
 	/**
@@ -176,7 +177,7 @@ public class Pipe extends FieldElement {
 	 * @param w The amount of water in the Pipe
 	 */
 	public Pipe(int mc, Game g, int c, int w) {
-		super(2, g);
+		super(mc, g);
 		Skeleton.Println(this.toString()+"Pipe("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ", " + int.class.getSimpleName() + " " + w + ")");
 		isPunctured = false;
 		isGrabbed = false;
@@ -193,8 +194,8 @@ public class Pipe extends FieldElement {
 		Skeleton.indentation++;
 		if(!isPunctured) {
 			setIsPunctured(true);
-			Skeleton.Println("return true");
 			Skeleton.indentation--;
+			Skeleton.Println("return true");
 			return true;
 		}
 		Skeleton.indentation--;

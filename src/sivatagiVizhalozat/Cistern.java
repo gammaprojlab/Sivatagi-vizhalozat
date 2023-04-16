@@ -24,7 +24,6 @@ public class Cistern extends FieldElement {
 		Skeleton.Println(this.toString()+"Cistern()");
 	}
 
-	
 	/**
 	 * Two parameter constructor
 	 * @param mc The maximum number of connections this element can have
