@@ -48,7 +48,7 @@ public abstract class FieldElement implements Steppable {
 	/**
 	 * It stores the fields that are connected to this element
 	*/
-	private ArrayList<FieldElement> connections;
+	protected ArrayList<FieldElement> connections;
 
 	/**
 	 * It sets the ArrayList for connections
@@ -66,7 +66,7 @@ public abstract class FieldElement implements Steppable {
 	public ArrayList<FieldElement> GetNeighbor() {
 		Skeleton.Println(this.toString()+"GetNeighbor()");
 		if(connections != null) {
-			Skeleton.Println("return " + connections);
+			Skeleton.Println("return " + connections.getClass().getSimpleName() + "<FieldElement>" +  " neighbors");
 			return connections;
 		}
 		Skeleton.Println("return null");
@@ -104,7 +104,7 @@ public abstract class FieldElement implements Steppable {
 	/**
 	 * It stores players standing on this element
 	*/
-	private ArrayList<Player> players;
+	protected ArrayList<Player> players;
 
 	/**
 	 * It sets the ArrayList for the players variable
@@ -170,7 +170,8 @@ public abstract class FieldElement implements Steppable {
 		Skeleton.Println(this.toString()+"Add("+FieldElement.class.getSimpleName()+" "+field+")");
 		Skeleton.indentation++;
 		if(field != null) {
-			if (!GetNeighbor().contains(field) && GetNeighbor().size() < maxConections) {
+			
+			if (!connections.contains(field) && connections.size() < maxConections) {
 				connections.add(field);
 				Skeleton.indentation--;
 				Skeleton.Println("return true");

@@ -17,9 +17,6 @@ public class GeneratePipeTest extends Test{
 		Skeleton.Println("SETUP COMPLETE");
 		Skeleton.Println("");
 		
-		Skeleton.indentation++;
-		Skeleton.indentation++;
-		
 		//The functional part of the test
 			//Is the p Pipe connected to the c Cistern?
 		if(c.Connect(p))
