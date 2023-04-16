@@ -157,6 +157,7 @@ public class Pump extends FieldElement {
 		input = -1;
 		output = -1;
 		water = 0;
+		setMaxConnections(5);
 	}
 
 	/**
@@ -191,23 +192,6 @@ public class Pump extends FieldElement {
 		water = 0;
 	}
 
-	/**
-	 * Four parameter constructor
-	 * @param mc The maximum number of connections this element can have
-	 * @param g The Game object where this element is being used
-	 * @param c The maximum amount of water that the pump's tank can hold
-	 * @param w The amount of water in the pump's tank
-	 */
-	public Pump(int mc, Game g, int tC, int w) {
-		super(mc, g);
-		Skeleton.Println(this.toString()+"Pump("+ int.class.getSimpleName() + " " + mc + ", " + 
-		Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + tC + ", " + int.class.getSimpleName() + " " + w + ")");
-		isWorking = true;
-		tankCapacity = tC;
-		input = -1;
-		output = -1;
-		water = w;
-	}
 
 	/**
 	 * At random moments this function is called to break the pump. When the pump isn't working, it's not pumping to the output pipe 
