@@ -21,9 +21,6 @@ public class PumpNotWorkingTest extends Test{
 		Skeleton.Println("SETUP COMPLETE");
 		Skeleton.Println("");
 		
-		Skeleton.indentation++;
-		Skeleton.indentation++;
-		
 		//The functional part of the test
 			//Mess with the pump
 		pump.StopWorking();

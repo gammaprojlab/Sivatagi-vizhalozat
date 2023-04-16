@@ -56,19 +56,23 @@ public class Skeleton {
 					}
 					else
 					{
-						if(choice < tests.size())
+						if(choice < tests.size() && choice > -1)
 						{
 							tests.get(choice).Run();
 							System.out.println();
 							System.out.println("Test finished");
-							System.out.println();
-							
+							System.out.println();	
 						}
 						else
 						{
-							Println("Írjál ide valamit");
+							Println("Invalid number");
 						}
+						
 					}
+				}
+				else
+				{
+					Println("TypeStuff");
 				}
 			}
 			catch(Exception ex)
