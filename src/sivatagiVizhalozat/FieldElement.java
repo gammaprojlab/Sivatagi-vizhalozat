@@ -24,7 +24,7 @@ public abstract class FieldElement implements Steppable {
 	/**
 	 * It stores how many connections a this element can have
 	*/
-	private int maxConections;
+	protected int maxConnections;
 
 	/**
 	 * Set the maxConnections variable
@@ -32,7 +32,7 @@ public abstract class FieldElement implements Steppable {
 	 */
 	public void setMaxConnections(int c) {
 		Skeleton.Println(this.toString()+"setMaxConnections("+int.class.getSimpleName()+" "+c+")");
-		if(c >= 0) maxConections = c;
+		if(c >= 0) maxConnections = c;
 	}
 
 	/**
@@ -41,8 +41,8 @@ public abstract class FieldElement implements Steppable {
 	 */
 	public int getMaxConnections() {
 		Skeleton.Println(this.toString()+"getMaxConnections()");
-		Skeleton.Println("return " + maxConections);
-		return maxConections;
+		Skeleton.Println("return " + maxConnections);
+		return maxConnections;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public abstract class FieldElement implements Steppable {
 	/**
 	 * It stores the game pbject
 	*/
-	private Game game;
+	protected Game game;
 
 	/**
 	 * It sets the value for the game variable
@@ -138,7 +138,7 @@ public abstract class FieldElement implements Steppable {
 		Skeleton.Println(this.toString()+"FieldElement()");
 		players = new ArrayList<Player>();
 		connections = new ArrayList<FieldElement>();
-		maxConections = 0;
+		maxConnections = 0;
 		game = null;
 	}
 
@@ -152,11 +152,11 @@ public abstract class FieldElement implements Steppable {
 		players = new ArrayList<Player>();
 		connections = new ArrayList<FieldElement>();
 		if(mc >= 0 && g != null) {
-			maxConections = mc;
+			maxConnections = mc;
 			game = g;
 		}
 		else {
-			maxConections = 0;
+			maxConnections = 0;
 			game = null;
 		}
 	}
@@ -170,8 +170,7 @@ public abstract class FieldElement implements Steppable {
 		Skeleton.Println(this.toString()+"Add("+FieldElement.class.getSimpleName()+" "+field+")");
 		Skeleton.indentation++;
 		if(field != null) {
-			
-			if (!connections.contains(field) && connections.size() < maxConections) {
+			if (!connections.contains(field) && connections.size() < maxConnections) {
 				connections.add(field);
 				Skeleton.indentation--;
 				Skeleton.Println("return true");
@@ -191,7 +190,7 @@ public abstract class FieldElement implements Steppable {
 		Skeleton.Println(this.toString()+"Remove("+FieldElement.class.getSimpleName()+" "+field+")");
 		Skeleton.indentation++;
 		if(field != null) {
-			if(GetNeighbor().contains(field)) {
+			if(connections.contains(field)) {
 				connections.remove(field);
 				Skeleton.indentation--;
 				Skeleton.Println("return true");
@@ -270,7 +269,7 @@ public abstract class FieldElement implements Steppable {
 	public Pipe Disconnect(int f) {
 		Skeleton.Println(this.toString()+"Disconnect("+int.class.getSimpleName()+" "+f+")");
 		Skeleton.indentation++;
-		if(f >= 0 && f < connections.size()) {
+		if(f >= 0 && f < connections.size() && connections.size() >= 2) {
 			FieldElement pipe = connections.get(f);
 			Pipe ret = pipe.Disconnect(pipe.GetNeighbor().indexOf(this));
 			if(ret != null) {

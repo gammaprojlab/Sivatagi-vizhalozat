@@ -141,31 +141,27 @@ public class Pipe extends FieldElement {
 	}
 
 	/**
-	 * Three parameter constructor
-	 * @param mc The maximum number of connections this element can have
+	 * Two parameter constructor
 	 * @param g The Game object where this element is being used
 	 * @param c The maximum amount of water that the pipe can hold
 	 */
-	public Pipe(int mc, Game g, int c) {
-		super(mc, g);
-		Skeleton.Println(this.toString()+"Pipe("+ int.class.getSimpleName() + " " + mc + ", " + 
-		Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ")");
+	public Pipe(Game g, int c) {
+		super(2, g);
+		Skeleton.Println(this.toString()+"Pipe("+ Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ")");
 		isPunctured = false;
 		isGrabbed = false;
 		capacity = c;
 		water = 0;
 	}
 	/**
-	 * Four parameter constructor
-	 * @param mc The maximum number of connections this element can have
+	 * Three parameter constructor
 	 * @param g The Game object where this element is being used
 	 * @param c The maximum amount of water that the pipe can hold
 	 * @param w The amount of water in the Pipe
 	 */
-	public Pipe(int mc, Game g, int c, int w) {
-		super(mc, g);
-		Skeleton.Println(this.toString()+"Pipe("+ int.class.getSimpleName() + " " + mc + ", " + 
-		Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ", " + int.class.getSimpleName() + " " + w + ")");
+	public Pipe(Game g, int c, int w) {
+		super(2, g);
+		Skeleton.Println(this.toString()+"Pipe("+ Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ", " + int.class.getSimpleName() + " " + w + ")");
 		isPunctured = false;
 		isGrabbed = false;
 		capacity = c;
@@ -198,14 +194,14 @@ public class Pipe extends FieldElement {
 		Skeleton.Println(this.toString()+"Split("+Pump.class.getSimpleName()+" "+p+")");
 		Skeleton.indentation++;
 		if(p != null && GetNeighbor().size() == 2 && !isGrabbed) {
-			Pipe newPipe = new Pipe(getMaxConnections(), getGame(), capacity, water/2);
-			FieldElement a = GetNeighbor().get(0);
+			Pipe newPipe = new Pipe(maxConnections, game, capacity, water/2);
+			FieldElement a = connections.get(0);
 			if(a.Remove(this) && Remove(a)) {
 				p.Add(newPipe); p.Add(this);
 				a.Add(newPipe);
 				newPipe.Add(a); newPipe.Add(p);
 				water = water/2;
-				getGame().AddSteppable(p);
+				game.AddSteppable(p);
 				Skeleton.indentation--;
 				Skeleton.Println("return true");
 				return true;
@@ -224,7 +220,7 @@ public class Pipe extends FieldElement {
 	public Pipe Grab() {
 		Skeleton.Println(this.toString()+"Grab()");
 		Skeleton.indentation++;
-		if(!isGrabbed && GetNeighbor().size() == 1 && GetPlayers().size() == 0) {
+		if(!isGrabbed && connections.size() == 1 && players.size() == 0) {
 			setIsGrabbed(true);
 			Skeleton.indentation--;
 			Skeleton.Println("return " + this);
@@ -314,9 +310,8 @@ public class Pipe extends FieldElement {
 	public void Step1() {
 		Skeleton.Println(this.toString()+"Step1()");
 		Skeleton.indentation++;
-		Game g = getGame();
-		if(g != null && !isGrabbed && (isPunctured || GetNeighbor().size() == 1)) {
-			g.WaterSpilled(water);
+		if(game != null && !isGrabbed && (isPunctured || connections.size() == 1)) {
+			game.WaterSpilled(water);
 			setWater(0);
 		}
 		Skeleton.indentation--;
@@ -330,8 +325,8 @@ public class Pipe extends FieldElement {
 		Skeleton.Println(this.toString()+"StepOn("+Player.class.getSimpleName()+" "+p+")");
 		if(p != null) {
 		Skeleton.indentation++;
-			if(GetPlayers().size() == 0) {
-				GetPlayers().add(p);
+			if(players.size() == 0) {
+				players.add(p);
 				Skeleton.indentation--;
 				Skeleton.Println("return true");
 				return true;

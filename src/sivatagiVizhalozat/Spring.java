@@ -39,7 +39,7 @@ public class Spring extends FieldElement {
 	public void Step2() {
 		Skeleton.Println(this.toString()+"Step2()");
 		Skeleton.indentation++;
-		for (var connection : GetNeighbor()) {
+		for (var connection : connections) {
 			connection.PumpWater(Integer.MAX_VALUE);
 		}
 		Skeleton.indentation--;

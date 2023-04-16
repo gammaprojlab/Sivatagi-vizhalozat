@@ -60,9 +60,8 @@ public class Cistern extends FieldElement {
 	public void Step1() {
 		Skeleton.Println(this.toString()+"Step1()");
 		Skeleton.indentation++;
-		ArrayList<FieldElement> neighbours = GetNeighbor();
 		if(neighbours != null) {
-			for (var neighbour : neighbours) {
+			for (var neighbour : connections) {
 				getGame().WaterCollected(neighbour.SuckWater(Integer.MAX_VALUE));
 			}
 		}
