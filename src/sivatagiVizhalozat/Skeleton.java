@@ -69,13 +69,14 @@ public class Skeleton {
 			catch(Exception ex)
 			{
 				ex.printStackTrace();
-				System.out.println("Something ain't right! Check your input");
+				System.out.println("Something ain't right!");
 			}
 			finally
 			{
 				
 			}
 		}
+		System.out.println("Program terminated");
 	}
 	
 	public static void Println(String str)
