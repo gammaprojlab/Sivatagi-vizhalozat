@@ -19,9 +19,13 @@ public class RepairPipeTest extends Test {
 		plumber.Repair();				//Repair the punctured pipe
 
 		if(!pipe.getIsPunctured()) {
-			Skeleton.Println("SUCCES! Pipe is repaired.");
+			Skeleton.Println("");
+			Skeleton.Println("SUCCESS! Pipe is repaired.");
+			Skeleton.Println("");
 		} else {
+			Skeleton.Println("");
 			Skeleton.Println("FAILURE! Pipe is not repaired.");
+			Skeleton.Println("");
 		}
 	}
 }
