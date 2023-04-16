@@ -1,5 +1,7 @@
 package sivatagiVizhalozat;
 
+import java.util.Scanner;
+
 public class ConnectPipeTest extends Test {
 	ConnectPipeTest(String name) {
 		super(name);
@@ -23,25 +25,61 @@ public class ConnectPipeTest extends Test {
 		
 		plumber.ConnectPipe();
 		
-		if(f.getMaxConnections() == 2) {
-			Skeleton.Println("SUCCES! FieldElement is connected.");
+		if(f.GetNeighbor().get(1) == p1) {
+			Skeleton.Println("");
+			Skeleton.Println("SUCCESS! FieldElement is connected.\n");
+			Skeleton.Println("");
 		} else {
-			Skeleton.Println("FAILURE! FieldElement is not connected.");
+			Skeleton.Println("");
+			Skeleton.Println("FAILURE! FieldElement is not connected.\n");
+			Skeleton.Println("");
 		}
 	}
 	
 	public void Run() {
-		//Test cistern
-		Cistern c = new Cistern();
-		ToField(c);
-		
-		//Test pump
-		Pump p = new Pump();
-		ToField(p);
-		
-		//Test spring
-		Spring s = new Spring();
-		ToField(s);
+		boolean quit = false;
+		while(!quit)
+		{
+			Skeleton.Println("0 to quit");
+			Skeleton.Println("Cistern: 1,");
+			Skeleton.Println("Pump: 2,");
+			Skeleton.Println("Spring: 3");
+			Skeleton.Println("Chose test scenario:");
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try 
+			{
+				int choice = Integer.parseInt(str)-1;
+				if(!str.isBlank())
+				{
+					if(choice == -1)
+					{
+						quit = true;
+					}
+					else
+					{
+						if(choice == 0) {
+							//Test cistern
+							Cistern c = new Cistern();
+							ToField(c);
+						} else if(choice == 1) {
+							//Test pump
+							Pump p = new Pump();
+							ToField(p);
+						} else if(choice == 2) {
+							//Test spring
+							Spring s = new Spring();
+							ToField(s);
+						}
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+				Skeleton.Println("Something ain't right! Check your input");
+			}
+		}
 		
 	}
 }
