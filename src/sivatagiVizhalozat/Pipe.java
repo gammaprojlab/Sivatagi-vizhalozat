@@ -192,7 +192,7 @@ public class Pipe extends FieldElement {
 	public boolean Puncture() {
 		Skeleton.Println(this.toString()+"Puncture()");
 		if(!isPunctured) {
-			isPunctured(true);	
+			isPunctured = true;	
 			Skeleton.Println("return true");
 			return true;
 		}
