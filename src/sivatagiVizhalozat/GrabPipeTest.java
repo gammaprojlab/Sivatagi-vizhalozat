@@ -20,7 +20,7 @@ public class GrabPipeTest extends Test {
 		
 		plumber.GrabPipe();
 		
-		if(plumber.setHeldPipe() == pipe1 || plumber.setHeldPipe() == pipe2) {
+		if(plumber.GetPipe() == pipe1 || plumber.GetPipe() == pipe2) {
 			Skeleton.Println("SUCCES!");
 		} else {
 			Skeleton.Println("FAILURE!");
