@@ -13,11 +13,20 @@ package sivatagiVizhalozat;
 
 
 
-/** */
+/**
+ * Simulates the passage of time. 
+ * Every time-varying class implements the Step function and calls it at given intervals.
+ *  */
 public interface Steppable {
-	/** */
+	/**
+	 * It performs the scaling of scalable classes and has essentially no functionality,
+	 * however, each scalable class calls it from time to time according to its own function.
+	 *  */
 	public void Step1();
 	
-	/** */
+	/**
+	 * It performs the scaling of scalable classes and has essentially no functionality,
+	 * however, each scalable class calls it from time to time according to its own function.
+	 *  */
 	public void Step2();
 }

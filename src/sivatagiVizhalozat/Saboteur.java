@@ -13,30 +13,49 @@ package sivatagiVizhalozat;
 
 
 
-/** */
+/**
+ * The department responsible for the activities of the saboteur character.
+ * With the help of this, the saboteur players can pierce the pipes.
+ *  */
 public class Saboteur extends Player {
 	
+	/**
+	 * Konstruktor of the Saboteur.
+	 *  */
 	public Saboteur() {
 		super();
 		Skeleton.Println(this.toString()+"Saboteur()");
 	}
 	
+	/**
+	 * Konstruktor of the Saboteur with params.
+	 * @param g The where the player plays.
+	 * @param f The FieldElement where the player stands.
+	 *  */
 	public Saboteur(Game g, FieldElement f) {
-		super();
+		super(g, f);
 		Skeleton.Println(this.toString()+"Saboteur("+ Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() +" "+ f +")");
 	}
 	
-    /** */
+    /**
+     * Punctures the location, where the player is standing.
+     *  */
     public void PuncturePipe() {
     	Skeleton.Println(this.toString()+"PuncturePipe()");
     	location.Puncture();
 	}
 
+    /**
+     * The implementation of the Step1 function of the Steppable interface
+     *  */
 	@Override
 	public void Step1() {
 		Skeleton.Println(this.toString()+"Step1()");
 	}
 
+	/**
+	 * The implementation of the Step2 function of the Steppable interface
+	 *  */
 	@Override
 	public void Step2() {
 		Skeleton.Println(this.toString()+"Step2()");
