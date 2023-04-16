@@ -10,27 +10,138 @@ package sivatagiVizhalozat;
 //
 //
 
+import java.util.ArrayList;
 
-
-
-/** */
+/** 
+ * The Player class is the parent class of Plumber and Saboteur.
+ * These will be the caracters what the person/people can control.
+ * It implements the Stepable class because it will be Stepping and moving,
+ * because of the Stepable's Step function.
+ * */
 public abstract class Player implements Steppable {
-	/** */
+	/** 
+	 * The FieldElement, which the Player is on in the game.
+	 * */
 	private FieldElement location;
 	
-	/** */
+	/** 
+	 * Gets the Players location.
+	 * @return: location Where the Player is.
+	 * */
+	public FieldElement GetLocation() {
+		Skeleton.Println(this.toString()+"GetLocation()");
+		return location;
+	}
+	
+	/** 
+	 * Sets the Players location.
+	 * @param: f Where the Player is.
+	 * */
+	public void SetLocation(FieldElement f) {
+		Skeleton.Println(this.toString()+"SetLocation("+ FieldElement.class.getSimpleName() + " " + f +")");
+		location = f;
+	}
+	
+	/**
+	 * It is the Game that the Player belongs to.
+	 *  */
 	private Game game;
 	
-	/** */
-	public void PlayerMove(FieldElement f) {
+	/** 
+	 * Gets the Players game.
+	 * @return: game In what game is the Player in.
+	 * */
+	public Game GetGame() {
+		Skeleton.Println(this.toString()+"GetGame()");
+		return game;
 	}
 	
-	/** */
+	/** 
+	 * Sets the Players game.
+	 * @param: g In what game is the Player in.
+	 * */
+	public void SetGame(Game g) {
+		Skeleton.Println(this.toString()+"SetGame("+ Game.class.getSimpleName() + " " + g +")");
+		game = g;
+	}
+	
+	/**
+	 * Player class's konstruktor without parameters.
+	 *  */
+	public Player() {
+		Skeleton.Println(this.toString()+"Player()");
+		location = null;
+		game = null;
+	}
+	
+	/**
+	 * Player class's konstruktor with parameters.
+	 * @param: g Game, that the Player belongs to.
+	 * @param: f FieldElement, that the Player starts the Game from.
+	 *  */
+	
+	public Player(Game g, FieldElement f) {
+		Skeleton.Println(this.toString()+"Player(" + Game.class.getSimpleName()+ " " + g + ", " + FieldElement.class.getSimpleName() + " " + f + ")");
+		game = g;
+		location = f;
+	}
+	
+	/**
+	 * Moves the Player to a specific FieldElement.
+	 * @param: f The FieldElement where the Player will be put.
+	 *  */
+	public void PlayerMove(FieldElement f) {
+		Skeleton.Println(this.toString()+"PlayerMove("+ FieldElement.class.getSimpleName() + " " + f +")");
+		ArrayList<FieldElement> fields = location.GetNeighbor();
+		if (fields.contains(f)) {
+			if(f.StepOn(this)) {
+				if(location.StepOff(this);){
+					SetLocation(f);
+				}
+				else {
+					f.StepOff(this);
+				}
+			}
+		}
+	}
+	
+	/** 
+	 * The FieldElement can be gotten with this function.
+	 * @return: Returns with the players location.
+	 * */
 	public FieldElement GetLocation() {
-		return null;
+		Skeleton.Println(this.toString()+"GetLocation()");
+		return location;
 	}
 
-	/** */
+	/**
+	 * Changes the direction, from where and to where the Pump will pump the water.
+	 * @param: input From where the Pump suck te water out.
+	 * @param: output To where the Pump pumps the water.
+	 *  */
 	public void PumpDirection(int input, int output) {
+		Skeleton.Println(this.toString()+"PumpDirection("+ int.class.getSimpleName() + " " + input + ", " + int.class.getSimpleName() + " " + output +")");
+		location.ChangeDirection(input, output);
+	}
+	
+	/**
+	 * The implementation of the Step1 function of the Steppable interface
+	*/
+	public void Step1() {
+		Skeleton.Println(this.toString()+"Step1()");
+	}
+	
+	/** 
+	 * The implementation of the Step2 function of the Steppable interface
+	*/
+	public void Step2() {
+		Skeleton.Println(this.toString()+"Step2()");
+	}
+	
+	/**
+	 * Used for testing
+	 */
+	public String toString() {
+		return this.getClass().getSimpleName()+"'"+Integer.toHexString(this.hashCode())+"'"+"."; 
 	}
 }
