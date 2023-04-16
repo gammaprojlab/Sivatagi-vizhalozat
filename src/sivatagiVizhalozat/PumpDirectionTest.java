@@ -24,9 +24,13 @@ public class PumpDirectionTest extends Test {
 		pump.ChangeDirection(1, 2);			//Change the input to the first neighbor (pipe1) and the output to the second neighbor (pipe2)
 		
 		if(pump.getInput() == 1 && pump.getOutput() == 2) {
-			Skeleton.Println("SUCCES!");
+			Skeleton.Println("");
+			Skeleton.Println("SUCCESS!");
+			Skeleton.Println("");
 		} else {
+			Skeleton.Println("");
 			Skeleton.Println("FAILURE!");
+			Skeleton.Println("");
 		}
 	}
 }
