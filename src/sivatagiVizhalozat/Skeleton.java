@@ -11,45 +11,84 @@ import java.util.Scanner;
 public class Skeleton {
 	static int indentation = 0;
 	private  List<Test> tests = new ArrayList<Test>();
-	
+	private Boolean quit = false;
 	
 	Skeleton()
 	{
 		
 	}
 
-	public void run() {
-		tests.add(new SkeletonTest1("realTest"));
-		tests.add(new Test("test2"));
-		tests.add(new Test("test3"));
-		tests.add(new Test("test4"));
-		tests.add(new Test("test5"));
-		
-		System.out.println("Chose test scenario:");
-		int number = 1;
-		indentation++;
-		for(Test t : tests)
+	public void Run() {
+		tests.add(new ConnectPipeTest("ConnectPipeTest"));
+		tests.add(new DisconnectPipeTest("DisconnectPipeTest"));
+		tests.add(new FixPumpTest("FixPumpTest"));
+		tests.add(new GeneratePipeTest("GeneratePipeTest"));
+		tests.add(new GrabPipeTest("GrabPipeTest"));
+		tests.add(new PlacePumpTest("PlacePumpTest"));
+		tests.add(new PumpDirectionTest("PumpDirectionTest"));
+		tests.add(new PumpNotWorkingTest("PumpNotWorkingTest"));
+		tests.add(new PuncturePipeTest("PuncturePipeTest"));
+		tests.add(new RepairPipeTest("RepairPipeTest"));
+		tests.add(new TakePumpTest("TakePumpTest"));
+		tests.add(new TimerTest("TimerTest"));
+
+		while(!quit)
 		{
-			Println(number+". "+t.GetName());
-			number++;
+			
+			System.out.println("Chose test scenario:");
+			int number = 1;
+			indentation++;
+			for(Test t : tests)
+			{
+				Println(number+". "+t.GetName());
+				number++;
+			}
+			indentation--;
+			System.out.println("Enter 0 to quit");
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try 
+			{
+				int choice = Integer.parseInt(str)-1;
+				if(!str.isBlank())
+				{
+					if(choice == -1)
+					{
+						quit = true;
+					}
+					else
+					{
+						if(choice < tests.size() && choice > -1)
+						{
+							tests.get(choice).Run();
+							System.out.println();
+							System.out.println("Test finished");
+							System.out.println();	
+						}
+						else
+						{
+							Println("Invalid number");
+						}
+						
+					}
+				}
+				else
+				{
+					Println("TypeStuff");
+				}
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+				System.out.println("Something ain't right!");
+			}
+			finally
+			{
+				
+			}
 		}
-		indentation--;
-		Scanner sc = new Scanner(System.in);
-		String str = sc.nextLine();
-		
-		if(!str.isBlank() && Integer.parseInt(str)-1 < tests.size())
-		{
-			tests.get(Integer.parseInt(str)-1).Run();
-		}
-		else
-		{
-			Println("Írjál ide valamit");
-		}
-		
-		
-		
+		System.out.println("Program terminated");
 	}
-	
 	
 	public static void Println(String str)
 	{

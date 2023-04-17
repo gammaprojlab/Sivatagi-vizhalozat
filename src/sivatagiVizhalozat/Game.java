@@ -10,8 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
-
-
+import java.util.ArrayList;
 
 /** 
  * The class that implements the Game functionality.
@@ -30,7 +29,7 @@ public class Game {
 	 * @param s Points to what the Saboteurs point will be set.
 	 *  */
 	public void SetspilledWater(int s) {
-		Skeleton.Println(this.toString()+"SetspilledWater("+ int.class.setSimpleName() + " " + s +")");
+		Skeleton.Println(this.toString()+"SetspilledWater("+ int.class.getSimpleName() + " " + s +")");
 		spilledWater = s;
 	}
 	
@@ -53,7 +52,7 @@ public class Game {
 	 * @param c Points to what the Plumbers point will be set.
 	 *  */
 	public void SetcollectedWater(int c) {
-		Skeleton.Println(this.toString()+"SetcollectedWater("+ int.class.setSimpleName() + " " + c +")");
+		Skeleton.Println(this.toString()+"SetcollectedWater("+ int.class.getSimpleName() + " " + c +")");
 		collectedWater = c;
 	}
 	
@@ -76,7 +75,7 @@ public class Game {
 	 * @param s Saboteur who will be playing.
 	 *  */
 	public void AddSaboteur(Saboteur s) {
-		Skeleton.Println(this.toString()+"AddSaboteur("+ Saboteur.class.setSimpleName() + " " + s +")");
+		Skeleton.Println(this.toString()+"AddSaboteur("+ Saboteur.class.getSimpleName() + " " + s +")");
 		saboteurs.add(s);
 	}
 	
@@ -99,7 +98,7 @@ public class Game {
 	 * @param p Plumber who will be playing.
 	 * */
 	public void AddPlumber(Plumber p) {
-		Skeleton.Println(this.toString()+"AddPlumber("+ Plumber.class.setSimpleName() + " " + p +")");
+		Skeleton.Println(this.toString()+"AddPlumber("+ Plumber.class.getSimpleName() + " " + p +")");
 		plumbers.add(p);
 	}
 	
@@ -122,7 +121,7 @@ public class Game {
 	 * @param s New tiel to the map.
 	 *  */
 	public void AddSteppable(Steppable s) {
-		Skeleton.Println(this.toString()+"AddSteppable("+ Steppable.class.setSimpleName() + " " + s +")");
+		Skeleton.Println(this.toString()+"AddSteppable("+ Steppable.class.getSimpleName() + " " + s +")");
 		steppable.add(s);
 	}
 	
@@ -152,14 +151,16 @@ public class Game {
 	 *  */
 	public void Tick() {
 		Skeleton.Println(this.toString()+"Tick()");
-		Skeleton.identation++;
+		Skeleton.indentation++;
+
 		for(Steppable step: steppable) {
 			step.Step1();
 		}
 		for(Steppable step: steppable) {
 			step.Step2();
 		}
-		Skeleton.identation--;
+
+		Skeleton.indentation--;
 	}
 	
 	/**

@@ -10,7 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
-import java.nio.channels.Pipe;
+import java.util.ArrayList;
 
 /** 
  * The class responsible for the mechanic character's activities.
@@ -104,10 +104,11 @@ public class Plumber extends Player {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
 		Skeleton.identation++;
 		if (GetPipe() == null) {
-			pi = location.Disconnect(p);
+			Pipe pi = location.Disconnect(p);
 			setHeldPipe(pi);
 		}
 		Skeleton.identation--;
+
 	}
 	
 	/**
@@ -117,7 +118,7 @@ public class Plumber extends Player {
 		Skeleton.Println(this.toString()+"TakePump()");
 		Skeleton.identation++;
 		if(GetPump() == null) {
-			p = location.ProvidePump();
+			Pump p = location.ProvidePump();
 			setHeldPump(p);
 		}
 		Skeleton.identation--;
@@ -128,10 +129,12 @@ public class Plumber extends Player {
 	 *  */
 	public void PlacePump() {
 		Skeleton.Println(this.toString()+"PlacePump()");
+
 		Skeleton.identation++;
 		if(GetPump() == null && location.getNeigbours().size() == 2) {
+
 			location.Split(heldPump);
-			game.addSteppable(heldPump);
+			game.AddSteppable(heldPump);
 			this.PlayerMove(heldPump);
 			setHeldPump(null);
 		}
@@ -143,8 +146,10 @@ public class Plumber extends Player {
 	 *  */
 	public void GrabPipe() {
 		Skeleton.Println(this.toString()+"GrabPipe()");
-		ArrayList<FieldElement> elements = location.GetNeighbour();
-		Skeleton.identation++;
+
+  Skeleton.identation++;
+	ArrayList<FieldElement> elements = location.GetNeighbour();
+		
 		for(FieldElement element: elements) {
 			if (GetPipe() == null) {
 				Pipe p = location.Grab();
