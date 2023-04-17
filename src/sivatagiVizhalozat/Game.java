@@ -180,4 +180,11 @@ public class Game {
 		Skeleton.Println(this.toString()+"WaterCollected("+ int.class.getSimpleName() + " " + water +")");
 		collectedWater += water;
 	}
+	
+	/**
+	* Used for testing
+	*/
+	public String toString() {
+		return this.getClass().getSimpleName() + "'" + Integer.toHexString(this.hashCode()) + "'" + ".";
+	}
 }
