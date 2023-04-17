@@ -233,7 +233,7 @@ public abstract class FieldElement implements Steppable {
 	public boolean StepOff(Player p) {
 		Skeleton.Println(this.toString() + "StepOff(" + Player.class.getSimpleName() + " " + p + ")");
 		if (p != null) {
-			if (players.contains(p)) {
+			if (players.contains(p)) { // if players is on this element
 				players.remove(p);
 				Skeleton.Println("return true");
 				return true;
@@ -274,11 +274,7 @@ public abstract class FieldElement implements Steppable {
 	public Pipe Disconnect(int f) {
 		Skeleton.Println(this.toString() + "Disconnect(" + int.class.getSimpleName() + " " + f + ")");
 		Skeleton.indentation++;
-		if (true) 
-		{
-			Skeleton.Println(connections.get(0).toString());
-
-			
+		if(f >= 0 && f < connections.size()) {
 			FieldElement pipe = connections.get(f);
 			Pipe ret = pipe.Disconnect(pipe.GetNeighbor().indexOf(this));
 			if (ret != null) {
