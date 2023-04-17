@@ -168,7 +168,7 @@ public abstract class FieldElement implements Steppable {
 			maxConnections = mc;
 			game = g;
 		} else {
-			maxConnections = 0;
+			maxConnections = 5;
 			game = null;
 		}
 	}
@@ -274,7 +274,11 @@ public abstract class FieldElement implements Steppable {
 	public Pipe Disconnect(int f) {
 		Skeleton.Println(this.toString() + "Disconnect(" + int.class.getSimpleName() + " " + f + ")");
 		Skeleton.indentation++;
-		if (f >= 0 && f < connections.size() && connections.size() >= 2) {
+		if (true) 
+		{
+			Skeleton.Println(connections.get(0).toString());
+
+			
 			FieldElement pipe = connections.get(f);
 			Pipe ret = pipe.Disconnect(pipe.GetNeighbor().indexOf(this));
 			if (ret != null) {

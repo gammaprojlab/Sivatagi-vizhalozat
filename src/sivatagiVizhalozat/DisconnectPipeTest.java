@@ -52,6 +52,9 @@ public class DisconnectPipeTest extends Test{
 		
 		while(!quit)
 		{
+			
+			
+			
 			Skeleton.indentation++;
 			Skeleton.Println("0 to quit");
 			Skeleton.Println("Cistern: 1,");
@@ -79,7 +82,10 @@ public class DisconnectPipeTest extends Test{
 						Skeleton.Println("SETUP COMPLETE");
 						Skeleton.Println("");
 						plumber.DisconnectPipe(0);
+						Skeleton.Println("");
 						Skeleton.Println("SUCCES!");
+						Skeleton.Println("");
+						quit = true;
 						break;
 					case 2:
 						plumber.SetLocation(pump);
@@ -87,7 +93,10 @@ public class DisconnectPipeTest extends Test{
 						Skeleton.Println("SETUP COMPLETE");
 						Skeleton.Println("");
 						plumber.DisconnectPipe(0);
+						Skeleton.Println("");
 						Skeleton.Println("SUCCES!");
+						Skeleton.Println("");
+						quit = true;
 						break;
 					case 3:
 						plumber.SetLocation(cistern);
@@ -95,7 +104,10 @@ public class DisconnectPipeTest extends Test{
 						Skeleton.Println("SETUP COMPLETE");
 						Skeleton.Println("");
 						plumber.DisconnectPipe(0);
+						Skeleton.Println("");
 						Skeleton.Println("SUCCES!");
+						Skeleton.Println("");
+						quit = true;
 						break;
 					default:
 						Skeleton.Println("FAILURE");

@@ -125,7 +125,7 @@ public class Plumber extends Player {
 	}
 	
 	/**
-	 * Places the Pump to te FieldElement.
+	 * Places the Pump to the FieldElement.
 	 *  */
 	public void PlacePump() {
 		Skeleton.Println(this.toString()+"PlacePump()");
