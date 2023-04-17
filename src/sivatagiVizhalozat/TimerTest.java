@@ -34,7 +34,7 @@ public class TimerTest extends Test{
 		
 		Pipe pipe3 = new Pipe(2,game);
 		
-		Cistern cistern = new Cistern(0,game);
+		Cistern cistern = new Cistern(2,game);
 	
 		game.AddSteppable(cistern);
 		game.AddSteppable(pipe1);
