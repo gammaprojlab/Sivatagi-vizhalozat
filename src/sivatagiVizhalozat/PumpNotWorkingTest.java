@@ -40,6 +40,8 @@ public class PumpNotWorkingTest extends Test{
 			//Mess with the pump
 		pump.StopWorking();
 		
+		Skeleton.indentation--;
+		Skeleton.indentation--;
 		if(pump.getIsWorking())
 			Skeleton.Println("FAILURE! Pump is still working.");
 		else
