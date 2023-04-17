@@ -43,6 +43,7 @@ public class PlacePumpTest extends Test{
 		//Place player on cistern
 		Plumber plumber = new Plumber();
 		plumber.SetLocation(cistern);
+                cistern.StepOn(plumber);
 		plumber.SetGame(game);
 		
 		Skeleton.Println("");
@@ -62,7 +63,7 @@ public class PlacePumpTest extends Test{
 		
 		//Check if the placed pump has the correct neighbors. PIPES WHEN A PUMP IS PLACED ARE FIRST CONNECTED TO ALREADY EXISTING PUMPS AND THEN TO THE NEWLY PLACED ONE
 		if(pump1.GetNeighbor().get(0).GetNeighbor().get(1)==pump2.GetNeighbor().get(0).GetNeighbor().get(1)){
-			Skeleton.Println("SUCCES! Between pump1 and pump2 there is another pump. It is also connected to pump1 and pump2 with 1-1 pipes.");
+			Skeleton.Println("SUCCESS! Between pump1 and pump2 there is another pump. It is also connected to pump1 and pump2 with 1-1 pipes.");
 			Skeleton.indentation++;
 				Skeleton.Println("The id of the pump: "+pump1.GetNeighbor().get(0).GetNeighbor().get(1));
 		}
