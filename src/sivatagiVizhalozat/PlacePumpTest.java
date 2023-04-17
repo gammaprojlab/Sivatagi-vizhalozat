@@ -1,11 +1,25 @@
 package sivatagiVizhalozat;
 
+/**
+ * @class The PlacePumpTest class, that is responsible for testing if 
+ * 			when placing a pump the Pipe it is getting placed on is
+ * 			splitted into 2 parts and those get connected to the
+ * 			corresponding pumps. To which the parent pipe used to be
+ * 			Connected too.
+ */
 public class PlacePumpTest extends Test{
 
+	/**
+	 * The Constructor of the PlacePumpTest class
+	 * @param name The name of the test
+	 */
 	PlacePumpTest(String name) {
 		super(name);
 	}
 	
+	/**
+	 * The function that executes the test with all the setup it needs.
+	 */
 	public void Run()
 	{
 		//Setting up test elements
@@ -51,7 +65,6 @@ public class PlacePumpTest extends Test{
 			Skeleton.Println("SUCCES! Between pump1 and pump2 there is another pump. It is also connected to pump1 and pump2 with 1-1 pipes.");
 			Skeleton.indentation++;
 				Skeleton.Println("The id of the pump: "+pump1.GetNeighbor().get(0).GetNeighbor().get(1));
-			Skeleton.indentation--;
 		}
 		else
 			Skeleton.Println("FAILURE! The pump didn't get placed where it should be.");

@@ -1,11 +1,23 @@
 package sivatagiVizhalozat;
 
+/**
+ * @class The FixPumpTest class, that is responsible for testing if 
+ * 			when the Pump stops working and a plumber tries to fix it
+ * 			it gets fixed and starts working again.
+ */
 public class FixPumpTest extends Test{
 	
+	/**
+	 * The Constructor of the FixPumpTest class
+	 * @param name The name of the test
+	 */
 	FixPumpTest(String name){
 		super(name);
 	}
 	
+	/**
+	 * The function that executes the test with all the setup it needs.
+	 */
 	public void Run()
 	{
 		//Setting up test elements
