@@ -91,9 +91,11 @@ public class Plumber extends Player {
 	 *  */
 	public void ConnectPipe() {
 		Skeleton.Println(this.toString()+"ConnectPipe()");
+		Skeleton.indentation++;
 		if(location.Connect(heldPipe)) {
 			heldPipe = null;
 		}
+		Skeleton.indentation--;
 	}
 	
 	/**
@@ -147,8 +149,8 @@ public class Plumber extends Player {
 	public void GrabPipe() {
 		Skeleton.Println(this.toString()+"GrabPipe()");
 
-  Skeleton.indentation++;
-	ArrayList<FieldElement> elements = location.GetNeighbor();
+  		Skeleton.indentation++;
+		ArrayList<FieldElement> elements = location.GetNeighbor();
 		
 		for(FieldElement element: elements) {
 			if (GetPipe() == null) {
