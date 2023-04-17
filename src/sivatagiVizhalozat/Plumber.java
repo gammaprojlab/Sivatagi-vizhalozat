@@ -76,14 +76,14 @@ public class Plumber extends Player {
 	 *  */
 	public void Repair() {
 		Skeleton.Println(this.toString()+"Repair()");
-		Skeleton.identation++;
+		Skeleton.indentation++;
 		if (location.Repair()) {
 			Skeleton.Println("The FieldElement is repaired.");
 		}
 		else {
 			Skeleton.Println("The FieldElement cannot be repaired.");
 		}
-		Skeleton.identation--;
+		Skeleton.indentation--;
 	}
 	
 	/**
@@ -102,12 +102,12 @@ public class Plumber extends Player {
 	 *  */
 	public void DisconnectPipe(int p) {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
-		Skeleton.identation++;
+		Skeleton.indentation++;
 		if (GetPipe() == null) {
 			Pipe pi = location.Disconnect(p);
 			setHeldPipe(pi);
 		}
-		Skeleton.identation--;
+		Skeleton.indentation--;
 
 	}
 	
@@ -116,12 +116,12 @@ public class Plumber extends Player {
 	 *  */
 	public void TakePump() {
 		Skeleton.Println(this.toString()+"TakePump()");
-		Skeleton.identation++;
+		Skeleton.indentation++;
 		if(GetPump() == null) {
 			Pump p = location.ProvidePump();
 			setHeldPump(p);
 		}
-		Skeleton.identation--;
+		Skeleton.indentation--;
 	}
 	
 	/**
@@ -130,15 +130,15 @@ public class Plumber extends Player {
 	public void PlacePump() {
 		Skeleton.Println(this.toString()+"PlacePump()");
 
-		Skeleton.identation++;
-		if(GetPump() == null && location.getNeigbours().size() == 2) {
+		Skeleton.indentation++;
+		if(GetPump() == null && location.GetNeighbor().size() == 2) {
 
 			location.Split(heldPump);
 			game.AddSteppable(heldPump);
 			this.PlayerMove(heldPump);
 			setHeldPump(null);
 		}
-		Skeleton.identation--;
+		Skeleton.indentation--;
 	}
 	
 	/**
@@ -147,8 +147,8 @@ public class Plumber extends Player {
 	public void GrabPipe() {
 		Skeleton.Println(this.toString()+"GrabPipe()");
 
-  Skeleton.identation++;
-	ArrayList<FieldElement> elements = location.GetNeighbour();
+  Skeleton.indentation++;
+	ArrayList<FieldElement> elements = location.GetNeighbor();
 		
 		for(FieldElement element: elements) {
 			if (GetPipe() == null) {
@@ -156,7 +156,7 @@ public class Plumber extends Player {
 				setHeldPipe(p);
 			}
 		}
-		Skeleton.identation--;
+		Skeleton.indentation--;
 	}
 	
 	/**
