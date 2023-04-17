@@ -344,7 +344,7 @@ public class Pipe extends FieldElement {
 	public Pipe Disconnect(int f) {
 		Skeleton.Println(this.toString()+"Disconnect("+int.class.getSimpleName()+" "+f+")");
 		Skeleton.indentation++;
-		if(true) {
+		if(players.size() == 0) {
 			if(f >= 0 && f < connections.size() && connections.size() == 2) {
 				Remove(connections.get(f));
 				Skeleton.indentation--;
