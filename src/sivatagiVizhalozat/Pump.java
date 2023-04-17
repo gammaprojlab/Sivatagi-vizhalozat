@@ -171,7 +171,7 @@ public class Pump extends FieldElement {
 		super();
 		Skeleton.Println(this.toString() + "Pump()");
 		isWorking = true;
-		tankCapacity = 0;
+		tankCapacity = 25;
 		input = -1;
 		output = -1;
 		water = 0;
@@ -189,7 +189,7 @@ public class Pump extends FieldElement {
 		Skeleton.Println(this.toString() + "Pump(" + int.class.getSimpleName() + " " + mc + ", "
 				+ Game.class.getSimpleName() + " " + g + ")");
 		isWorking = true;
-		tankCapacity = 0;
+		tankCapacity = 25;
 		input = -1;
 		output = -1;
 		water = 0;
