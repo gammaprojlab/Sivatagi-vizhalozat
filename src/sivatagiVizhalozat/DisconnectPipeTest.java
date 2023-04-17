@@ -1,5 +1,6 @@
 package sivatagiVizhalozat;
 
+import java.io.Console;
 import java.util.Scanner;
 
 /**
@@ -47,43 +48,66 @@ public class DisconnectPipeTest extends Test{
 		plumber.SetGame(game);
 		
 		
-		Skeleton.Println("");
-		Skeleton.Println("SETUP COMPLETE");
-		Skeleton.Println("");
+		Boolean quit = false;
 		
-		Skeleton.Println("Select from where you want to disconnect the pipe:");
-		Skeleton.Println("1. Spring");
-		Skeleton.Println("2. Pump");
-		Skeleton.Println("3. Cistern");
-		
-		Scanner in = new Scanner(System.in);
-		 
-        int choice = in.nextInt();
-        
-        in.close();
-		
-        Skeleton.indentation++;
-		
-		switch(choice)
-		{	case 1:
-				plumber.SetLocation(spring);
-				plumber.DisconnectPipe(0);
-				Skeleton.Println("SUCCES!");
-				break;
-			case 2:
-				plumber.SetLocation(pump);
-				plumber.DisconnectPipe(0);
-				Skeleton.Println("SUCCES!");
-				break;
-			case 3:
-				plumber.SetLocation(cistern);
-				plumber.DisconnectPipe(0);
-				Skeleton.Println("SUCCES!");
-				break;
-			default:
-				Skeleton.Println("FAILURE");
+		while(!quit)
+		{
+			Skeleton.indentation++;
+			Skeleton.Println("0 to quit");
+			Skeleton.Println("Cistern: 1,");
+			Skeleton.Println("Pump: 2,");
+			Skeleton.Println("Spring: 3");
+			Skeleton.Println("Chose test scenario:");
+			Skeleton.indentation--;
+			
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try 
+			{
+			int choice = Integer.parseInt(str);
+			if(!str.isBlank())
+			{
+				switch(choice)
+				{	
+					case 0:
+						quit = true;
+						break;
+							
+					case 1:
+						plumber.SetLocation(spring);
+						Skeleton.Println("");
+						Skeleton.Println("SETUP COMPLETE");
+						Skeleton.Println("");
+						plumber.DisconnectPipe(0);
+						Skeleton.Println("SUCCES!");
+						break;
+					case 2:
+						plumber.SetLocation(pump);
+						Skeleton.Println("");
+						Skeleton.Println("SETUP COMPLETE");
+						Skeleton.Println("");
+						plumber.DisconnectPipe(0);
+						Skeleton.Println("SUCCES!");
+						break;
+					case 3:
+						plumber.SetLocation(cistern);
+						Skeleton.Println("");
+						Skeleton.Println("SETUP COMPLETE");
+						Skeleton.Println("");
+						plumber.DisconnectPipe(0);
+						Skeleton.Println("SUCCES!");
+						break;
+					default:
+						Skeleton.Println("FAILURE");
+				}
+			}
 		}
-		
-		Skeleton.indentation--;
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+				System.out.println("Something ain't right!");
+			}
+			finally {}
+		}
 	}
 }

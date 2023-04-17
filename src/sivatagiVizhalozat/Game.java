@@ -102,12 +102,14 @@ public class Game {
 	/** */
 	public void Tick() {
 		Skeleton.Println(this.toString()+"Tick()");
+		Skeleton.indentation++;
 		for(Steppable step: steppable) {
 			step.Step1();
 		}
 		for(Steppable step: steppable) {
 			step.Step2();
 		}
+		Skeleton.indentation--;
 	}
 	
 	/** */

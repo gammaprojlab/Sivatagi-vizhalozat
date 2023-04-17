@@ -20,6 +20,7 @@ public class Skeleton {
 
 	public void Run() {
 		tests.add(new ConnectPipeTest("ConnectPipeTest"));
+		tests.add(new DisconnectPipeTest("DisconnectPipeTest"));
 		tests.add(new FixPumpTest("FixPumpTest"));
 		tests.add(new GeneratePipeTest("GeneratePipeTest"));
 		tests.add(new GrabPipeTest("GrabPipeTest"));
@@ -29,6 +30,7 @@ public class Skeleton {
 		tests.add(new PuncturePipeTest("PuncturePipeTest"));
 		tests.add(new RepairPipeTest("RepairPipeTest"));
 		tests.add(new TakePumpTest("TakePumpTest"));
+		tests.add(new TimerTest("TimerTest"));
 
 		while(!quit)
 		{

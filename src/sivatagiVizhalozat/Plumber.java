@@ -70,9 +70,11 @@ public class Plumber extends Player {
 	/** */
 	public void DisconnectPipe(int p) {
 		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
+		Skeleton.indentation++;
 		ArrayList<FieldElement> neighbours = location.GetNeighbor();
 		Pipe pi = location.Disconnect(p);
 		setHeldPipe(pi);
+		Skeleton.indentation--;
 	}
 	
 	/** */

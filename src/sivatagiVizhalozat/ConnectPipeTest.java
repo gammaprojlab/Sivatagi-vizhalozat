@@ -40,11 +40,12 @@ public class ConnectPipeTest extends Test {
 		boolean quit = false;
 		while(!quit)
 		{
+			Skeleton.Println("Chose test scenario:");
 			Skeleton.Println("0 to quit");
 			Skeleton.Println("Cistern: 1,");
 			Skeleton.Println("Pump: 2,");
 			Skeleton.Println("Spring: 3");
-			Skeleton.Println("Chose test scenario:");
+			
 			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
 			try 

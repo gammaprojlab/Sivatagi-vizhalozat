@@ -24,41 +24,40 @@ public class TimerTest extends Test{
 		//Setting up test elements
 		Game game = new Game();
 		
-		Spring spring = new Spring(2,game);
+		Spring spring = new Spring(0,game);
 		
 		Pipe pipe1 = new Pipe(2,game);
 		
-		Pump pump = new Pump(2,game); 
+		Pump pump = new Pump(5,game); 
 		
 		Pipe pipe2 = new Pipe(2,game);
 		
-		Cistern cistern = new Cistern(2,game);
+		Pipe pipe3 = new Pipe(2,game);
+		
+		Cistern cistern = new Cistern(0,game);
 	
+		game.AddSteppable(cistern);
+		game.AddSteppable(pipe1);
+		game.AddSteppable(pipe2);
+		game.AddSteppable(pipe3);
+		game.AddSteppable(pump);
+		game.AddSteppable(spring);
 		
 		//Fixate pipe
 		spring.Connect(pipe1);
 		pump.Connect(pipe1);
+		pump.Connect(pipe3);
 		pump.Connect(pipe2);
 		cistern.Connect(pipe2);
-		
-		//Place player on cistern
-		Plumber plumber = new Plumber();
-		plumber.SetLocation(cistern);
-		plumber.SetGame(game);
-		
 		
 		Skeleton.Println("");
 		Skeleton.Println("SETUP COMPLETE");
 		Skeleton.Println("");
 		
-		Skeleton.Println("Select from where you want to disconnect the pipe:");
-		Skeleton.Println("1. Spring");
-		Skeleton.Println("2. Pump");
-		Skeleton.Println("3. Cistern");
-		
-		Skeleton.indentation++;
 		game.Tick();
-		Skeleton.indentation--;
+
+		
+		
 	}
 
 }
