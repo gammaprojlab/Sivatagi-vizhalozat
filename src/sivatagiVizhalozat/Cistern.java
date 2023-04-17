@@ -60,7 +60,7 @@ public class Cistern extends FieldElement {
 		Skeleton.indentation++;
 		if(connections != null) {
 			for (var neighbour : connections) {
-				getGame().WaterCollected(neighbour.SuckWater(Integer.MAX_VALUE));
+				game.WaterCollected(neighbour.SuckWater(Integer.MAX_VALUE));
 			}
 		}
 		Skeleton.indentation--;
