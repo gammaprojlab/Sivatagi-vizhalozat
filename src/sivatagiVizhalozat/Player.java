@@ -15,8 +15,8 @@ import java.util.ArrayList;
 /** 
  * The Player class is the parent class of Plumber and Saboteur.
  * These will be the caracters what the person/people can control.
- * It implements the Stepable class because it will be Stepping and moving,
- * because of the Stepable's Step function.
+ * It implements the Steppable class because it will be Stepping and moving,
+ * because of the Steppable's Step function.
  * */
 public abstract class Player implements Steppable {
 	/** 
@@ -86,16 +86,24 @@ public abstract class Player implements Steppable {
 	public void PlayerMove(FieldElement f) {
 		Skeleton.Println(this.toString()+"PlayerMove("+ FieldElement.class.getSimpleName() + " " + f +")");
 		ArrayList<FieldElement> fields = location.GetNeighbor();
+		Skeleton.identation++;
 		if (fields.contains(f)) {
+			Skeleton.identation++;
 			if(f.StepOn(this)) {
-				if(location.StepOff(this)){
+
+				Skeleton.identation++;
+				if(location.StepOff(this);){
+
 					SetLocation(f);
 				}
 				else {
 					f.StepOff(this);
 				}
+				Skeleton.identation--;
 			}
+			Skeleton.identation--;
 		}
+		Skeleton.identation--;
 	}
 	
 	/** 
