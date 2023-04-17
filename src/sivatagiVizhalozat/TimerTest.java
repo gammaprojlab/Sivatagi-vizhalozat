@@ -24,11 +24,11 @@ public class TimerTest extends Test{
 		//Setting up test elements
 		Game game = new Game();
 		
-		Spring spring = new Spring(5,game);
+		Spring spring = new Spring(2,game);
 		
 		Pipe pipe1 = new Pipe(2,game);
 		
-		Pump pump = new Pump(5,game); 
+		Pump pump = new Pump(2,game); 
 		
 		Pipe pipe2 = new Pipe(2,game);
 		
