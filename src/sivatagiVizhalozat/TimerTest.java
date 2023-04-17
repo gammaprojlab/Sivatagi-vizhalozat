@@ -24,7 +24,7 @@ public class TimerTest extends Test{
 		//Setting up test elements
 		Game game = new Game();
 		
-		Spring spring = new Spring(0,game);
+		Spring spring = new Spring(5,game);
 		
 		Pipe pipe1 = new Pipe(2,game);
 		
