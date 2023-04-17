@@ -123,7 +123,7 @@ public class Pipe extends FieldElement {
 		isPunctured = false;
 		isGrabbed = false;
 		water = 0;
-		capacity = 0;
+		capacity = 50;
 		maxConnections = 2;
 	}
 
@@ -138,7 +138,7 @@ public class Pipe extends FieldElement {
 		isPunctured = false;
 		isGrabbed = false;
 		water = 0;
-		capacity = 0;
+		capacity = 50;
 	}
 
 	/**
