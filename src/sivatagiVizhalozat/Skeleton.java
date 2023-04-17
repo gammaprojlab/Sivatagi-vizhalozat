@@ -4,21 +4,33 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * The Skeleton Class
- * Responsible for the control of the tests.
+ * The Class Skeleton.
  */
 
 public class Skeleton {
+	
+	/** The current ammount of indentation */
 	static int indentation = 0;
+	
+	/** The list of tests */
 	private  List<Test> tests = new ArrayList<Test>();
+	
+	/** Tells the skeleton when it is done*/
 	private Boolean quit = false;
 	
+	/**
+	 * Instantiates a new skeleton.
+	 */
 	Skeleton()
 	{
 		
 	}
 
+	/**
+	 * Runs the test program.
+	 */
 	public void Run() {
+		//adds the tests to the list
 		tests.add(new ConnectPipeTest("ConnectPipeTest"));
 		tests.add(new DisconnectPipeTest("DisconnectPipeTest"));
 		tests.add(new FixPumpTest("FixPumpTest"));
@@ -38,12 +50,14 @@ public class Skeleton {
 			System.out.println("Chose test scenario:");
 			int number = 1;
 			indentation++;
+			//writes out menu
 			for(Test t : tests)
 			{
 				Println(number+". "+t.GetName());
 				number++;
 			}
 			indentation--;
+			//scans for input
 			System.out.println("Enter 0 to quit");
 			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
@@ -60,6 +74,7 @@ public class Skeleton {
 					{
 						if(choice < tests.size() && choice > -1)
 						{
+							//runs test
 							tests.get(choice).Run();
 							System.out.println();
 							System.out.println("Test finished");
@@ -90,6 +105,11 @@ public class Skeleton {
 		System.out.println("Program terminated");
 	}
 	
+	/**
+	 * Println.
+	 *
+	 * @param str the str
+	 */
 	public static void Println(String str)
 	{
 		for (int i = 0; i < indentation; i++)
