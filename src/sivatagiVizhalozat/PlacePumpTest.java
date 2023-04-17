@@ -65,7 +65,8 @@ public class PlacePumpTest extends Test{
 		if(pump1.GetNeighbor().get(0).GetNeighbor().get(1)==pump2.GetNeighbor().get(0).GetNeighbor().get(1)){
 			Skeleton.Println("SUCCESS! Between pump1 and pump2 there is another pump. It is also connected to pump1 and pump2 with 1-1 pipes.");
 			Skeleton.indentation++;
-				Skeleton.Println("The id of the pump: "+pump1.GetNeighbor().get(0).GetNeighbor().get(1));
+			Skeleton.Println("The id of the pump: "+pump1.GetNeighbor().get(0).GetNeighbor().get(1));
+			Skeleton.indentation--;
 		}
 		else
 			Skeleton.Println("FAILURE! The pump didn't get placed where it should be.");
