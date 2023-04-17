@@ -28,7 +28,7 @@ public class TimerTest extends Test{
 		
 		Pipe pipe1 = new Pipe(2,game);
 		
-		Pump pump = new Pump(2,game); 
+		Pump pump = new Pump(5,game); 
 		
 		Pipe pipe2 = new Pipe(2,game);
 		
