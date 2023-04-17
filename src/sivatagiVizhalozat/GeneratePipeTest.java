@@ -37,7 +37,8 @@ public class GeneratePipeTest extends Test{
 		if(c.GetNeighbor().size()==1) {
 			Skeleton.Println("SUCCES! There really is a Pipe connected to this Cistern");
 			Skeleton.indentation++;
-				Skeleton.Println("The id of the pipe: "+c.GetNeighbor().get(0));
+			Skeleton.Println("The id of the pipe: "+c.GetNeighbor().get(0));
+			Skeleton.indentation--;
 		}
 		else
 			Skeleton.Println("FAILURE! The pipe didn't get connected to the ");
