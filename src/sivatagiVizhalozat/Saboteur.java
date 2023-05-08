@@ -18,39 +18,51 @@ package sivatagiVizhalozat;
  * With the help of this, the saboteur players can pierce the pipes.
  *  */
 public class Saboteur extends Player {
+	/** 
+	 * The identification of the Saboteur
+	 * */
+	private static int nextId = 1;
+	
+	/** 
+	 * Sets the value of nextId
+	 * @param: The value to be set
+	 * */
+	public void setNextId(int id) {
+		nextId = id;
+	}
 	
 	/**
-	 * Konstruktor of the Saboteur.
-	 *  */
+	 * Get the value of the nextId variable
+	 * @return The identification of the saboteur
+	 */
+	public int getNextId() {
+		return nextId;
+	}
+	
+	/**
+	 * Konstruktor of the Saboteur without params.
+	 **/
 	public Saboteur() {
 		super();
-		Skeleton.Println(this.toString()+"Saboteur()");
 	}
 	
 	/**
 	 * Konstruktor of the Saboteur with params.
-	 * @param g The where the player plays.
-	 * @param f The FieldElement where the player stands.
-	 *  */
-	public Saboteur(Game g, FieldElement f) {
-		super(g, f);
-		Skeleton.Println(this.toString()+"Saboteur("+ Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() +" "+ f +")");
+	 * @param n The player's name
+	 * @param id The identification of the player
+	 * @param f The location where the player starts from
+	 * @param g The Game object where this element is created
+	 **/
+	public Saboteur(String n, int id, FieldElement f, Game g) {
+		super(n, nextId++, f, g);
 	}
 	
-    /**
-     * Punctures the location, where the player is standing.
-     *  */
-    public void PuncturePipe() {
-    	Skeleton.Println(this.toString()+"PuncturePipe()");
-    	location.Puncture();
-	}
-
-    /**
-     * The implementation of the Step1 function of the Steppable interface
-     *  */
-	@Override
-	public void Step1() {
-		Skeleton.Println(this.toString()+"Step1()");
+	
+	/**
+     * Makes the pipe slippery.
+     **/
+	public void MakeSlippery() {
+		location.SetState(PipeSurfaceState.Slippery);
 	}
 
 	/**
@@ -58,6 +70,14 @@ public class Saboteur extends Player {
 	 *  */
 	@Override
 	public void Step2() {
-		Skeleton.Println(this.toString()+"Step2()");
+
+	}
+	
+	/**
+	 * Returns a string containing the data of the object
+	 * @return A string containing the data of the object
+	 */
+	public String toString() {
+		return super.toString();
 	}
 }
