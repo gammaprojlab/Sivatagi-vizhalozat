@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Stores the different fields and returns a fieldelement by a given type and id
  */
-public class Map extends Serializable {
+public class Map implements Serializable {
     /**
      * Stores cisterns on the map
      */
