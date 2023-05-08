@@ -155,10 +155,16 @@ public class Pipe extends FieldElement {
 	 * @param s The state the pipe is going to be set to
 	 */
 	public void setState(PipeSurfaceState s) {
-		// TODO If state isn't set already??? to other than normal
-		state = s;
-		if(s != PipeSurfaceState.Normal) {
+		if(state == PipeSurfaceState.Normal) {
+			if(s != PipeSurfaceState.Normal) {
 			duration = (int)Math.round(game.getRandom()*10);
+			}
+		}
+		else {
+			if(s == PipeSurfaceState.Normal) {
+				state = s;
+				duration = 0;
+			}
 		}
 	}
 
