@@ -12,6 +12,8 @@ import java.util.ArrayList;
 //
 //
 
+import java.io.Serializable;
+
 /**
  * FieldElement:
  * An abstract class for all the placed elements on the board.
@@ -19,7 +21,7 @@ import java.util.ArrayList;
  * It fulfills an important role in finding the neighbouring elements.
  * To simulate water flow, it implements the Steppable interface
  */
-public abstract class FieldElement implements Steppable {
+public abstract class FieldElement implements Steppable, Serializable {
 
 	/**
 	 * It stores how many connections a this element can have
@@ -27,12 +29,32 @@ public abstract class FieldElement implements Steppable {
 	protected int maxConnections;
 
 	/**
+	 * Stores the id of the object
+	 */
+	protected int id;
+
+	/**
+	 * It returns the value of the id
+	 * @return The id of the object
+	 */
+	public int getId() {
+		return id;
+	}
+	
+	/**
+	 * Set the objects id
+	 * @param i The new id of the object
+	 */
+	public void setId(int i) {
+		if(i > 0) id = i;
+	}
+
+	/**
 	 * Set the maxConnections variable
 	 * 
 	 * @param c The new value
 	 */
 	public void setMaxConnections(int c) {
-		Skeleton.Println(this.toString() + "setMaxConnections(" + int.class.getSimpleName() + " " + c + ")");
 		if (c >= 0)
 			maxConnections = c;
 	}
@@ -43,8 +65,6 @@ public abstract class FieldElement implements Steppable {
 	 * @return The number of connections this element can have
 	 */
 	public int getMaxConnections() {
-		Skeleton.Println(this.toString() + "getMaxConnections()");
-		Skeleton.Println("return " + maxConnections);
 		return maxConnections;
 	}
 
@@ -59,7 +79,6 @@ public abstract class FieldElement implements Steppable {
 	 * @param c The new ArrayList to be set for connections
 	 */
 	public void setConnections(ArrayList<FieldElement> c) {
-		Skeleton.Println(this.toString() + "setConnections(" + ArrayList.class.getSimpleName() + " " + c + ")");
 		if (c != null)
 			connections = c;
 	}
@@ -71,12 +90,9 @@ public abstract class FieldElement implements Steppable {
 	 *         to this element
 	 */
 	public ArrayList<FieldElement> GetNeighbor() {
-		Skeleton.Println(this.toString() + "GetNeighbor()");
 		if (connections != null) {
-			Skeleton.Println("return " + connections.getClass().getSimpleName() + "<FieldElement>" + " neighbors");
 			return connections;
 		}
-		Skeleton.Println("return null");
 		return null;
 	}
 
@@ -91,7 +107,6 @@ public abstract class FieldElement implements Steppable {
 	 * @param g The value for the game variable
 	 */
 	public void setGame(Game g) {
-		Skeleton.Println(this.toString() + "setGame(" + Game.class.getSimpleName() + " " + g + ")");
 		if (g != null)
 			game = g;
 	}
@@ -101,12 +116,9 @@ public abstract class FieldElement implements Steppable {
 	 * @return The Game object
 	 */
 	public Game getGame() {
-		Skeleton.Println(this.toString() + "GetGame()");
 		if (game != null) {
-			Skeleton.Println("return " + game);
 			return game;
 		}
-		Skeleton.Println("return null");
 		return null;
 	}
 
@@ -121,7 +133,6 @@ public abstract class FieldElement implements Steppable {
 	 * @param p The new ArrayList to be set
 	 */
 	public void setPlayers(ArrayList<Player> p) {
-		Skeleton.Println(this.toString() + "setPlayers(" + ArrayList.class.getSimpleName() + " " + p + ")");
 		if (p != null) {
 			players = p;
 		}
@@ -133,12 +144,9 @@ public abstract class FieldElement implements Steppable {
 	 * @return The ArrayList of players
 	 */
 	public ArrayList<Player> GetPlayers() {
-		Skeleton.Println(this.toString() + "GetPlayers()");
 		if (players != null) {
-			Skeleton.Println("return " + players);
 			return players;
 		}
-		Skeleton.Println("return null");
 		return null;
 	}
 
@@ -146,7 +154,6 @@ public abstract class FieldElement implements Steppable {
 	 * Default constructor
 	 */
 	public FieldElement() {
-		Skeleton.Println(this.toString() + "FieldElement()");
 		players = new ArrayList<Player>();
 		connections = new ArrayList<FieldElement>();
 		maxConnections = 5;
@@ -160,13 +167,12 @@ public abstract class FieldElement implements Steppable {
 	 * @param g  The Game object where this element is being used
 	 */
 	public FieldElement(int mc, Game g) {
-		Skeleton.Println(this.toString() + "FieldElement(" + int.class.getSimpleName() + " " + mc + ", "
-				+ Game.class.getSimpleName() + " " + g + ")");
 		players = new ArrayList<Player>();
 		connections = new ArrayList<FieldElement>();
 		if (mc >= 0 && g != null) {
 			maxConnections = mc;
 			game = g;
+			game.getMap().addFieldElement(this.getClass().getSimpleName(), this);
 		} else {
 			maxConnections = 5;
 			game = null;
@@ -181,33 +187,26 @@ public abstract class FieldElement implements Steppable {
 	 *         field to it's connections
 	 */
 	public boolean Add(FieldElement field) {
-		Skeleton.Println(this.toString() + "Add(" + FieldElement.class.getSimpleName() + " " + field + ")");
 		if (field != null) {
 			if (!connections.contains(field) && connections.size() < maxConnections) {
 				connections.add(field);
-				Skeleton.Println("return true");
 				return true;
 			}
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
 	/**
 	 * Remove a field from connections
-	 * 
 	 * @param field The field to be removed
 	 */
 	public boolean Remove(FieldElement field) {
-		Skeleton.Println(this.toString() + "Remove(" + FieldElement.class.getSimpleName() + " " + field + ")");
 		if (field != null) {
 			if (connections.contains(field)) {
 				connections.remove(field);
-				Skeleton.Println("return true");
 				return true;
 			}
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -216,13 +215,13 @@ public abstract class FieldElement implements Steppable {
 	 * @return The successfulness of the player stepping on this field
 	 */
 	public boolean StepOn(Player p) {
-		Skeleton.Println(this.toString() + "StepOn(" + Player.class.getSimpleName() + " " + p + ")");
-		if (p != null) {
+		if (p != null && !players.contains(p)) {
+			if(p.GetLocation() != null)
+				p.GetLocation().StepOff(p);
 			players.add(p);
-			Skeleton.Println("return true");
+			p.SetLocation(this);
 			return true;
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -231,15 +230,12 @@ public abstract class FieldElement implements Steppable {
 	 * @return The successfulness of the player leaving this field
 	 */
 	public boolean StepOff(Player p) {
-		Skeleton.Println(this.toString() + "StepOff(" + Player.class.getSimpleName() + " " + p + ")");
 		if (p != null) {
 			if (players.contains(p)) { // if players is on this element
 				players.remove(p);
-				Skeleton.Println("return true");
 				return true;
 			}
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -248,43 +244,32 @@ public abstract class FieldElement implements Steppable {
 	 * @return The successfulness of connecting the pipe to this field
 	 */
 	public boolean Connect(Pipe p) {
-		Skeleton.Println(this.toString() + "Connect(" + Pipe.class.getSimpleName() + " " + p + ")");
-		Skeleton.indentation++;
 		if (p != null) {
 			ArrayList<FieldElement> pipeConnections = p.GetNeighbor();
 			if (pipeConnections.contains(this))
 				return false;
 			if (Add(p) && p.Add(this)) {
-				Skeleton.indentation--;
-				Skeleton.Println("return true");
 				return true;
 			}
 			Remove(p);
 			p.Remove(this);
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return false");
 		return false;
 	}
 
 	/**
-	 * @param f The index of the pipe the player wants to disconnect from this field
+	 * @param f The id of the pipe the player wants to disconnect from this field
 	 * @return The disconnected pipe
 	 */
-	public Pipe Disconnect(int f) {
-		Skeleton.Println(this.toString() + "Disconnect(" + int.class.getSimpleName() + " " + f + ")");
-		Skeleton.indentation++;
-		if(f >= 0 && f < connections.size()) {
-			FieldElement pipe = connections.get(f);
-			Pipe ret = pipe.Disconnect(pipe.GetNeighbor().indexOf(this));
-			if (ret != null) {
-				Skeleton.indentation--;
-				Skeleton.Println("return " + ret);
-				return ret;
+	public Pipe Disconnect(int f) { 
+		for (FieldElement p : connections) {
+			if(p.getId() == f) {
+				Pipe ret = p.Disconnect(p.GetNeigbour().indexOf(this));
+				if(ret != null) {
+					return ret;
+				}
 			}
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return null");
 		return null;
 	}
 
@@ -295,8 +280,6 @@ public abstract class FieldElement implements Steppable {
 	 *         pipe
 	 */
 	public boolean Puncture() {
-		Skeleton.Println(this.toString() + "Punctue()");
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -306,8 +289,6 @@ public abstract class FieldElement implements Steppable {
 	 *         and place the pump in-between the pipes
 	 */
 	public boolean Split(Pump p) {
-		Skeleton.Println(this.toString() + "Split()");
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -317,18 +298,12 @@ public abstract class FieldElement implements Steppable {
 	 * @return The grabbed pipe
 	 */
 	public Pipe Grab() {
-		Skeleton.Println(this.toString() + "Grab()");
-		Skeleton.indentation++;
 		for (var connection : connections) {
 			Pipe ret = connection.Grab();
 			if (ret != null) {
-				Skeleton.indentation--;
-				Skeleton.Println("return " + ret);
 				return ret;
 			}
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return null");
 		return null;
 	}
 
@@ -339,8 +314,6 @@ public abstract class FieldElement implements Steppable {
 	 *         field
 	 */
 	public boolean Repair() {
-		Skeleton.Println(this.toString() + "Repair()");
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -349,8 +322,6 @@ public abstract class FieldElement implements Steppable {
 	 * @return The amount of water the pipe was able to accept
 	 */
 	public int SuckWater(int water) {
-		Skeleton.Println(this.toString() + "SuckWater(" + int.class.getSimpleName() + " " + water + ")");
-		Skeleton.Println("return 0");
 		return 0;
 	}
 
@@ -359,8 +330,6 @@ public abstract class FieldElement implements Steppable {
 	 * @return The amount of water the pipe was able to pump into the element
 	 */
 	public int PumpWater(int water) {
-		Skeleton.Println(this.toString() + "PumpWater(" + int.class.getSimpleName() + " " + water + ")");
-		Skeleton.Println("return 0");
 		return 0;
 	}
 
@@ -370,21 +339,16 @@ public abstract class FieldElement implements Steppable {
 	 * @return The created pump
 	 */
 	public Pump ProvidePump() {
-		Skeleton.Println(this.toString() + "ProvidePump()");
-		Skeleton.Println("return null");
 		return null;
 	}
 
 	/**
-	 * @param p1 The index of the pipe the player wants to set as input
-	 * @param p2 The index of the pipe the player wants to set as output
+	 * @param p1 The id of the pipe the player wants to set as input
+	 * @param p2 The id of the pipe the player wants to set as output
 	 * @return The successfulness of the command, if the player was able to change
 	 *         the direction
 	 */
 	public boolean ChangeDirection(int p1, int p2) {
-		Skeleton.Println(this.toString() + "ChangeDirection(" + int.class.getSimpleName() + " " + p1 + ", "
-				+ int.class.getSimpleName() + p2 + ")");
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -392,20 +356,18 @@ public abstract class FieldElement implements Steppable {
 	 * The implementation of the Step1 function of the Steppable interface
 	 */
 	public void Step1() {
-		Skeleton.Println(this.toString() + "Step1()");
 	}
 
 	/**
 	 * The implementation of the Step2 function of the Steppable interface
 	 */
 	public void Step2() {
-		Skeleton.Println(this.toString() + "Step2()");
 	}
 
 	/**
 	 * Used for testing
 	 */
 	public String toString() {
-		return this.getClass().getSimpleName() + "'" + Integer.toHexString(this.hashCode()) + "'" + ".";
+		return "";
 	}
 }
