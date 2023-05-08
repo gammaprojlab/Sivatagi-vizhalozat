@@ -205,7 +205,7 @@ public abstract class Player implements Steppable, Serializable {
 		String ret = "id: " + id
 		+ "\nname: " + Name 
 		+ "\nimmobile: " + Immobile 
-		+ "\nlocation: " + location.getClass().getSimpleName();
+		+ "\nlocation: " + location.getClass().getSimpleName() + location.getId();
 		
 		return ret;
 	}
