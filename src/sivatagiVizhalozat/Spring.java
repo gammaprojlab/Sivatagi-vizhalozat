@@ -10,17 +10,42 @@ package sivatagiVizhalozat;
 //
 //
 
-
-
 /** */
 public class Spring extends FieldElement {
+
+	private static int nextId = 1;
+
+	/**
+	 * Sets the value of the nextId variable
+	 * @param value The value to be set
+	 */
+	public void setNextId(int i) {
+		nextId = i;
+	}
+
+	/**
+	 * Get the value of the nextId variable
+	 * @return What's going to be the next id of this class
+	 */
+	public int nextId() {
+		return nextId;
+	}
 
 	/**
 	 * Default constructor
 	 */
 	public Spring() {
 		super();
-		Skeleton.Println(this.toString()+"Spring()");
+		id = nextId++;
+	}
+
+	/**
+	 * One parameter constructor
+	 * @param g The Game object where this element is being used
+	 */
+	public Spring(Game g) {
+		super(Integer.MAX_VALUE, g);
+		id = nextId++;
 	}
 
 	/**
@@ -30,18 +55,38 @@ public class Spring extends FieldElement {
 	 */
 	public Spring(int mc, Game g) {
 		super(mc, g);
-		Skeleton.Println(this.toString()+"Spring("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g +")");
+		id = nextId++;
 	}
 	
 	/** 
 	 * The implementation of the Step2 function of the Steppable interface
 	*/
 	public void Step2() {
-		Skeleton.Println(this.toString()+"Step2()");
-		Skeleton.indentation++;
 		for (var connection : connections) {
 			connection.PumpWater(Integer.MAX_VALUE);
 		}
-		Skeleton.indentation--;
 	}
+
+	/**
+	 * Returns a string containing the data of the object
+	 * @return A string containing the data of the object
+	 */
+	public String toString() {
+		String ret = "id: " + getId()
+		+ "\nmaxConnections: " + ((maxConnections < Integer.MAX_VALUE) ? maxConnections : "infinte")  
+		+ "connections: ";
+		for (FieldElement neighbour : connections) {
+			ret = ret.concat("\n");
+			ret = ret.concat(neighbour.getClass().getSimpleName());
+			ret = ret.concat(Integer.toString(neighbour.getId()));
+		}
+		ret = ret.concat("\nplayers: ");
+		for (Player player : players) {
+			ret = ret.concat("\n");
+			ret = ret.concat(player.getClass().getSimpleName());
+			ret = ret.concat(Integer.toString(player.getId()));
+		}
+		return ret;
+	}
+
 }
