@@ -19,7 +19,7 @@ package sivatagiVizhalozat;
  *  */
 public class Saboteur extends Player {
 	/** 
-	 * The identification of the Saboteur
+	 * The next Saboteur's id
 	 * */
 	private static int nextId = 1;
 	
