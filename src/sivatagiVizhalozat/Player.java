@@ -11,6 +11,7 @@ package sivatagiVizhalozat;
 //
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /** 
  * The Player class is the parent class of Plumber and Saboteur.
@@ -18,34 +19,93 @@ import java.util.ArrayList;
  * It implements the Steppable class because it will be Stepping and moving,
  * because of the Steppable's Step function.
  * */
-public abstract class Player implements Steppable {
+public abstract class Player implements Steppable, Serializable {
+	/** 
+	 * Tells how long the Player cannot move
+	 * */
+	private int Immobile;
+	
+	/** 
+	 * Name of the player
+	 * */
+	private String Name;
+	
+	/** 
+	 * The identification of the player
+	 * */
+	private int id;
+	
 	/** 
 	 * The FieldElement, which the Player is on in the game.
 	 * */
 	protected FieldElement location;
 	
+	/**
+	 * It is the Game that the Player belongs to.
+	 *  */
+	protected Game game;
 
+	/** 
+	 * Sets the value of Immobile
+	 * @param: The value to be set
+	 * */
+	public void SetImmobile(int b) {
+		Immobile = b;
+	}
+	
+	/**
+	 * Get the value of the Immobile variable
+	 * @return How long the Player cannot move
+	 */
+	public int GetImmobile() {
+		return Immobile;
+	}
+	
+	/** 
+	 * Sets the value of Name
+	 * @param: The value to be set
+	 * */
+	public void SetName(String n) {
+		Name = n;
+	}
+	
+	/**
+	 * Get the value of the Name variable
+	 * @return The name of the player
+	 */
+	public String GetName() {
+		return Name;
+	}
+	
+	/** 
+	 * Sets the value of id
+	 * @param: The value to be set
+	 * */
+	public void SetId(int szam) {
+		id = szam;
+	}
+	
+	/**
+	 * Get the value of the id variable
+	 * @return The identification of the player
+	 */
+	public int GetId() {
+		return id;
+	}
 
 	/** 
 	 * Sets the Players location.
 	 * @param: f Where the Player is.
 	 * */
 	public void SetLocation(FieldElement f) {
-		Skeleton.Println(this.toString()+"SetLocation("+ FieldElement.class.getSimpleName() + " " + f +")");
 		location = f;
 	}
-	
-	/**
-	 * It is the Game that the Player belongs to.
-	 *  */
-	protected Game game;
 	
 	/** 
 	 * Gets the Players game.
 	 * @return: game In what game is the Player in.
 	 * */
 	public Game GetGame() {
-		Skeleton.Println(this.toString()+"GetGame()");
 		return game;
 	}
 	
@@ -54,29 +114,34 @@ public abstract class Player implements Steppable {
 	 * @param: g In what game is the Player in.
 	 * */
 	public void SetGame(Game g) {
-		Skeleton.Println(this.toString()+"SetGame("+ Game.class.getSimpleName() + " " + g +")");
 		game = g;
 	}
 	
 	/**
 	 * Player class's konstruktor without parameters.
-	 *  */
+	 * */
 	public Player() {
-		Skeleton.Println(this.toString()+"Player()");
+		Immobile = 0;
+		Name = "";
+		id = -1;
 		location = null;
 		game = null;
+		
 	}
 	
 	/**
 	 * Player class's konstruktor with parameters.
-	 * @param: g Game, that the Player belongs to.
-	 * @param: f FieldElement, that the Player starts the Game from.
-	 *  */
-	
-	public Player(Game g, FieldElement f) {
-		Skeleton.Println(this.toString()+"Player(" + Game.class.getSimpleName()+ " " + g + ", " + FieldElement.class.getSimpleName() + " " + f + ")");
+	 * @param n The player's name
+	 * @param id The identification of the player
+	 * @param location The location where the player starts from
+	 * @param g The Game object where this element is created
+	 **/
+	public Player(String n, int id, FieldElement location, Game g) {
+		Immobile = 0;
+		Name = n;
+		this.id = id;
 		game = g;
-		location = f;
+		this.location = location;
 	}
 	
 	/**
@@ -84,26 +149,11 @@ public abstract class Player implements Steppable {
 	 * @param: f The FieldElement where the Player will be put.
 	 *  */
 	public void PlayerMove(FieldElement f) {
-		Skeleton.Println(this.toString()+"PlayerMove("+ FieldElement.class.getSimpleName() + " " + f +")");
 		ArrayList<FieldElement> fields = location.GetNeighbor();
-		Skeleton.indentation++;
+
 		if (fields.contains(f)) {
-			Skeleton.indentation++;
-			if(f.StepOn(this)) {
-
-				Skeleton.indentation++;
-				if(location.StepOff(this)){
-
-					SetLocation(f);
-				}
-				else {
-					f.StepOff(this);
-				}
-				Skeleton.indentation--;
-			}
-			Skeleton.indentation--;
+			f.StepOn(this);
 		}
-		Skeleton.indentation--;
 	}
 	
 	/** 
@@ -111,38 +161,52 @@ public abstract class Player implements Steppable {
 	 * @return: Returns with the players location.
 	 * */
 	public FieldElement GetLocation() {
-		Skeleton.Println(this.toString()+"GetLocation()");
 		return location;
 	}
 
 	/**
 	 * Changes the direction, from where and to where the Pump will pump the water.
-	 * @param: input From where the Pump suck te water out.
+	 * @param: input From where the Pump suck the water out.
 	 * @param: output To where the Pump pumps the water.
 	 *  */
 	public void PumpDirection(int input, int output) {
-		Skeleton.Println(this.toString()+"PumpDirection("+ int.class.getSimpleName() + " " + input + ", " + int.class.getSimpleName() + " " + output +")");
 		location.ChangeDirection(input, output);
 	}
+	
+	/**
+     * Punctures the location, where the player is standing.
+     **/
+    public void PuncturePipe() {
+    	location.Puncture();
+	}
+    
+    
+    /**
+     * It makes the pipe sticky.
+     **/
+    public void MakeSticky() {
+    	location.SetSticky(PipeSurfaceState.Sticky);
+    }
 	
 	/**
 	 * The implementation of the Step1 function of the Steppable interface
 	*/
 	public void Step1() {
-		Skeleton.Println(this.toString()+"Step1()");
-	}
-	
-	/** 
-	 * The implementation of the Step2 function of the Steppable interface
-	*/
-	public void Step2() {
-		Skeleton.Println(this.toString()+"Step2()");
+		if(Immobile > 0) {
+			Immobile--;
+		}
 	}
 	
 	/**
-	 * Used for testing
+	 * Returns a string containing the data of the object
+	 * @return A string containing the data of the object
 	 */
 	public String toString() {
-		return this.getClass().getSimpleName()+"'"+Integer.toHexString(this.hashCode())+"'"+"."; 
+		String ret = "id: " + id
+		+ "\nname: " + Name 
+		+ "\nimmobile: " + Immobile 
+		+ "\nlocation: " + location.getId();
+		
+		return ret;
 	}
 }
