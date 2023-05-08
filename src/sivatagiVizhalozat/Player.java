@@ -185,7 +185,7 @@ public abstract class Player implements Steppable, Serializable {
      * It makes the pipe sticky.
      **/
     public void MakeSticky() {
-    	location.SetSticky(PipeSurfaceState.Sticky);
+    	location.SetState(PipeSurfaceState.Sticky);
     }
 	
 	/**
