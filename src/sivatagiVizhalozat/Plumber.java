@@ -18,6 +18,10 @@ import java.util.ArrayList;
  * disconnect and connect pipes and pick up pumps from cisterns and then put them down.
  * */
 public class Plumber extends Player {
+	/** 
+	 * The next Plumber's id
+	 * */
+	private static int nextId = 1;
 	
 	/** 
 	 * This tells you which pipe the mechanic is currently holding, if he has one.
@@ -25,48 +29,62 @@ public class Plumber extends Player {
 	private Pipe heldPipe;
 	
 	/**
-	 * Gets the Pipe what the Plumber has in is inventory.
-	 * @return heldPipe The pipe what te Plumber has in his inventory.
-	 *  */
-	public Pipe GetPipe() {
-		Skeleton.Println(this.toString()+"GetPipe()");
-		return heldPipe;
-	}
-	
-	/**
 	 * This tells you which pump the mechanic is currently holding, if he has one.
 	 *  */
 	private Pump heldPump;
 	
 	/**
-	 * Gets the Pump what the Plumber has in is inventory.
-	 * @return heldPump The pump what te Plumber has in his inventory.
+	 * Sets the Pipe.
+	 * @param p The pipe what will be put in the inventory of the Plumber.
 	 *  */
-	public Pump GetPump(){
-		Skeleton.Println(this.toString()+"GetPump()");
+	public void setHeldPipe(Pipe p) {
+		heldPipe = p;
+	}
+	
+	/**
+	 * Gets the Pipe what the Plumber has in is inventory.
+	 * @return heldPipe The pipe what the Plumber has in his inventory.
+	 *  */
+	public Pipe getHeldPipe() {
+		return heldPipe;
+	}
+	
+	/** 
+	 * Sets the Pump.
+	 * @param p The pump what will be put in the inventory of the Plumber.
+	 * */
+	public void setHeldPump(Pump p) {
+		heldPump = p;
+	}
+	
+	/**
+	 * Gets the Pump what the Plumber has in is inventory.
+	 * @return heldPump The pump what the Plumber has in his inventory.
+	 *  */
+	public Pump getHeldPump(){
 		return heldPump;
 	}
 	
 	/**
-	 * Konstruktor of the Plumber class.
+	 * Konstruktor of the Plumber class, without params.
 	 *  */
 	public Plumber() {
 		super();
-		Skeleton.Println(this.toString()+"Plumber()");
 		heldPipe = null;
 		heldPump = null;
 	}
 	
 	/**
 	 * Konstruktor of te Plumber class, with params.
-	 * @param g The game, where the Player playes.
-	 * @param f The FieldElement where the Player starts.
-	 * @param pi The Pipe what the Player as in is inventory.
 	 * @param pu The Pump what the Player as in is inventory.
+	 * @param pi The Pipe what the Player as in is inventory.
+	 * @param id The identification of the player.
+	 * @param n The player's name.
+	 * @param f The FieldElement where the Player starts.
+	 * @param g The game, where the Player playes.
 	 *  */
-	public Plumber(Game g, FieldElement f, Pipe pi, Pump pu){
-		super(g, f);
-		Skeleton.Println(this.toString()+"Plumber(" + Game.class.getSimpleName() + " " + g + ", " + FieldElement.class.getSimpleName() + " " + f + ", " + Pipe.class.getSimpleName() + " " + pi + ", " + Pump.class.getSimpleName() + " " + pu +")");
+	public Plumber(Pump pu, Pipe pi, int id, String n, FieldElement f, Game g){
+		super(n, id, f, g);
 		heldPipe = pi;
 		heldPump = pu;
 	}
@@ -75,27 +93,16 @@ public class Plumber extends Player {
 	 * Repairs the location.
 	 *  */
 	public void Repair() {
-		Skeleton.Println(this.toString()+"Repair()");
-		Skeleton.indentation++;
-		if (location.Repair()) {
-			Skeleton.Println("The FieldElement is repaired.");
-		}
-		else {
-			Skeleton.Println("The FieldElement cannot be repaired.");
-		}
-		Skeleton.indentation--;
+		location.Repair();
 	}
 	
 	/**
 	 * Connects the Pipe to the FieldElement.
 	 *  */
 	public void ConnectPipe() {
-		Skeleton.Println(this.toString()+"ConnectPipe()");
-		Skeleton.indentation++;
 		if(location.Connect(heldPipe)) {
 			heldPipe = null;
 		}
-		Skeleton.indentation--;
 	}
 	
 	/**
@@ -103,88 +110,44 @@ public class Plumber extends Player {
 	 * @param p The pipe what the player wants to disconnect.
 	 *  */
 	public void DisconnectPipe(int p) {
-		Skeleton.Println(this.toString()+"Disconnect("+ int.class.getSimpleName() + " " + p +")");
-		Skeleton.indentation++;
-		if (GetPipe() == null) {
-			Pipe pi = location.Disconnect(p);
-			setHeldPipe(pi);
-		}
-		Skeleton.indentation--;
-
+		location.Disconnect(p);
 	}
 	
 	/**
 	 * Takes the pump from the Cistern.
 	 *  */
 	public void TakePump() {
-		Skeleton.Println(this.toString()+"TakePump()");
-		Skeleton.indentation++;
-		if(GetPump() == null) {
+		if(getHeldPump() == null) {
 			Pump p = location.ProvidePump();
 			setHeldPump(p);
 		}
-		Skeleton.indentation--;
 	}
 	
 	/**
-	 * Places the Pump to the FieldElement.
+	 * Places the Pump to the pipe, which splits the pipe.
 	 *  */
 	public void PlacePump() {
-		Skeleton.Println(this.toString()+"PlacePump()");
-
-		Skeleton.indentation++;
-		if(GetPump() == null && location.GetNeighbor().size() == 2) {
-
-			location.Split(heldPump);
-			game.AddSteppable(heldPump);
-			this.PlayerMove(heldPump);
-			setHeldPump(null);
-		}
-		Skeleton.indentation--;
-	}
-	
-	/**
-	 * Grabs the Pipe.
-	 *  */
-	public void GrabPipe() {
-		Skeleton.Println(this.toString()+"GrabPipe()");
-
-  		Skeleton.indentation++;
-		ArrayList<FieldElement> elements = location.GetNeighbor();
-		
-		for(FieldElement element: elements) {
-			if (GetPipe() == null) {
-				Pipe p = location.Grab();
-				setHeldPipe(p);
+		if(heldPump != null && location.GetNeighbor().size() == 2) {
+			if(location.Split(heldPump)) {
+				game.AddSteppable(heldPump);
+				setHeldPump(null);
+				this.PlayerMove(heldPump);
 			}
 		}
-		Skeleton.indentation--;
 	}
 	
 	/**
-	 * Sets the Pipe.
-	 * @param p The pipe what will be put in the inventory of the Plumber.
+	 * Pick up the connected Pipe element.
 	 *  */
-	public void setHeldPipe(Pipe p) {
-		Skeleton.Println(this.toString()+"setHeldPipe("+ Pipe.class.getSimpleName() + " " + p +")");
-		heldPipe = p;
-	}
-	
-	/** 
-	 * Sets the Pump.
-	 * @param p The pump what will be put in the inventory of the Plumber.
-	 * */
-	public void setHeldPump(Pump p) {
-		Skeleton.Println(this.toString()+"setHeldPump("+ Pump.class.getSimpleName() + " " + p +")");
-		heldPump = p;
-	}
-
-	/** 
-	 * The implementation of the Step1 function of the Steppable interface
-	*/
-	@Override
-	public void Step1() {
-		Skeleton.Println(this.toString()+"Step1()");
+	public void GrabPipe() {
+		ArrayList<FieldElement> elements = location.GetNeighbor();
+		if (heldPipe == null) {
+			for(FieldElement element: elements) {
+				Pipe p = location.Grab();
+				if(!p.getIsGrabbed())
+					setHeldPipe(p);
+			}
+		}
 	}
 
 	/** 
@@ -196,9 +159,15 @@ public class Plumber extends Player {
 	}
 	
 	/**
-	 * Used for testing
+	 * Returns a string containing the data of the object
+	 * @return A string containing the data of the object
 	 */
 	public String toString() {
-		return this.getClass().getSimpleName()+"'"+Integer.toHexString(this.hashCode())+"'"+"."; 
+		String ret = super.toString();
+		ret =  ret
+				+ "\nheldPipe: " + heldPipe.getClass().getSimpleName()
+				+ "\nheldPump: " + heldPump.getClass().getSimpleName();
+		
+		return ret;
 	}
 }
