@@ -17,6 +17,7 @@ package sivatagiVizhalozat;
 */
 public class Pipe extends FieldElement {
 
+	static int nextId = 1;
 	/**
 	 * Stores the state of the Pipe if it is punctured or not
 	*/
@@ -38,11 +39,58 @@ public class Pipe extends FieldElement {
 	private int water;
 
 	/**
+	 * Stores how many turns until it can be puntured again
+	 */
+	private int unpuncturable;
+
+	/**
+	 * Stores how many turns until the pipe goes back the Normal state
+	 */
+	private int duration;
+
+	/**
+	 * Stores the current state of the pipes surface, if it slippery, sticky or normal
+	 */
+	private PipeSurfaceState state;
+
+	
+	/**
+	 * Sets the value of the duration variable
+	 * @param value The value to be set
+	 */
+	public void setDuration(int d) {
+		if(d >= 0) duration = d;
+	}
+
+	/**
+	 * Get the value of the duration variable
+	 * @return How many time until pipe state goes normal
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
+	/**
+	 * Sets the value of the nextId variable
+	 * @param value The value to be set
+	 */
+	public void setNextId(int i) {
+		nextId = i;
+	}
+
+	/**
+	 * Get the value of the nextId variable
+	 * @return What's going to be the next id of this class
+	 */
+	public int nextId() {
+		return nextId;
+	}
+
+	/**
 	 * Sets the value of the isPunctured variable
 	 * @param value The value to be set
 	 */
 	public void setIsPunctured(boolean value) {
-		Skeleton.Println(this.toString()+"setIsPunctured("+boolean.class.getSimpleName()+" "+value+")");
 		isPunctured = value;
 	}
 
@@ -51,8 +99,6 @@ public class Pipe extends FieldElement {
 	 * @return True or false depending if it is punctured or not
 	 */
 	public boolean getIsPunctured() {
-		Skeleton.Println(this.toString()+"getIsPunctured()");
-		Skeleton.Println("return " + ((isPunctured) ? "true" : "false"));
 		return this.isPunctured;
 	}
 
@@ -61,17 +107,14 @@ public class Pipe extends FieldElement {
 	 * @param value The value to be set
 	 */
 	public void setIsGrabbed(boolean value) {
-		Skeleton.Println(this.toString()+"setIsGrabbed("+boolean.class.getSimpleName()+" "+value+")");
 		isGrabbed = value;
 	}
 
 	/**
-	 * Get the value of the usGrabbed variable
+	 * Get the value of the isGrabbed variable
 	 * @return True or false depemding if it is grabbed or not
 	 */
 	public boolean getIsGrabbed() {
-		Skeleton.Println(this.toString() + "getIsGrabbed()");
-		Skeleton.Println("return " + ((isGrabbed) ? "true" : "false"));
 		return isGrabbed;
 	}
 
@@ -80,8 +123,6 @@ public class Pipe extends FieldElement {
 	 * @return The amount of water that's in the pipe
 	 */
 	public int getWater() {
-		Skeleton.Println(this.toString() + "getWater()");
-		Skeleton.Println("return " + water);
 		return water;
 	}
 
@@ -90,7 +131,6 @@ public class Pipe extends FieldElement {
 	 * @param w The value of how much water is in the pipe
 	 */
 	public void setWater(int w) {
-		Skeleton.Println(this.toString()+"setWater("+int.class.getSimpleName()+" "+w+")");
 		water = w;
 	}
 
@@ -99,7 +139,6 @@ public class Pipe extends FieldElement {
 	 * @param c The amount of water the pipe can hold
 	 */
 	public void setCapacity(int c) {
-		Skeleton.Println(this.toString() + "setCapacity(" + int.class.getSimpleName() + c + ")");
 		capacity = c;
 	}
 
@@ -108,37 +147,74 @@ public class Pipe extends FieldElement {
 	 * @return The amount of water this pipe can hold
 	 */
 	public int getCapacity() {
-		Skeleton.Println(this.toString() + "getCapacity()");
-		Skeleton.Println("return " + capacity);
 		return capacity;
 	}
 
-	
+	/**
+	 * Sets the state of the pipe, and if state is not normal sets the duration
+	 * @param s The state the pipe is going to be set to
+	 */
+	public void setState(PipeSurfaceState s) {
+		// TODO If state isn't set already??? to other than normal
+		state = s;
+		if(s != PipeSurfaceState.Normal) {
+			duration = (int)Math.round(game.getRandom()*10);
+		}
+	}
+
+	/**
+	 * Get the current state of the pipe
+	 * @return The current state of the pipe
+	 */
+	public PipeSurfaceState getState() {
+		return state;
+	}
+
+	/**
+	 * Sets the value of the unpuncturable variable
+	 * @param u The value to be set
+	 */
+	public void setUnpuncturable(int u) {
+		if(u >= 0) unpuncturable = u;
+	}
+
+	/**
+	 * Get the current value of the unpuncturable variable
+	 * @return The current value of the unpuncturable variable
+	 */
+	public int getUnpuncturable() {
+		return unpuncturable;
+	}
+
 	/**
 	 * Default constructor
 	 */
 	public Pipe() {
 		super();
-		Skeleton.Println(this.toString()+"Pipe()");
+		id = nextId++;
 		isPunctured = false;
 		isGrabbed = false;
 		water = 0;
 		capacity = 50;
 		maxConnections = 2;
+		state = PipeSurfaceState.Normal;
+		duration = 0;
+		unpuncturable = 0;
 	}
 
 	/**
-	 * Two parameter constructor
-	 * @param mc The maximum number of connections this element can have
-	 * @param g The Game object where this element is being used
+	 * One parameter constructor
 	 */
-	public Pipe(int mc, Game g) {
-		super(mc, g);
-		Skeleton.Println(this.toString()+"Pipe("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g +")");
+	public Pipe(Game g) {
+		super(2,g);
+		id = nextId++;
 		isPunctured = false;
 		isGrabbed = false;
 		water = 0;
 		capacity = 50;
+		state = PipeSurfaceState.Normal;
+		duration = 0;
+		unpuncturable = 0;
 	}
 
 	/**
@@ -148,12 +224,16 @@ public class Pipe extends FieldElement {
 	 */
 	public Pipe(Game g, int c) {
 		super(2, g);
-		Skeleton.Println(this.toString()+"Pipe("+ Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ")");
+		id = nextId++;
 		isPunctured = false;
 		isGrabbed = false;
-		capacity = c;
 		water = 0;
+		capacity = c;
+		state = PipeSurfaceState.Normal;
+		duration = 0;
+		unpuncturable = 0;
 	}
+
 	/**
 	 * Three parameter constructor
 	 * @param g The Game object where this element is being used
@@ -162,27 +242,14 @@ public class Pipe extends FieldElement {
 	 */
 	public Pipe(Game g, int c, int w) {
 		super(2, g);
-		Skeleton.Println(this.toString()+"Pipe("+ Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ", " + int.class.getSimpleName() + " " + w + ")");
+		id = nextId++;
 		isPunctured = false;
 		isGrabbed = false;
-		capacity = c;
 		water = w;
-	}
-
-	/**
-	 * Four parameter constructor
-	 * @param mc The maximum number of connections this element can have
-	 * @param g The Game object where this element is being used
-	 * @param c The maximum amount of water that the pipe can hold
-	 * @param w The amount of water in the Pipe
-	 */
-	public Pipe(int mc, Game g, int c, int w) {
-		super(mc, g);
-		Skeleton.Println(this.toString()+"Pipe("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + c + ", " + int.class.getSimpleName() + " " + w + ")");
-		isPunctured = false;
-		isGrabbed = false;
 		capacity = c;
-		water = w;
+		state = PipeSurfaceState.Normal;
+		duration = 0;
+		unpuncturable = 0;
 	}
 
 	/**
@@ -190,13 +257,10 @@ public class Pipe extends FieldElement {
 	 * @return The successfulness of the command, if it was able to puncture the pipe
 	*/
 	public boolean Puncture() {
-		Skeleton.Println(this.toString()+"Puncture()");
-		if(!isPunctured) {
+		if(!isPunctured && unpuncturable == 0) {
 			isPunctured = true;	
-			Skeleton.Println("return true");
 			return true;
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 	
@@ -205,8 +269,6 @@ public class Pipe extends FieldElement {
 	 * @return The successfulness of the command, if it was able to split the pipe and place the pump in-between the pipes
 	*/
 	public boolean Split(Pump p) {
-		Skeleton.Println(this.toString()+"Split("+Pump.class.getSimpleName()+" "+p+")");
-		Skeleton.indentation++;
 		if(p != null && connections.size() == 2 && !isGrabbed) {
 			Pipe newPipe = new Pipe(game, capacity, water/2);
 			FieldElement a = connections.get(0);
@@ -216,14 +278,10 @@ public class Pipe extends FieldElement {
 				newPipe.Add(a); newPipe.Add(p);
 				water = water/2;
 				game.AddSteppable(p);
-				Skeleton.indentation--;
-				Skeleton.Println("return true");
 				return true;
 			}
 			a.Add(this); Add(this);
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return false");
 		return false;
 	}
 	
@@ -232,16 +290,10 @@ public class Pipe extends FieldElement {
 	 * @return The grabbed pipe
 	*/
 	public Pipe Grab() {
-		Skeleton.Println(this.toString()+"Grab()");
-		Skeleton.indentation++;
 		if(!isGrabbed && connections.size() == 1 && players.size() == 0) {
 			isGrabbed = true;
-			Skeleton.indentation--;
-			Skeleton.Println("return " + this);
 			return this;
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return null");
 		return null;
 	}
 	
@@ -250,13 +302,11 @@ public class Pipe extends FieldElement {
 	 * @return The successfulness of the command, if it was able to repair this Pipe
 	*/
 	public boolean Repair() {
-		Skeleton.Println(this.toString()+"Repair()");
 		if(isPunctured && !isGrabbed) {
 			isPunctured = false;
-			Skeleton.Println("return true");
+			unpuncturable = 5;
 			return true;
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 	
@@ -265,22 +315,18 @@ public class Pipe extends FieldElement {
 	 * @return The amount of water the pipe was able to pump into the element
 	*/
 	public int SuckWater(int w) {
-		Skeleton.Println(this.toString()+"SuckWater("+int.class.getSimpleName()+" "+w+")");
 		if(water > 0) {
 			if(w >= water) {
 				int ret = water;
 				water = 0;
-				Skeleton.Println("return " + ret);
 				return ret;
 			}
 			// The water that the element can accept is less than what's in the pipe
 			else {
 				water =- w;
-				Skeleton.Println("return " + w);
 				return w;
 			}
 		}
-		Skeleton.Println("return 0");
 		return 0;
 	}
 	
@@ -289,21 +335,17 @@ public class Pipe extends FieldElement {
 	 * @return The amount of water the pipe was able to accept 
 	*/
 	public int PumpWater(int w) {
-		Skeleton.Println(this.toString()+"PumpWater("+int.class.getSimpleName()+" "+w+")");
 		if(w > 0 && capacity > water) {
 			if(w >= (capacity - water)) {
 				int ret = capacity-water;
 				water += ret;
-				Skeleton.Println("return " + ret);
 				return ret;
 			}
 			else {
 				water += w;
-				Skeleton.Println("return " + w);
 				return w;
 			}
 		}
-		Skeleton.Println("return 0");
 		return 0;
 	}
 	
@@ -311,13 +353,15 @@ public class Pipe extends FieldElement {
 	 * The implementation of the Step1 function of the Steppable interface
 	*/
 	public void Step1() {
-		Skeleton.Println(this.toString()+"Step1()");
-		Skeleton.indentation++;
 		if(game != null && !isGrabbed && (isPunctured || connections.size() == 1)) {
 			game.WaterSpilled(water);
 			water = 0;
 		}
-		Skeleton.indentation--;
+		if(state != PipeSurfaceState.Normal)  {
+			if(duration > 0) duration--;
+			else state = PipeSurfaceState.Normal;
+		}
+		if(unpuncturable > 0) unpuncturable--;
 	}
 	
 	/**
@@ -325,15 +369,30 @@ public class Pipe extends FieldElement {
 	 * @return The successfulness of the player stepping on this field
 	*/
 	public boolean StepOn(Player p) {
-		Skeleton.Println(this.toString()+"StepOn("+Player.class.getSimpleName()+" "+p+")");
 		if(p != null) {
 			if(players.size() == 0) {
+				if(p.GetLocation() != null) {
+					p.GetLocation().StepOff(p);
+				}
+
+				p.SetLocation(this);
 				players.add(p);
-				Skeleton.Println("return true");
+
+				if(state == PipeSurfaceState.Slippery) {
+					if(game.getRandom() < 0.5) connections.get(0).StepOn(p);
+					else connections.get(1).StepOn(p);
+					state = PipeSurfaceState.Normal;
+				}
+
+				else if(state == PipeSurfaceState.Sticky) {
+					p.setImmobile(duration);
+					duration = 0;
+					state = PipeSurfaceState.Normal;
+				}
+
 				return true;
 			}
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 	
@@ -342,18 +401,41 @@ public class Pipe extends FieldElement {
 	 * @return The disconnected pipe
 	*/
 	public Pipe Disconnect(int f) {
-		Skeleton.Println(this.toString()+"Disconnect("+int.class.getSimpleName()+" "+f+")");
-		Skeleton.indentation++;
-		if(players.size() == 0) {
-			if(f >= 0 && f < connections.size() && connections.size() == 2) {
+		if(players.size() == 0 && !isGrabbed) {
+			if(f >= 0 && f < connections.size()) {
 				Remove(connections.get(f));
-				Skeleton.indentation--;
-				Skeleton.Println("return " + this);
 				return this;
 			}
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return null");
 		return null;
+	}
+
+	/**
+	 * Returns a string containing the data of the object
+	 * @return A string containing the data of the object
+	 */
+	public String toString() {
+		String ret = "id: " + getId()
+		+ "\nmaxConnections: " + maxConnections 
+		+ "\nstate: " + state 
+		+ "\nisPunctured: " + ((isPunctured) ? "true" : "false")
+		+ "\nisGrabbed: " + ((isGrabbed) ? "true" : "false")
+		+ "\ncapacity: " + capacity
+		+ "\nwater: " + water
+		+ "unpuncturable: " + unpuncturable
+		+ "duration: " + duration
+		+ "connections: ";
+		for (FieldElement neighbour : connections) {
+			ret = ret.concat("\n");
+			ret = ret.concat(neighbour.getClass().getSimpleName());
+			ret = ret.concat(Integer.toString(neighbour.getId()));
+		}
+		ret = ret.concat("\nplayers: ");
+		for (Player player : players) {
+			ret = ret.concat("\n");
+			ret = ret.concat(player.getClass().getSimpleName());
+			ret = ret.concat(Integer.toString(player.getId()));
+		}
+		return ret;
 	}
 }
