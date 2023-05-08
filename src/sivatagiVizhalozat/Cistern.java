@@ -15,13 +15,27 @@ package sivatagiVizhalozat;
 */
 public class Cistern extends FieldElement {
 
+	/**
+	 * Stores the id of the next created Cistern
+	 */
+	private static int nextId = 1;
 
 	/**
 	 * Default constructor;
 	 */
 	public Cistern() {
 		super();
-		Skeleton.Println(this.toString()+"Cistern()");
+		id = nextId++;
+		maxConnections = Integer.MAX_VALUE;
+	}
+
+	/**
+	 * One parameter constructor
+	 * @param g The Game object where this element is being used
+	 */
+	public Cistern(Game g) {
+		super(Integer.MAX_VALUE, g);
+		id = nextId++;
 	}
 
 	/**
@@ -31,7 +45,23 @@ public class Cistern extends FieldElement {
 	 */
 	public Cistern(int mc, Game g) {
 		super(mc, g);
-		Skeleton.Println(this.toString()+"Cistern("+ int.class.getSimpleName() + " " + mc + ", " + Game.class.getSimpleName() + " " + g +")");
+		id = nextId++;
+	}
+
+	/**
+	 * Sets the value of the nextId variable
+	 * @param value The value to be set
+	 */
+	public void setNextId(int i) {
+		nextId = i;
+	}
+
+	/**
+	 * Get the value of the nextId variable
+	 * @return What's going to be the next id of this class
+	 */
+	public int nextId() {
+		return nextId;
 	}
 
 	/**
@@ -39,16 +69,10 @@ public class Cistern extends FieldElement {
 	 * @return The newly created pump
 	 */
 	public Pump ProvidePump() {
-		Skeleton.Println(this.toString()+"ProvidePump()");
-		Skeleton.indentation++;
 		Pump ret = new Pump();
 		if(ret != null) {
-			Skeleton.indentation--;
-			Skeleton.Println("return " + ret);
 			return ret;
 		}
-		Skeleton.indentation--;
-		Skeleton.Println("return null");
 		return null;
 	}
 	
@@ -56,13 +80,50 @@ public class Cistern extends FieldElement {
 	 * The implementation of the Step1 function of the Steppable interface
 	*/
 	public void Step1() {
-		Skeleton.Println(this.toString()+"Step1()");
-		Skeleton.indentation++;
 		if(connections != null) {
 			for (var neighbour : connections) {
 				game.WaterCollected(neighbour.SuckWater(Integer.MAX_VALUE));
 			}
 		}
-		Skeleton.indentation--;
+		if(game.getRandom()*100 > 85 && connections.size() < maxConnections) GeneratePipe();
+	}
+
+	/**
+	 * If cistern has less than 10 pipes with one free end
+	 * then create a new one and add it to it's connections
+	 */
+	private void GeneratePipe() {
+		int free = 0;
+		for(FieldElement p : connections) {
+			if(p.connections.size() == 1) free++;
+		}
+		if(free < 10) {
+			Pipe p = new Pipe(game);
+			p.Add(this); this.Add(p);
+			game.getMap().addFieldElement(p.getClass().getSimpleName(), p);
+			game.AddSteppable(p);
+		}
+	}
+
+	/**
+	 * Returns a string containing the data of the object
+	 * @return A string containing the data of the object
+	 */
+	public String toString() {
+		String ret = "id: " + getId()
+		+ "\nmaxConnections: " + ((maxConnections < Integer.MAX_VALUE) ? maxConnections : "infinte")  
+		+ "connections: ";
+		for (FieldElement neighbour : connections) {
+			ret = ret.concat("\n");
+			ret = ret.concat(neighbour.getClass().getSimpleName());
+			ret = ret.concat(Integer.toString(neighbour.getId()));
+		}
+		ret = ret.concat("\nplayers: ");
+		for (Player player : players) {
+			ret = ret.concat("\n");
+			ret = ret.concat(player.getClass().getSimpleName());
+			ret = ret.concat(Integer.toString(player.getId()));
+		}
+		return ret;
 	}
 }
