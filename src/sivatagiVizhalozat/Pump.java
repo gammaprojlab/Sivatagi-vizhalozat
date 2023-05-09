@@ -19,6 +19,12 @@ package sivatagiVizhalozat;
 public class Pump extends FieldElement {
 
 	/**
+	 * It storest what the next created Pump's ID will be.
+	 * After creating a new Pump this counter will increase by one.
+	 */
+	private static int nextId;
+	
+	/**
 	 * It stores the state of the pump, if it working and can pump water into the
 	 * output pipe
 	 */
@@ -52,8 +58,6 @@ public class Pump extends FieldElement {
 	 * @return True if the pump is working and false otherwise
 	 */
 	public boolean getIsWorking() {
-		Skeleton.Println(this.toString() + "getIsWorking()");
-		Skeleton.Println("return null");
 		return isWorking;
 	}
 
@@ -63,8 +67,6 @@ public class Pump extends FieldElement {
 	 * @param w The value to set the isWorking variable
 	 */
 	public void setIsWorking(boolean w) {
-		Skeleton.Println(this.toString() + "setIsWorking(" + boolean.class.getSimpleName() + " "
-				+ ((w) ? "true" : "false") + ")");
 		isWorking = w;
 	}
 
@@ -74,8 +76,6 @@ public class Pump extends FieldElement {
 	 * @return The maximum amount of water the pump can hold
 	 */
 	public int getTankCapacity() {
-		Skeleton.Println(this.toString() + "getTankCapacity()");
-		Skeleton.Println("return " + tankCapacity);
 		return tankCapacity;
 	}
 
@@ -85,7 +85,6 @@ public class Pump extends FieldElement {
 	 * @param tC The maximum amount of water the pump can hold
 	 */
 	public void setTankCapacity(int tC) {
-		Skeleton.Println(this.toString() + "setTankCapacity(" + int.class.getSimpleName() + " " + tC + ")");
 		tankCapacity = tC;
 	}
 
@@ -95,10 +94,24 @@ public class Pump extends FieldElement {
 	 * @return The index of the input pipe
 	 */
 	public int getInput() {
-		Skeleton.Println(this.toString() + "getInput()");
-		Skeleton.Println("return " + input);
 		return input;
 	}
+
+	/**
+	 * Get the index of the next pipe, that will be created.
+	 * 
+	 * @return The index of the next pipe
+	 */
+	public int getNextId() {
+		return nextId;
+	};
+
+	/**
+	 * Set the index of the next pipe, that will be created.
+	 */
+	public void setNextId(int id) {
+		nextId = id;
+	};
 
 	/**
 	 * Set the index of the input pipe, if i is -1, it means that the input is
@@ -107,7 +120,6 @@ public class Pump extends FieldElement {
 	 * @param i The index of the input pipe in the pump's connections
 	 */
 	public void setInput(int i) {
-		Skeleton.Println(this.toString() + "setInput(" + int.class.getSimpleName() + " " + i + ")");
 		if (i >= -1 && i < connections.size()) {
 			input = i;
 		}
@@ -155,7 +167,6 @@ public class Pump extends FieldElement {
 	 *          the new value will be the tankCapacity
 	 */
 	public void setWater(int w) {
-		Skeleton.Println(this.toString() + "setWater(" + int.class.getSimpleName() + " " + w + ")");
 		if (w <= tankCapacity && w >= 0)
 			water = w;
 		else if (w > tankCapacity)
@@ -165,52 +176,127 @@ public class Pump extends FieldElement {
 	}
 
 	/**
-	 * Default constructor
+	 * Pump's own toString to make tests more visually informative.
+	 */
+	public string toString () {
+		string value = "";
+
+		value += "Pump" + id + "\n" + "\n";
+		value += "id: " + id + "\n";
+		value += "maxConnections: " + maxConnections + "\n";
+		value += "isWorking: " + isWorking + "\n";
+		value += "tankCapacity: " + tankCapacity + "\n";
+		value += "water: " + water + "\n";
+		value += "input: " + input + "\n";
+		value += "output: " + output + "\n";
+		value += "connections: " + "\n";
+			for(Pipe p : connections){
+				value += "Pipe";
+				value += p.id;
+				value += "\n";
+			}
+		value += "players: " + "\n";
+			for(Player p : connections){
+				value += p.getClass.getSimpleName();
+				value += p.id;
+				value += "\n";
+			}	
+			
+		return value;	
+	}
+	/**
+	 * Default constructor. Calls parent's default constructor and sets 
+	 * base values up. Then increases the nextId by one.
 	 */
 	public Pump() {
 		super();
-		Skeleton.Println(this.toString() + "Pump()");
-		isWorking = true;
-		tankCapacity = 25;
+		id=nextId;
+		nextId++;
 		input = -1;
 		output = -1;
+		tankCapacity = 100;
 		water = 0;
 		setMaxConnections(5);
+		isWorking = true;
+	}
+
+	/**
+	 * Constructor with a Game parameter.Calls parent's 2 parametered 
+	 * constructor and sets base values up. Then increases the nextId by one.
+	 *
+	 * @param g  The Game object where this element is being used
+	 */
+	public Pump(Game g) {
+		super(5, g);
+		id=nextId;
+		nextId++;
+		input = -1;
+		output = -1;
+		tankCapacity = 100;
+		water = 0;
+		isWorking = true;
 	}
 
 	/**
 	 * Two parameter constructor
-	 * 
+	 * Works similarly to the one parametered constructor.
+	 *
 	 * @param mc The maximum number of connections this element can have
 	 * @param g  The Game object where this element is being used
 	 */
 	public Pump(int mc, Game g) {
 		super(mc, g);
-		Skeleton.Println(this.toString() + "Pump(" + int.class.getSimpleName() + " " + mc + ", "
-				+ Game.class.getSimpleName() + " " + g + ")");
-		isWorking = true;
-		tankCapacity = 25;
+		id=nextId;
+		nextId++;
 		input = -1;
 		output = -1;
+		tankCapacity = 100;
 		water = 0;
+		isWorking = true;
 	}
 
 	/**
 	 * Three parameter constructor
-	 * 
+	 * Works similarly to the one parametered constructor.
+	 *
 	 * @param mc The maximum number of connections this element can have
 	 * @param g  The Game object where this element is being used
-	 * @param c  The maximum amount of water that the pump's tank can hold
+	 * @param tC The maximum amount of water that the pump's tank can hold
 	 */
 	public Pump(int mc, Game g, int tC) {
 		super(mc, g);
-		Skeleton.Println(this.toString() + "Pump(" + int.class.getSimpleName() + " " + mc + ", " +
-				Game.class.getSimpleName() + " " + g + ", " + int.class.getSimpleName() + " " + tC + ")");
-		isWorking = true;
-		tankCapacity = tC;
+		id=nextId;
+		nextId++;
 		input = -1;
 		output = -1;
+		tankCapacity = tC;
 		water = 0;
+		isWorking = true;
+	}
+
+	/**
+	 * Eight parameter constructor
+	 * Works similarly to the one parametered constructor except, that 
+	 * it sets every variable of the newly created Pump.
+	 *
+	 * @param mc The maximum number of connections this element can have
+	 * @param g  The Game object where this element is being used
+	 * @param tC The maximum amount of water that the pump's tank can hold
+	 * @param w  The water that is currently in the Pump
+	 * @param i  The intake Pipe's id.
+	 * @param o  The exhaust Pipe's id.
+	 * @param iw The boolean value that swts wether the Pump is working or not
+	 * @param fixid The id of the Pump
+	 */
+	public Pump(int mc, Game g, int tC, int w, int i, int o, boolean iw) {
+		super(mc, g);
+		id=nextId;
+		nextId++;
+		input = i;
+		output = o;
+		tankCapacity = tC;
+		water = w;
+		isWorking = iw;
 	}
 
 	/**
@@ -219,7 +305,6 @@ public class Pump extends FieldElement {
 	 * nor sucking from the input pipe
 	 */
 	public void StopWorking() {
-		Skeleton.Println(this.toString() + "StopWorking()");
 		if (isWorking) {
 			isWorking = false;
 		}
@@ -230,13 +315,10 @@ public class Pump extends FieldElement {
 	 * repaired it functions normally
 	 */
 	public boolean Repair() {
-		Skeleton.Println(this.toString() + "Repair()");
 		if (!isWorking) {
 			isWorking = true;
-			Skeleton.Println("return true");
 			return true;
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -267,11 +349,9 @@ public class Pump extends FieldElement {
 				else if (inx < output)
 					output--;
 				connections.remove(pipe);
-				Skeleton.Println("return true");
 				return true;
 			}
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -284,15 +364,18 @@ public class Pump extends FieldElement {
 	 * @param o The index of the new output pipe
 	 */
 	public boolean ChangeDirection(int i, int o) {
-		Skeleton.Println(this.toString() + "ChangeDirection(" + int.class.getSimpleName() + " " + i + ", "
-				+ Game.class.getSimpleName() + " " + o + ")");
-		if (i >= -1 && o >= -1 && i < connections.size() && o < connections.size() && i != o) {
-			input = i;
-			output = o;
-			Skeleton.Println("return true");
+		if((i != -1 && i != o) || (i = -1 && i = o))
+		{
+			if(i == -1 || connections.contains(game.map.getPipe(input))) 
+			{
+				input = i;
+			}
+			else if(o == -1 || connections.contains(game.map.getPipe(input)))
+			{
+				output = o;
+			}
 			return true;
 		}
-		Skeleton.Println("return false");
 		return false;
 	}
 
@@ -301,19 +384,17 @@ public class Pump extends FieldElement {
 	 * If Input is closed( = -1) Skip it
 	 */
 	public void Step1() {
-		Skeleton.Println(this.toString() + "Step1()");
-		Skeleton.indentation++;
-		if (Math.random() * 100 < 20)
+		if (Game.getRandom() > 80)
 			StopWorking();
 		if (isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's
 																	// room for water in tank
-			int w = connections.get(input).SuckWater(tankCapacity - water);
+			
+			int w = connections.contains(game.map.getPipe(input)).SuckWater(tankCapacity - water);
 			if (water + w < tankCapacity)
 				water += w;
 			else
 				water = tankCapacity;
 		}
-		Skeleton.indentation--;
 
 	}
 
@@ -322,15 +403,12 @@ public class Pump extends FieldElement {
 	 * If Output is closed( = -1) Skip it
 	 */
 	public void Step2() {
-		Skeleton.Println(this.toString() + "Step2()");
-		Skeleton.indentation++;
-		if (output != -1) { // If output is open
-			int w = connections.get(output).PumpWater(water);
+		if (isWorking && output != -1) { // If pump is working and output is open
+			int w = connections.contains(game.map.getPipe(output)).PumpWater(water);
 			if (water - w >= 0)
 				water -= w;
 			else
 				water = 0;
 		}
-		Skeleton.indentation--;
 	}
 }
