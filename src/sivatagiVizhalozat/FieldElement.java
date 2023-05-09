@@ -216,10 +216,10 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 */
 	public boolean StepOn(Player p) {
 		if (p != null && !players.contains(p)) {
-			if(p.GetLocation() != null)
-				p.GetLocation().StepOff(p);
+			if(p.getLocation() != null)
+				p.getLocation().StepOff(p);
 			players.add(p);
-			p.SetLocation(this);
+			p.setLocation(this);
 			return true;
 		}
 		return false;

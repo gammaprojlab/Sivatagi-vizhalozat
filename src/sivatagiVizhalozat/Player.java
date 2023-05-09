@@ -65,7 +65,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the value of Name
 	 * @param: The value to be set
 	 * */
-	public void SetName(String n) {
+	public void setName(String n) {
 		name = n;
 	}
 	
@@ -81,7 +81,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the value of id
 	 * @param: The value to be set
 	 * */
-	public void SetId(int szam) {
+	public void setId(int szam) {
 		id = szam;
 	}
 	
@@ -97,7 +97,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the Players location.
 	 * @param: f Where the Player is.
 	 * */
-	public void SetLocation(FieldElement f) {
+	public void setLocation(FieldElement f) {
 		location = f;
 	}
 	
@@ -160,7 +160,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * The FieldElement can be gotten with this function.
 	 * @return: Returns with the players location.
 	 * */
-	public FieldElement GetLocation() {
+	public FieldElement getLocation() {
 		return location;
 	}
 
