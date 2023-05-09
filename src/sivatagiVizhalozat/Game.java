@@ -10,6 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /** 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * It stores and controls the mechanics, saboteurs and field elements present on the Playground.
  * Scores during the game are also credited to the teams by this department.
  * */
-public class Game {
+public class Game implements Serializable{
 	
 	/**
 	 * Saboteurs' points, as many spilled into the desert.

@@ -377,11 +377,11 @@ public class Pipe extends FieldElement {
 	public boolean StepOn(Player p) {
 		if(p != null) {
 			if(players.size() == 0) {
-				if(p.GetLocation() != null) {
-					p.GetLocation().StepOff(p);
+				if(p.getLocation() != null) {
+					p.getLocation().StepOff(p);
 				}
 
-				p.SetLocation(this);
+				p.setLocation(this);
 				players.add(p);
 
 				if(state == PipeSurfaceState.Slippery) {
