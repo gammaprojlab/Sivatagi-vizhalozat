@@ -283,7 +283,7 @@ public class Pipe extends FieldElement {
 				a.Add(newPipe);
 				newPipe.Add(a); newPipe.Add(p);
 				water = water/2;
-				game.AddSteppable(p);
+				game.addSteppable(p);
 				return true;
 			}
 			a.Add(this); Add(this);
@@ -360,7 +360,7 @@ public class Pipe extends FieldElement {
 	*/
 	public void Step1() {
 		if(game != null && !isGrabbed && (isPunctured || connections.size() == 1)) {
-			game.WaterSpilled(water);
+			game.addWaterSpilled(water);
 			water = 0;
 		}
 		if(state != PipeSurfaceState.Normal)  {

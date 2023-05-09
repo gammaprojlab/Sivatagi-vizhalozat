@@ -143,7 +143,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * 
 	 * @return The ArrayList of players
 	 */
-	public ArrayList<Player> GetPlayers() {
+	public ArrayList<Player> getPlayers() {
 		if (players != null) {
 			return players;
 		}
@@ -264,7 +264,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	public Pipe Disconnect(int f) { 
 		for (FieldElement p : connections) {
 			if(p.getId() == f) {
-				Pipe ret = p.Disconnect(p.GetNeigbour().indexOf(this));
+				Pipe ret = p.Disconnect(p.GetNeighbor().indexOf(this));
 				if(ret != null) {
 					return ret;
 				}
@@ -351,6 +351,9 @@ public abstract class FieldElement implements Steppable, Serializable {
 	public boolean ChangeDirection(int p1, int p2) {
 		return false;
 	}
+	
+	public void setState(PipeSurfaceState s)
+	{}
 
 	/**
 	 * The implementation of the Step1 function of the Steppable interface

@@ -62,7 +62,7 @@ public class Saboteur extends Player {
      * Makes the pipe slippery.
      **/
 	public void MakeSlippery() {
-		location.SetState(PipeSurfaceState.Slippery);
+		location.setState(PipeSurfaceState.Slippery);
 	}
 
 	/**

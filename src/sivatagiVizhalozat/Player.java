@@ -23,12 +23,12 @@ public abstract class Player implements Steppable, Serializable {
 	/** 
 	 * Tells how long the Player cannot move
 	 * */
-	private int Immobile;
+	private int immobile;
 	
 	/** 
 	 * Name of the player
 	 * */
-	private String Name;
+	private String name;
 	
 	/** 
 	 * The identification of the player
@@ -49,16 +49,16 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the value of Immobile
 	 * @param: The value to be set
 	 * */
-	public void SetImmobile(int b) {
-		Immobile = b;
+	public void setImmobile(int b) {
+		immobile = b;
 	}
 	
 	/**
 	 * Get the value of the Immobile variable
 	 * @return How long the Player cannot move
 	 */
-	public int GetImmobile() {
-		return Immobile;
+	public int getImmobile() {
+		return immobile;
 	}
 	
 	/** 
@@ -66,15 +66,15 @@ public abstract class Player implements Steppable, Serializable {
 	 * @param: The value to be set
 	 * */
 	public void SetName(String n) {
-		Name = n;
+		name = n;
 	}
 	
 	/**
 	 * Get the value of the Name variable
 	 * @return The name of the player
 	 */
-	public String GetName() {
-		return Name;
+	public String getName() {
+		return name;
 	}
 	
 	/** 
@@ -89,7 +89,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Get the value of the id variable
 	 * @return The identification of the player
 	 */
-	public int GetId() {
+	public int getId() {
 		return id;
 	}
 
@@ -105,7 +105,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Gets the Players game.
 	 * @return: game In what game is the Player in.
 	 * */
-	public Game GetGame() {
+	public Game getGame() {
 		return game;
 	}
 	
@@ -113,7 +113,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the Players game.
 	 * @param: g In what game is the Player in.
 	 * */
-	public void SetGame(Game g) {
+	public void setGame(Game g) {
 		game = g;
 	}
 	
@@ -121,8 +121,8 @@ public abstract class Player implements Steppable, Serializable {
 	 * Player class's konstruktor without parameters.
 	 * */
 	public Player() {
-		Immobile = 0;
-		Name = "";
+		immobile = 0;
+		name = "";
 		id = -1;
 		location = null;
 		game = null;
@@ -137,8 +137,8 @@ public abstract class Player implements Steppable, Serializable {
 	 * @param g The Game object where this element is created
 	 **/
 	public Player(String n, int id, FieldElement location, Game g) {
-		Immobile = 0;
-		Name = n;
+		immobile = 0;
+		name = n;
 		this.id = id;
 		game = g;
 		this.location = location;
@@ -185,15 +185,15 @@ public abstract class Player implements Steppable, Serializable {
      * It makes the pipe sticky.
      **/
     public void MakeSticky() {
-    	location.SetState(PipeSurfaceState.Sticky);
+    	location.setState(PipeSurfaceState.Sticky);
     }
 	
 	/**
 	 * The implementation of the Step1 function of the Steppable interface
 	*/
 	public void Step1() {
-		if(Immobile > 0) {
-			Immobile--;
+		if(immobile > 0) {
+			immobile--;
 		}
 	}
 	
@@ -203,8 +203,8 @@ public abstract class Player implements Steppable, Serializable {
 	 */
 	public String toString() {
 		String ret = "id: " + id
-		+ "\nname: " + Name 
-		+ "\nimmobile: " + Immobile 
+		+ "\nname: " + name 
+		+ "\nimmobile: " + immobile 
 		+ "\nlocation: " + location.getClass().getSimpleName() + location.getId();
 		
 		return ret;

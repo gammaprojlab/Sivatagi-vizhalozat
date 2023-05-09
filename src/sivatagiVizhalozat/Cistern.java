@@ -70,10 +70,7 @@ public class Cistern extends FieldElement {
 	 */
 	public Pump ProvidePump() {
 		Pump ret = new Pump();
-		if(ret != null) {
-			return ret;
-		}
-		return null;
+		return ret;
 	}
 	
 	/** 
@@ -82,7 +79,7 @@ public class Cistern extends FieldElement {
 	public void Step1() {
 		if(connections != null) {
 			for (var neighbour : connections) {
-				game.WaterCollected(neighbour.SuckWater(Integer.MAX_VALUE));
+				game.addWaterCollected(neighbour.SuckWater(Integer.MAX_VALUE));
 			}
 		}
 		if(game.getRandom()*100 > 85 && connections.size() < maxConnections) GeneratePipe();
@@ -101,7 +98,7 @@ public class Cistern extends FieldElement {
 			Pipe p = new Pipe(game);
 			p.Add(this); this.Add(p);
 			game.getMap().addFieldElement(p.getClass().getSimpleName(), p);
-			game.AddSteppable(p);
+			game.addSteppable(p);
 		}
 	}
 
