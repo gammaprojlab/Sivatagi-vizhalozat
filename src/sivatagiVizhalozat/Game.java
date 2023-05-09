@@ -39,7 +39,7 @@ public class Game implements Serializable{
 	private int tester;
 	
 
-	private ArrayList<Integer> classIdArray;
+	private int[] classIdArray;
 
 	/**
 	 * Saboteurs who play the game.
@@ -203,5 +203,13 @@ public class Game implements Serializable{
 				return 1;
 		}
 		return Math.random();
+	}
+
+	public void setIdArray(int[] array) {
+		classIdArray = array;
+	}
+
+	public int[] getIdArray() {
+		return classIdArray;
 	}
 }
