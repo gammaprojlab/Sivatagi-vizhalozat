@@ -29,11 +29,11 @@ public class CommandHandler
 	         fileIn.close();
 	         int array[] = game.getIdArray();
 	         Plumber.setNextId(array[0]);
-	         Saboteur.getNextId(array[1]);
-	         Cistern.getNextId(array[2]);
-	         Pipe.getNextId(array[3]);
-	         Pump.getNextId(array[4]);
-	         Spring.getNextId(array[5]);
+	         Saboteur.setNextId(array[1]);
+	         Cistern.setNextId(array[2]);
+	         Pipe.setNextId(array[3]);
+	         Pump.setNextId(array[4]);
+	         Spring.setNextId(array[5]);
 		}
 		catch (Exception e)
 		{
@@ -50,7 +50,7 @@ public class CommandHandler
 	{
 		try 
 		{
-			int array[] = {Plumber.getNextId(), Saboteur.getNextId(), Cistern.getNextId(), Pipe.getNextId(), Pump.getNextId(), Spring.getNextId()};
+			int array[] = {Plumber.nextId(), Saboteur.nextId(), Cistern.nextId(), Pipe.nextId(), Pump.nextId(), Spring.nextId()};
 			game.setIdArray(array);
 			FileOutputStream fileOut =
 			new FileOutputStream(path);

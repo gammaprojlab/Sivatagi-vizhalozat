@@ -109,7 +109,7 @@ public class Pump extends FieldElement {
 	/**
 	 * Set the index of the next pipe, that will be created.
 	 */
-	public void setNextId(int id) {
+	public static void setNextId(int id) {
 		nextId = id;
 	};
 
@@ -412,5 +412,9 @@ public class Pump extends FieldElement {
 					water = 0;
 			}
 		}
+	}
+
+	public static int nextId() {
+		return nextId;
 	}
 }

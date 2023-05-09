@@ -169,4 +169,13 @@ public class Plumber extends Player {
 		
 		return ret;
 	}
+
+	public static int nextId() {
+		return nextId;
+	}
+
+	public static void setNextId(int id) {
+		nextId = id;
+		
+	}
 }

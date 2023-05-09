@@ -19,7 +19,7 @@ public class Spring extends FieldElement {
 	 * Sets the value of the nextId variable
 	 * @param value The value to be set
 	 */
-	public void setNextId(int i) {
+	public static void setNextId(int i) {
 		nextId = i;
 	}
 
@@ -27,7 +27,7 @@ public class Spring extends FieldElement {
 	 * Get the value of the nextId variable
 	 * @return What's going to be the next id of this class
 	 */
-	public int nextId() {
+	public static int nextId() {
 		return nextId;
 	}
 

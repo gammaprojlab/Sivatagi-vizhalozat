@@ -27,7 +27,7 @@ public class Saboteur extends Player {
 	 * Sets the value of nextId
 	 * @param: The value to be set
 	 * */
-	public void setNextId(int id) {
+	public static void setNextId(int id) {
 		nextId = id;
 	}
 	
@@ -79,5 +79,9 @@ public class Saboteur extends Player {
 	 */
 	public String toString() {
 		return super.toString();
+	}
+
+	public static int nextId() {
+		return nextId;
 	}
 }
