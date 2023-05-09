@@ -38,7 +38,7 @@ public class Game {
 	private int tester;
 	
 
-	private ArrayList<int> classIdArray;
+	private ArrayList<Integer> classIdArray;
 
 	/**
 	 * Saboteurs who play the game.
@@ -50,6 +50,8 @@ public class Game {
 	 *  */
 	private ArrayList<Plumber> plumbers;
 	
+	private Map map = new Map();
+	
 	/////////////////////////////////////////////////////////////
 	/**
 	 * Fields of the map.
@@ -58,13 +60,16 @@ public class Game {
 	//////////////////////////////////////////////////////////////
 	
 
-
+	public Map getMap()
+	{
+		return map;
+	}
 
 	/**
-	 * Sets the Point of the Saboteurs.
+	 * sets the Point of the Saboteurs.
 	 * @param s Points to what the Saboteurs point will be set.
 	 *  */
-	public void SetspilledWater(int s) {
+	public void setspilledWater(int s) {
 		spilledWater = s;
 	}
 	
@@ -72,15 +77,15 @@ public class Game {
 	 * Gets the points of the Saboteurs.
 	 * @return spilledWater Points of the Saboteurs.
 	 *  */
-	public int GetspilledWater() {
+	public int getSpilledWater() {
 		return spilledWater;
 	}
 	
 	/**
-	 * Sets the Point of the Plumbers.
+	 * sets the Point of the Plumbers.
 	 * @param c Points to what the Plumbers point will be set.
 	 *  */
-	public void SetcollectedWater(int c) {
+	public void setCollectedWater(int c) {
 		collectedWater = c;
 	}
 	
@@ -88,7 +93,7 @@ public class Game {
 	 * Gets the points of the Plumbers.
 	 * @return collectedWater Points of the Plumbers.
 	 *  */
-	public int GetcollectedWater() {
+	public int getCollectedWater() {
 		return collectedWater;
 	}
 	
@@ -96,7 +101,7 @@ public class Game {
 	 * Adds a Saboteur to the game.
 	 * @param s Saboteur who will be playing.
 	 *  */
-	public void AddSaboteur(Saboteur s) {
+	public void addSaboteur(Saboteur s) {
 		saboteurs.add(s);
 	}
 	
@@ -104,7 +109,7 @@ public class Game {
 	 * Gets the Saboteurs who play the game.
 	 * @return saboteurs Saboteurs who play.
 	 *  */
-	public ArrayList<Saboteur> GetSaboteurs() {
+	public ArrayList<Saboteur> getSaboteurs() {
 		return saboteurs;
 	}
 
@@ -113,7 +118,7 @@ public class Game {
 	 * Adds a Plumber to the game.
 	 * @param p Plumber who will be playing.
 	 * */
-	public void AddPlumber(Plumber p) {
+	public void addPlumber(Plumber p) {
 		plumbers.add(p);
 	}
 	
@@ -121,7 +126,7 @@ public class Game {
 	 * Gets the Plumbers who play the game.
 	 * @return plumbers Plumbers who play.
 	 *  */
-	public ArrayList<Plumber> GetPlumbers() {
+	public ArrayList<Plumber> getPlumbers() {
 		return plumbers;
 	}
 	
@@ -129,7 +134,7 @@ public class Game {
 	 * Adds to the Fields.
 	 * @param s New tiel to the map.
 	 *  */
-	public void AddSteppable(Steppable s) {
+	public void addSteppable(Steppable s) {
 		steppable.add(s);
 	}
 	
@@ -137,7 +142,7 @@ public class Game {
 	 * Gets the fields of the map.
 	 * @return steppable Fields of the map.
 	 *  */
-	public ArrayList<Steppable> GetSteppable() {
+	public ArrayList<Steppable> getSteppable() {
 		return steppable;
 	}
 	
@@ -168,7 +173,7 @@ public class Game {
 	 * Adds points to the Saboteurs.
 	 * @param water The points what will be added.
 	 *  */
-	public void WaterSpilled(int water) {
+	public void addWaterSpilled(int water) {
 		spilledWater += water;
 	}
 	
@@ -176,7 +181,7 @@ public class Game {
 	 * Adds points to the Plumbers.
 	 * @param water The points what will be added.
 	 *  */
-	public void WaterCollected(int water) {
+	public void addWaterCollected(int water) {
 		collectedWater += water;
 	}
 	
@@ -184,5 +189,18 @@ public class Game {
 	* Used for testing
 	*/
 	public String toString() {
+		return"Todo";
+	}
+
+	public double getRandom() {
+		switch(tester) {
+			case -1:
+				return Math.random();
+		case 0:
+				return 0;
+			case 1:
+				return 1;
+		}
+		return Math.random();
 	}
 }

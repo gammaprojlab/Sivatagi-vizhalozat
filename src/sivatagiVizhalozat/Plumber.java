@@ -129,7 +129,7 @@ public class Plumber extends Player {
 	public void PlacePump() {
 		if(heldPump != null && location.GetNeighbor().size() == 2) {
 			if(location.Split(heldPump)) {
-				game.AddSteppable(heldPump);
+				game.addSteppable(heldPump);
 				setHeldPump(null);
 				this.PlayerMove(heldPump);
 			}
@@ -155,7 +155,6 @@ public class Plumber extends Player {
 	*/
 	@Override
 	public void Step2() {
-		Skeleton.Println(this.toString()+"Step2()");
 	}
 	
 	/**
