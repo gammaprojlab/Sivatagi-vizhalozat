@@ -70,6 +70,7 @@ public class Plumber extends Player {
 	 *  */
 	public Plumber() {
 		super();
+		id = nextId++;
 		heldPipe = null;
 		heldPump = null;
 	}

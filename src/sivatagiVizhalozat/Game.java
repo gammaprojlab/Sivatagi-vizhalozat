@@ -151,6 +151,7 @@ public class Game implements Serializable{
 	 * Konstruktor of the Game class.
 	 *  */
 	public Game() {
+		tester = -1;
 		spilledWater = 0;
 		collectedWater = 0;
 		saboteurs = new ArrayList<Saboteur>();
@@ -211,5 +212,14 @@ public class Game implements Serializable{
 
 	public int[] getIdArray() {
 		return classIdArray;
+	}
+
+	public Plumber getPlumber(int id) {
+		for (Plumber plumber: plumbers)
+		{
+			if(plumber.getId() == id)
+				return plumber;
+		}
+		return null;
 	}
 }

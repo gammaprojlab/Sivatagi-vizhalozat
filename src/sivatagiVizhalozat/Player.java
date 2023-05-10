@@ -33,7 +33,7 @@ public abstract class Player implements Steppable, Serializable {
 	/** 
 	 * The identification of the player
 	 * */
-	private int id;
+	protected int id;
 	
 	/** 
 	 * The FieldElement, which the Player is on in the game.
@@ -123,7 +123,6 @@ public abstract class Player implements Steppable, Serializable {
 	public Player() {
 		immobile = 0;
 		name = "";
-		id = -1;
 		location = null;
 		game = null;
 		
