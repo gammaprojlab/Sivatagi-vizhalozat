@@ -38,7 +38,9 @@ public class Game implements Serializable{
 	 *  */
 	private int tester;
 	
-
+	/**
+	 * The nextIds of the game elements for each class.
+	 *  */
 	private int[] classIdArray;
 
 	/**
@@ -51,6 +53,9 @@ public class Game implements Serializable{
 	 *  */
 	private ArrayList<Plumber> plumbers;
 	
+	/**
+	 * The map instance.
+	 *  */
 	private Map map = new Map();
 	
 	/////////////////////////////////////////////////////////////
@@ -60,7 +65,23 @@ public class Game implements Serializable{
 	private ArrayList<Steppable> steppable;
 	//////////////////////////////////////////////////////////////
 	
-
+	/**
+	 * The number of rounds left till the end of the game.
+	 *  */
+	private int remainingRounds;
+	
+	/**
+	 * The currently active player. This player is performing the actions currently.
+	 *  */
+	private Player activePlayer;
+	
+	
+	
+	
+	/**
+	 * Gets the map instance, that the game is currently being played on.
+	 * @return The map instance
+	 *  */
 	public Map getMap()
 	{
 		return map;
@@ -70,7 +91,7 @@ public class Game implements Serializable{
 	 * sets the Point of the Saboteurs.
 	 * @param s Points to what the Saboteurs point will be set.
 	 *  */
-	public void setspilledWater(int s) {
+	public void setSpilledWater(int s) {
 		spilledWater = s;
 	}
 	
@@ -80,6 +101,40 @@ public class Game implements Serializable{
 	 *  */
 	public int getSpilledWater() {
 		return spilledWater;
+	}
+	
+	/**
+	 * Gets the mode of the game.
+	 * @return The value of the mode of the game.
+	 *  */
+	public int getTester() {
+		return tester;
+	}
+	
+	/**
+	 * Sets the mode of the game.
+	 * @param The value of the mode of the game.
+	 *  */
+	public void getTester(int t) {
+		tester = t;
+	}
+	
+	/**
+	 * Gives the classIdArray back
+	 * @return The classIdArray.
+	 *  */
+	public int[] getClassIdArray() {
+		int[] array = null;
+		array = classIdArray;
+		return array;
+	}
+	
+	/**
+	 * Adds a value to the classIdArray.
+	 * @return The classIdArray.
+	 *  */
+	public void addClassIdArray(int i) {
+		classIdArray[classIdArray.length] = i;
 	}
 	
 	/**
@@ -148,7 +203,7 @@ public class Game implements Serializable{
 	}
 	
 	/**
-	 * Konstruktor of the Game class.
+	 * Constructor of the Game class.
 	 *  */
 	public Game() {
 		tester = -1;
@@ -157,8 +212,51 @@ public class Game implements Serializable{
 		saboteurs = new ArrayList<Saboteur>();
 		plumbers = new ArrayList<Plumber>();
 		steppable = new ArrayList<Steppable>();
+		classIdArray = new int[6];
+		map = new Map();
+		remainingRounds = 40; 						///Ez mennyi legyen?
+		activePlayer = new Plumber();  				///???
+	}
+	/**
+	 * 8 parametered constructor of the Game class.
+	 * @param spilled The amount of water spilled.
+	 * @param collected The amount of water collected.
+	 * @param t The mode of the game.
+	 * @param pl The array list of plumbers playing the game.
+	 * @param sa The array list of saboteurs playing the game.
+	 * @param st The array list of all game elements in the current game.
+	 * @param classId The array of the next id values of all game elements.
+	 * @param maxrounds The max amount of round the game will be having. At 0 the game stops.
+	 *  */
+	public Game(int spilled, int collected,int t, ArrayList<Plumber> pl, ArrayList<Saboteur> sa, ArrayList<Steppable> st,int[] classId,int maxrounds) {
+		tester = t;
+		spilledWater = spilled;
+		collectedWater = collected;
+		saboteurs = sa;
+		plumbers = pl;
+		steppable = st;
+		classIdArray = classId;
+		map = new Map();
+		remainingRounds = maxrounds;
+		activePlayer = new Plumber();  				///???
 	}
 	
+	/**
+	 * Set activePlayer to the next Player. Plumbers start and the next player is 
+	 * selected in a zig-zag pattern between the two player types.
+	 *  */
+	public void NextPlayer () 
+	{ 
+		if(plumbers.contains(activePlayer)){
+			activePlayer = saboteurs.get(activePlayer.getId());
+		}
+		else if(saboteurs.contains(activePlayer)){
+			activePlayer = plumbers.get(activePlayer.getId()+1);
+		}
+		else
+			activePlayer = plumbers.get(0);
+		
+	}
 	/**
 	 * Imitates the flow of the water.
 	 *  */
@@ -191,7 +289,10 @@ public class Game implements Serializable{
 	* Used for testing
 	*/
 	public String toString() {
-		return"Todo";
+		String data = "";
+		data = data + "spilledWater: " + spilledWater + "\n";
+		data = data + "collectedWater: " + collectedWater + "\n";
+		return data;
 	}
 
 	public double getRandom() {
