@@ -141,13 +141,10 @@ public class Plumber extends Player {
 	 * Pick up the connected Pipe element.
 	 *  */
 	public void GrabPipe() {
-		ArrayList<FieldElement> elements = location.GetNeighbor();
 		if (heldPipe == null) {
-			for(FieldElement element: elements) {
-				Pipe p = location.Grab();
-				if(!p.getIsGrabbed())
-					setHeldPipe(p);
-			}
+			Pipe p = location.Grab();
+			if(p != null)
+				setHeldPipe(p);
 		}
 	}
 
