@@ -70,6 +70,7 @@ public class Plumber extends Player {
 	 *  */
 	public Plumber() {
 		super();
+		id = nextId++;
 		heldPipe = null;
 		heldPump = null;
 	}
@@ -168,5 +169,14 @@ public class Plumber extends Player {
 				+ "\nheldPump: " + heldPump.getClass().getSimpleName();
 		
 		return ret;
+	}
+
+	public static int nextId() {
+		return nextId;
+	}
+
+	public static void setNextId(int id) {
+		nextId = id;
+		
 	}
 }

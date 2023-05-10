@@ -17,7 +17,7 @@ package sivatagiVizhalozat;
 */
 public class Pipe extends FieldElement {
 
-	static int nextId = 1;
+	private static int nextId = 1;
 	/**
 	 * Stores the state of the Pipe if it is punctured or not
 	*/
@@ -74,15 +74,15 @@ public class Pipe extends FieldElement {
 	 * Sets the value of the nextId variable
 	 * @param value The value to be set
 	 */
-	public void setNextId(int i) {
-		nextId = i;
+	public static void setNextId(int id) {
+		nextId = id;
 	}
 
 	/**
 	 * Get the value of the nextId variable
 	 * @return What's going to be the next id of this class
 	 */
-	public int nextId() {
+	public static int nextId() {
 		return nextId;
 	}
 
