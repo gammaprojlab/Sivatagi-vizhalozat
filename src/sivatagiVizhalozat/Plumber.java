@@ -164,9 +164,17 @@ public class Plumber extends Player {
 	 */
 	public String toString() {
 		String ret = super.toString();
-		ret =  ret
-				+ "\nheldPipe: " + heldPipe.getClass().getSimpleName()
-				+ "\nheldPump: " + heldPump.getClass().getSimpleName();
+		
+		ret += "\nheldPipe: ";
+		if(heldPipe != null)
+			ret += heldPipe.getClass().getSimpleName();
+		else
+			ret += "null";
+		ret += "\nheldPump: ";
+		if(heldPump != null)
+				ret += heldPump.getClass().getSimpleName();
+		else
+			ret += "null";
 		
 		return ret;
 	}

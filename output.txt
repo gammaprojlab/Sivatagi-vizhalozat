@@ -1,4 +1,12 @@
 CreateGame() Success
 Create(Plumber) Success Plumber1 created
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: null
+heldPipe: null
+heldPump: null
 ConnectPipe(Plumber1) FAILED
 SaveGame(save.txt) Success

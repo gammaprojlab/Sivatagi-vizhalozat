@@ -122,7 +122,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * */
 	public Player() {
 		immobile = 0;
-		name = "";
+		name = "Sanyi";
 		location = null;
 		game = null;
 		
@@ -204,7 +204,11 @@ public abstract class Player implements Steppable, Serializable {
 		String ret = "id: " + id
 		+ "\nname: " + name 
 		+ "\nimmobile: " + immobile 
-		+ "\nlocation: " + location.getClass().getSimpleName() + location.getId();
+		+ "\nlocation: ";
+		if(location != null)
+			ret += location.getClass().getSimpleName() + location.getId();
+		else
+			ret+= "null";
 		
 		return ret;
 	}
