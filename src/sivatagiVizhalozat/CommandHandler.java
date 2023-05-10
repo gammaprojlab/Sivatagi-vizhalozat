@@ -58,9 +58,9 @@ public class CommandHandler
 	         Plumber.setNextId(array[0]);
 	         Saboteur.setNextId(array[1]);
 	         Cistern.setNextId(array[2]);
-	         Pipe.setNextId(array[3]);
-	         Pump.setNextId(array[4]);
-	         Spring.setNextId(array[5]);
+	         Pump.setNextId(array[3]);
+	         Spring.setNextId(array[4]);
+	         Pipe.setNextId(array[5]);
 	         out.println("LoadGame(" + path + ") Success");
 	}
 	
@@ -73,7 +73,7 @@ public class CommandHandler
 	void saveGame(String path) throws IOException
 	{
 			// Saves the static id of every class to the game
-			int array[] = {Plumber.nextId(), Saboteur.nextId(), Cistern.nextId(), Pipe.nextId(), Pump.nextId(), Spring.nextId()};
+			int array[] = {Plumber.nextId(), Saboteur.nextId(), Cistern.nextId(), Pump.nextId(), Spring.nextId(), Pipe.nextId()};
 			game.setIdArray(array);
 			
 			FileOutputStream fileOut = new FileOutputStream(path);
@@ -158,6 +158,7 @@ public class CommandHandler
 		}
 		int plumberId = 0;
 		//parse int only works if the entire string is numbers so we remove every non number from the input
+		
 		plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Plumber plumber = game.getPlumber(plumberId);
 		switch(command[0])
