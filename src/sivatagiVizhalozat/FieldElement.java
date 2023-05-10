@@ -179,6 +179,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 		}
 	}
 
+
 	/**
 	 * Add a new field to connections
 	 * 
@@ -244,7 +245,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * @return The successfulness of connecting the pipe to this field
 	 */
 	public boolean Connect(Pipe p) {
-		if (p != null) {
+		if (p != null && p.getClass() != this.getClass()) {
 			ArrayList<FieldElement> pipeConnections = p.GetNeighbor();
 			if (pipeConnections.contains(this))
 				return false;
@@ -372,5 +373,10 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 */
 	public String toString() {
 		return "";
+	}
+
+	public boolean addPlayer(Player player) {
+		players.add(player);
+		return true;
 	}
 }

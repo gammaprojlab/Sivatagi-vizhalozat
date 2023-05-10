@@ -164,7 +164,7 @@ public class Plumber extends Player {
 		
 		ret += "\nheldPipe: ";
 		if(heldPipe != null)
-			ret += heldPipe.getClass().getSimpleName();
+			ret += heldPipe.getClass().getSimpleName() + heldPipe.getId();
 		else
 			ret += "null";
 		ret += "\nheldPump: ";

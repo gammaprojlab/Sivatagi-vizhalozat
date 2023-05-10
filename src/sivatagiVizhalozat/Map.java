@@ -103,5 +103,30 @@ public class Map implements Serializable {
             default: return;
         }
     }
+    
+    
+    public FieldElement getFieldElement(String str)
+    {
+    	String type = str.replaceAll("\\d", "");
+    	int id = Integer.parseInt(str.replaceAll("[\\D]", ""));
+    	switch(type)
+    	{
+    	case"Pipe":
+    		return getPipe(id);
+    	case"Pump":
+    		return getPump(id);
+    	case"Spring":
+    		return getSpring(id);
+    	case"Cistern":
+    		return getCistern(id);
+    	}
+		return null;
+    }
 
 }
+
+
+
+
+
+

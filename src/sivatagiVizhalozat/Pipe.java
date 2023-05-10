@@ -444,4 +444,11 @@ public class Pipe extends FieldElement {
 		}
 		return ret;
 	}
+	
+	public boolean addPlayer(Player player) {
+		if(players.size()>0)
+			return false;
+		players.add(player);
+		return true;
+	}
 }
