@@ -27,6 +27,6 @@ id: 1
 name: Sanyi
 immobile: 0
 location: Pipe1
-heldPipe: null
+heldPipe: Pipe2
 heldPump: null
 SaveGame(save.txt) Success

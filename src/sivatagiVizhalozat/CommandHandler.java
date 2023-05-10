@@ -168,7 +168,7 @@ public class CommandHandler
 			out.println(plumber.toString());
 			break;
 		case"Move":
-			//plumber.PlayerMove(game.getFieldElement(arguments[1]));
+			plumber.PlayerMove(game.getMap().getFieldElement(arguments[1]));
 			out.println(" Success");
 			break;
 		case"ConnectPipe":
@@ -248,7 +248,13 @@ public class CommandHandler
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
 		
-		
+		if(command[0].equals("Create"))
+		{
+			Saboteur newSaboteur = new Saboteur();
+			game.addSaboteur(newSaboteur);
+			out.println(cmd + " Success Saboteur" + newSaboteur.getId() + " created");
+			return;
+		}
 		
 		
 		
@@ -261,6 +267,13 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		
+		if(command[0].equals("Create"))
+		{
+			Cistern newCistern = new Cistern(game);
+			out.println(cmd + " Success Cistern" + newCistern.getId() + " created");
+			return;
+		}
 	}
 	
 	void pumpHandler(String cmd)
@@ -269,6 +282,13 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		
+		if(command[0].equals("Create"))
+		{
+			Pump newPump = new Pump(game);
+			out.println(cmd + " Success Pump" + newPump.getId() + " created");
+			return;
+		}
 	}
 	
 	void springHandler(String cmd)
@@ -277,6 +297,13 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		
+		if(command[0].equals("Create"))
+		{
+			Spring newSpring = new Spring(game);
+			out.println(cmd + " Success Spring" + newSpring.getId() + " created");
+			return;
+		}
 	}
 	
 	void pipeHandler(String cmd)
@@ -288,9 +315,7 @@ public class CommandHandler
 		
 		if(command[0].equals("Create"))
 		{
-			Pipe newPipe = new Pipe();
-			game.getMap().addFieldElement("Pipe", newPipe);
-			game.addSteppable(newPipe);
+			Pipe newPipe = new Pipe(game);
 			out.println(cmd + " Success Pipe" + newPipe.getId() + " created");
 			return;
 		}
