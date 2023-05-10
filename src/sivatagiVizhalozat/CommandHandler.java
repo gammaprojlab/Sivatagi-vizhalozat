@@ -147,6 +147,8 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		
+		
 		if(command[0].equals("Create"))
 		{
 			Plumber newPlumber = new Plumber();
@@ -167,34 +169,70 @@ public class CommandHandler
 			break;
 		case"Move":
 			//plumber.PlayerMove(game.getFieldElement(arguments[1]));
+			out.println(" Success");
+			break;
 		case"ConnectPipe":
 			// needs a bool return to see success and then we can check with an if else statement
 			plumber.ConnectPipe();
+			out.println(cmd + " Success");
 			break;
 		case"DisconnectPipe":
 			plumber.DisconnectPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
+			out.println(cmd + " Success");
 			break;
 		case"TakePump":
 			plumber.TakePump();
+			out.println(cmd + " Success");
+			break;
 		case"PlacePump":
 			plumber.PlacePump();
+			out.println(cmd + " Success");
+			break;
 		case"GrabPipe":
 			plumber.GrabPipe();
+			out.println(cmd + " Success");
+			break;
 		case"PumpDirection":
 			if(arguments[1].equals("close"))
 				plumber.PumpDirection(-1,-1);
 			else
 				plumber.PumpDirection(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")), Integer.parseInt(arguments[2].replaceAll("[\\D]", "")));
+			out.println(cmd + " Success");
+			break;
 		case"Puncture":
 			plumber.PuncturePipe();
+			out.println(cmd + " Success");
+			break;
 		default:
 			if(command[0].contains("Set"))
 			{
 				String attribute = command[0].substring(3);
 				switch(attribute)
 				{
+				case"Location":
+					plumber.setLocation(game.getMap().getFieldElement(arguments[1]));
+					out.println(cmd + " Success");
+					break;
+				case"HeldPipe":
+					int pipeId =Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
+					plumber.setHeldPipe(game.getMap().getPipe(pipeId));
+					out.println(cmd + " Success");
+					break;
+				case"HeldPump":
+					int pumpId =Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
+					plumber.setHeldPump(game.getMap().getPump(pumpId));
+					out.println(cmd + " Success");
+					break;
+				case"Immobile":
+					plumber.setImmobile(Integer.parseInt(arguments[1]));
+					out.println(cmd + " Success");
+					break;
+				case"Name":
+					plumber.setName(arguments[1]);
+					out.println(cmd + " Success");
+					break;
 					//cases
-				
+					
 				
 				
 				}
@@ -209,6 +247,12 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		
+		
+		
+		
+		
+		
 	}
 	
 	void cisternHandler(String cmd)
@@ -241,6 +285,19 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		
+		if(command[0].equals("Create"))
+		{
+			Pipe newPipe = new Pipe();
+			game.getMap().addFieldElement("Pipe", newPipe);
+			game.addSteppable(newPipe);
+			out.println(cmd + " Success Pipe" + newPipe.getId() + " created");
+			return;
+		}
+		
+		
+		
+		
 	}
 	
 	void gameHandler(String cmd)

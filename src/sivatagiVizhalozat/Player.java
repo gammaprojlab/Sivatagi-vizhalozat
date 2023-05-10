@@ -94,11 +94,13 @@ public abstract class Player implements Steppable, Serializable {
 	}
 
 	/** 
-	 * Sets the Players location.
+	 * Sets the Players location, and also adds the player to the locations player list
 	 * @param: f Where the Player is.
 	 * */
 	public void setLocation(FieldElement f) {
+		f.addPlayer(this);
 		location = f;
+		
 	}
 	
 	/** 

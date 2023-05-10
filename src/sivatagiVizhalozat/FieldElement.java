@@ -373,4 +373,9 @@ public abstract class FieldElement implements Steppable, Serializable {
 	public String toString() {
 		return "";
 	}
+
+	public boolean addPlayer(Player player) {
+		players.add(player);
+		return true;
+	}
 }
