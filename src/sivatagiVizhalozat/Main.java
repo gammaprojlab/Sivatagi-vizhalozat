@@ -9,6 +9,7 @@ public class Main {
 		CommandHandler handler = new CommandHandler();
 		handler.executeCommand("CreateGame()");
 		handler.executeCommand("Create(Plumber)");
+		handler.executeCommand("ListParams(Plumber1)");
 		handler.executeCommand("ConnectPipe(Plumber1)");
 		handler.executeCommand("SaveGame(save.txt)");
 	}

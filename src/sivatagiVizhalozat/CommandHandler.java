@@ -160,15 +160,46 @@ public class CommandHandler
 		Plumber plumber = game.getPlumber(plumberId);
 		switch(command[0])
 		{
-			
+		case"ListParams":
+			out.println(arguments[0]+":");
+			out.println();
+			out.println(plumber.toString());
+			break;
+		case"Move":
+			//plumber.PlayerMove(game.getFieldElement(arguments[1]));
 		case"ConnectPipe":
 			// needs a bool return to see success and then we can check with an if else statement
 			plumber.ConnectPipe();
 			break;
 		case"DisconnectPipe":
-			plumber.DisconnectPipe(Integer.parseInt(arguments[1]));
+			plumber.DisconnectPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
 			break;
-		
+		case"TakePump":
+			plumber.TakePump();
+		case"PlacePump":
+			plumber.PlacePump();
+		case"GrabPipe":
+			plumber.GrabPipe();
+		case"PumpDirection":
+			if(arguments[1].equals("close"))
+				plumber.PumpDirection(-1,-1);
+			else
+				plumber.PumpDirection(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")), Integer.parseInt(arguments[2].replaceAll("[\\D]", "")));
+		case"Puncture":
+			plumber.PuncturePipe();
+		default:
+			if(command[0].contains("Set"))
+			{
+				String attribute = command[0].substring(3);
+				switch(attribute)
+				{
+					//cases
+				
+				
+				
+				}
+			}
+			
 		}
 	}
 	
