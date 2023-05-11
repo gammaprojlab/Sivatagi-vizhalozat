@@ -85,6 +85,47 @@ public class CommandHandler
 
 	}
 	
+	/**
+	 * Read the test input from console, write the test output to output.txt.
+	 */
+	public void TestMenu() {
+		boolean end = false;
+		int testCount = 1;
+		Scanner in = new Scanner(System.in);
+		//exit from test mode on "exit\n\n"
+		while(!end) {
+			out.println("\nTest" + testCount + ": ");
+			testCount++;
+			
+			//the next line should not be read
+			boolean noMoreLines = false;
+			while(in.hasNextLine() && !noMoreLines) {
+				String sor = in.nextLine();
+				if(sor.equals("exit")) {
+					end = true;
+					noMoreLines = true;
+				} else if(sor.equals("")) {
+					//new game
+					game = null;
+					
+					//reset the static variables
+					Cistern.setNextId(1);
+					Pipe.setNextId(1);
+					Plumber.setNextId(1);
+					Pump.setNextId(1);
+					Saboteur.setNextId(1);
+					Spring.setNextId(1);
+					
+					noMoreLines = true;
+				} else {
+					executeCommand(sor);
+				}
+			}
+			
+		}
+		in.close();
+	}
+	
 	void executeCommand(String cmd)
 	{
 		try {
