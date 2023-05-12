@@ -73,14 +73,14 @@ public class Spring extends FieldElement {
 	 */
 	public String toString() {
 		String ret = "id: " + getId()
-		+ "\nmaxConnections: " + ((maxConnections < Integer.MAX_VALUE) ? maxConnections : "infinte")  
-		+ "\nconnections: ";
+		+ "\nmaxConnections: " + ((maxConnections < Integer.MAX_VALUE) ? maxConnections : "infinite")  
+		+ "\nconnections:";
 		for (FieldElement neighbour : connections) {
 			ret = ret.concat("\n");
 			ret = ret.concat(neighbour.getClass().getSimpleName());
 			ret = ret.concat(Integer.toString(neighbour.getId()));
 		}
-		ret = ret.concat("\nplayers: ");
+		ret = ret.concat("\nplayers:");
 		for (Player player : players) {
 			ret = ret.concat("\n");
 			ret = ret.concat(player.getClass().getSimpleName());
