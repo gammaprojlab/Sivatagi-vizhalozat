@@ -323,4 +323,12 @@ public class Game implements Serializable{
 		}
 		return null;
 	}
+
+	public void setTester(int mode) {
+		tester = mode;
+	}
+
+	public void setRemainingRounds(int remaining) {
+		remainingRounds = remaining;	
+	}
 }

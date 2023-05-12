@@ -156,7 +156,7 @@ public class CommandHandler
 				break;
 			case"Tick":
 				game.Tick();
-				//ther is no way to check this commend so it just writes success every time
+				//there is no way to check this command so it just writes success every time
 				out.println(cmd + " Success");
 				break;
 		}
@@ -315,6 +315,32 @@ public class CommandHandler
 			out.println(cmd + " Success Cistern" + newCistern.getId() + " created");
 			return;
 		}
+		int cisternId = 0;
+		//parse int only works if the entire string is numbers so we remove every non number from the input
+		cisternId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
+		Cistern cistern = game.getMap().getCistern(cisternId);
+		switch(command[0])
+		{
+		case"ListParams":
+			out.println(arguments[0]+":");
+			out.println();
+			out.println(cistern.toString());
+			break;
+		case"Connect":
+			Pipe pipe = game.getMap().getPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
+			if(cistern.Connect(pipe))
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILURE");
+			break;
+		case"Disconnect":
+			if(cistern.Disconnect(Integer.parseInt(arguments[1].replaceAll("[\\D]", ""))) != null)
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILURE");
+			break;
+		default:			
+		}
 	}
 	
 	void pumpHandler(String cmd)
@@ -345,6 +371,32 @@ public class CommandHandler
 			out.println(cmd + " Success Spring" + newSpring.getId() + " created");
 			return;
 		}
+		int springId = 0;
+		//parse int only works if the entire string is numbers so we remove every non number from the input
+		springId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
+		Spring spring = game.getMap().getSpring(springId);
+		switch(command[0])
+		{
+		case"ListParams":
+			out.println(arguments[0]+":");
+			out.println();
+			out.println(spring.toString());
+			break;
+		case"Connect":
+			Pipe pipe = game.getMap().getPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
+			if(spring.Connect(pipe))
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILURE");
+			break;
+		case"Disconnect":
+			if(spring.Disconnect(Integer.parseInt(arguments[1].replaceAll("[\\D]", ""))) != null)
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILURE");
+			break;
+		default:
+		}
 	}
 	
 	void pipeHandler(String cmd)
@@ -372,6 +424,53 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+		if(command[0].equals("Create"))
+		{
+			game = new Game();
+			out.println(cmd + " Success Game created");
+			return;
+		}
+		int plumberId = 0;
+		//parse int only works if the entire string is numbers so we remove every non number from the input
+		plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
+		Plumber plumber = game.getPlumber(plumberId);
+		switch(command[0])
+		{
+		case"ListParams":
+			out.println(arguments[0]+":");
+			out.println();
+			out.println(game.toString());
+			break;
+		default:
+			if(command[0].contains("Set"))
+			{
+				String attribute = command[0].substring(3);
+				switch(attribute)
+				{
+				case"spilledWater":
+					int sWater = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));  //arguments[0] maybe?
+					game.setSpilledWater(sWater);
+					out.println(cmd + " Success");
+					break;
+				case"collectedWater":
+					int cWater = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));  //arguments[0] maybe?
+					game.setSpilledWater(cWater);
+					out.println(cmd + " Success");
+					break;
+				case"Tester":
+					int tester = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));  //arguments[0] maybe?
+					game.setTester(tester);
+					out.println(cmd + " Success");
+					break;
+				case"remainingRounds":
+					int remaining = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));  //arguments[0] maybe?
+					game.setRemainingRounds(remaining);
+					out.println(cmd + " Success");
+					break;			
+				}
+			}
+			
+		}
 	}
 	
 }
