@@ -240,6 +240,7 @@ public class CommandHandler
 			plumberHandler(cmd);
 		else if(arguments[0].contains("Saboteur"))
 			saboteurHandler(cmd);
+		else gameHandler(cmd);
 		}
 		catch(Exception e)
 		{
@@ -705,15 +706,19 @@ public class CommandHandler
 			case"Duration":
 				pipe.setDuration(Integer.parseInt(arguments[1]));
 				out.println(cmd + " Success");
+				break;
 			case"Capactiy": 
 				pipe.setCapacity(Integer.parseInt(arguments[1]));
 				out.println(cmd + " Success");
+				break;
 			case"Unpuncturable":
 				pipe.setUnpuncturable(Integer.parseInt(arguments[1]));
 				out.println(cmd + " Success");
+				break;
 			case"Water": 
 				pipe.setWater(Integer.parseInt(arguments[1]));
 				out.println(cmd + " Success");
+				break;
 			}
 		}
 		else
@@ -740,11 +745,14 @@ public class CommandHandler
 		Plumber plumber = game.getPlumber(plumberId);
 		switch(command[0])
 		{
-		case"ListParams":
-			out.println(arguments[0]+":");
-			out.println();
-			out.println(game.toString());
-			break;
+			case"ListParams":
+				out.println(arguments[0]+":");
+				out.println();
+				out.println(game.toString());
+				break;
+			case "Random":
+				game.setTester((arguments[0].equals("true") ? 1 : 0));
+				break;
 		default:
 			if(command[0].contains("Set"))
 			{
