@@ -353,8 +353,10 @@ public abstract class FieldElement implements Steppable, Serializable {
 		return false;
 	}
 	
-	public void setState(PipeSurfaceState s)
-	{}
+	public boolean setState(PipeSurfaceState s)
+	{
+		return false;
+	}
 
 	/**
 	 * The implementation of the Step1 function of the Steppable interface

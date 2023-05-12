@@ -99,53 +99,76 @@ public class Plumber extends Player {
 	
 	/**
 	 * Connects the Pipe to the FieldElement.
+	 * @return 
 	 *  */
-	public void ConnectPipe() {
+	public boolean ConnectPipe() {
 		if(location.Connect(heldPipe)) {
 			heldPipe = null;
+			return true;
 		}
+		return false;
 	}
 	
 	/**
 	 * Disconnects the Pipe from the FieldElement.
+	 * Can only be done when the Plumber holds no Pipe.
+	 * After disconnecting the Pipe the Plumber adds it as its held pipe
 	 * @param p The pipe what the player wants to disconnect.
+	 * @return 
 	 *  */
-	public void DisconnectPipe(int p) {
-		location.Disconnect(p);
+	public boolean DisconnectPipe(int p) {
+		if(heldPipe == null) 
+		{
+			heldPipe = location.Disconnect(p);
+			return true;
+		}
+		return false;
 	}
 	
 	/**
 	 * Takes the pump from the Cistern.
+	 * @return 
 	 *  */
-	public void TakePump() {
-		if(getHeldPump() == null) {
+	public boolean TakePump() {
+		if(heldPump == null) {
 			Pump p = location.ProvidePump();
-			setHeldPump(p);
+			if(p != null) {
+				setHeldPump(p);
+				return true;
+			}
 		}
+		return false;
 	}
 	
 	/**
 	 * Places the Pump to the pipe, which splits the pipe.
+	 * @return 
 	 *  */
-	public void PlacePump() {
+	public boolean PlacePump() {
 		if(heldPump != null && location.GetNeighbor().size() == 2) {
 			if(location.Split(heldPump)) {
 				game.addSteppable(heldPump);
 				setHeldPump(null);
-				this.PlayerMove(heldPump);
+				if(this.PlayerMove(heldPump))
+					return true;
 			}
 		}
+		return false;
 	}
 	
 	/**
 	 * Pick up the connected Pipe element.
+	 * @return 
 	 *  */
-	public void GrabPipe() {
+	public boolean GrabPipe() {
 		if (heldPipe == null) {
 			Pipe p = location.Grab();
-			if(p != null)
+			if(p != null) {
 				setHeldPipe(p);
+				return true;
+			}
 		}
+		return false;
 	}
 
 	/** 
