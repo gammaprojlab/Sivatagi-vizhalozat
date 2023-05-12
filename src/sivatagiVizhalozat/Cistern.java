@@ -109,7 +109,7 @@ public class Cistern extends FieldElement {
 	public String toString() {
 		String ret = "id: " + getId()
 		+ "\nmaxConnections: " + ((maxConnections < Integer.MAX_VALUE) ? maxConnections : "infinte")  
-		+ "connections: ";
+		+ "\nconnections: ";
 		for (FieldElement neighbour : connections) {
 			ret = ret.concat("\n");
 			ret = ret.concat(neighbour.getClass().getSimpleName());
