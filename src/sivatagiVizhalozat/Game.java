@@ -324,6 +324,15 @@ public class Game implements Serializable{
 		return null;
 	}
 
+	public Saboteur getSaboteur(int id) {
+		for (Saboteur saboteur: saboteurs)
+		{
+			if(saboteur.getId() == id)
+				return saboteur;
+		}
+		return null;
+	}
+	
 	public void setTester(int mode) {
 		tester = mode;
 	}
@@ -331,4 +340,6 @@ public class Game implements Serializable{
 	public void setRemainingRounds(int remaining) {
 		remainingRounds = remaining;	
 	}
+
+
 }

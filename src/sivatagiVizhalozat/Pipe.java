@@ -153,8 +153,9 @@ public class Pipe extends FieldElement {
 	/**
 	 * Sets the state of the pipe, and if state is not normal sets the duration
 	 * @param s The state the pipe is going to be set to
+	 * @return 
 	 */
-	public void setState(PipeSurfaceState s) {
+	public boolean setState(PipeSurfaceState s) {
 		if(state == PipeSurfaceState.Normal) {
 			if(s != PipeSurfaceState.Normal) {
 			duration = (int)Math.round(game.getRandom()*10);
@@ -166,6 +167,7 @@ public class Pipe extends FieldElement {
 				duration = 0;
 			}
 		}
+		return true;
 	}
 
 	/**

@@ -148,13 +148,16 @@ public abstract class Player implements Steppable, Serializable {
 	/**
 	 * Moves the Player to a specific FieldElement.
 	 * @param: f The FieldElement where the Player will be put.
+	 * @return if movement was successful
 	 *  */
-	public void PlayerMove(FieldElement f) {
+	public boolean PlayerMove(FieldElement f) {
 		ArrayList<FieldElement> fields = location.GetNeighbor();
 
 		if (fields.contains(f)) {
 			f.StepOn(this);
+			return true;
 		}
+		return false;
 	}
 	
 	/** 
@@ -169,24 +172,27 @@ public abstract class Player implements Steppable, Serializable {
 	 * Changes the direction, from where and to where the Pump will pump the water.
 	 * @param: input From where the Pump suck the water out.
 	 * @param: output To where the Pump pumps the water.
+	 * @return if direction change was successful
 	 *  */
-	public void PumpDirection(int input, int output) {
-		location.ChangeDirection(input, output);
+	public boolean PumpDirection(int input, int output) {
+		return location.ChangeDirection(input, output);
 	}
 	
 	/**
      * Punctures the location, where the player is standing.
+	 * @return if punctureing was successful
      **/
-    public void PuncturePipe() {
-    	location.Puncture();
+    public boolean PuncturePipe() {
+    	return location.Puncture();
 	}
     
     
     /**
      * It makes the pipe sticky.
+     * @return 
      **/
-    public void MakeSticky() {
-    	location.setState(PipeSurfaceState.Sticky);
+    public boolean MakeSticky() {
+    	return location.setState(PipeSurfaceState.Sticky);
     }
 	
 	/**
