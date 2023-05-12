@@ -23,17 +23,17 @@ public abstract class Player implements Steppable, Serializable {
 	/** 
 	 * Tells how long the Player cannot move
 	 * */
-	private int Immobile;
+	private int immobile;
 	
 	/** 
 	 * Name of the player
 	 * */
-	private String Name;
+	private String name;
 	
 	/** 
 	 * The identification of the player
 	 * */
-	private int id;
+	protected int id;
 	
 	/** 
 	 * The FieldElement, which the Player is on in the game.
@@ -49,39 +49,39 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the value of Immobile
 	 * @param: The value to be set
 	 * */
-	public void SetImmobile(int b) {
-		Immobile = b;
+	public void setImmobile(int b) {
+		immobile = b;
 	}
 	
 	/**
 	 * Get the value of the Immobile variable
 	 * @return How long the Player cannot move
 	 */
-	public int GetImmobile() {
-		return Immobile;
+	public int getImmobile() {
+		return immobile;
 	}
 	
 	/** 
 	 * Sets the value of Name
 	 * @param: The value to be set
 	 * */
-	public void SetName(String n) {
-		Name = n;
+	public void setName(String n) {
+		name = n;
 	}
 	
 	/**
 	 * Get the value of the Name variable
 	 * @return The name of the player
 	 */
-	public String GetName() {
-		return Name;
+	public String getName() {
+		return name;
 	}
 	
 	/** 
 	 * Sets the value of id
 	 * @param: The value to be set
 	 * */
-	public void SetId(int szam) {
+	public void setId(int szam) {
 		id = szam;
 	}
 	
@@ -89,23 +89,25 @@ public abstract class Player implements Steppable, Serializable {
 	 * Get the value of the id variable
 	 * @return The identification of the player
 	 */
-	public int GetId() {
+	public int getId() {
 		return id;
 	}
 
 	/** 
-	 * Sets the Players location.
+	 * Sets the Players location, and also adds the player to the locations player list
 	 * @param: f Where the Player is.
 	 * */
-	public void SetLocation(FieldElement f) {
+	public void setLocation(FieldElement f) {
+		f.addPlayer(this);
 		location = f;
+		
 	}
 	
 	/** 
 	 * Gets the Players game.
 	 * @return: game In what game is the Player in.
 	 * */
-	public Game GetGame() {
+	public Game getGame() {
 		return game;
 	}
 	
@@ -113,7 +115,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Sets the Players game.
 	 * @param: g In what game is the Player in.
 	 * */
-	public void SetGame(Game g) {
+	public void setGame(Game g) {
 		game = g;
 	}
 	
@@ -121,9 +123,8 @@ public abstract class Player implements Steppable, Serializable {
 	 * Player class's konstruktor without parameters.
 	 * */
 	public Player() {
-		Immobile = 0;
-		Name = "";
-		id = -1;
+		immobile = 0;
+		name = "Sanyi";
 		location = null;
 		game = null;
 		
@@ -137,8 +138,8 @@ public abstract class Player implements Steppable, Serializable {
 	 * @param g The Game object where this element is created
 	 **/
 	public Player(String n, int id, FieldElement location, Game g) {
-		Immobile = 0;
-		Name = n;
+		immobile = 0;
+		name = n;
 		this.id = id;
 		game = g;
 		this.location = location;
@@ -160,7 +161,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * The FieldElement can be gotten with this function.
 	 * @return: Returns with the players location.
 	 * */
-	public FieldElement GetLocation() {
+	public FieldElement getLocation() {
 		return location;
 	}
 
@@ -185,15 +186,15 @@ public abstract class Player implements Steppable, Serializable {
      * It makes the pipe sticky.
      **/
     public void MakeSticky() {
-    	location.SetState(PipeSurfaceState.Sticky);
+    	location.setState(PipeSurfaceState.Sticky);
     }
 	
 	/**
 	 * The implementation of the Step1 function of the Steppable interface
 	*/
 	public void Step1() {
-		if(Immobile > 0) {
-			Immobile--;
+		if(immobile > 0) {
+			immobile--;
 		}
 	}
 	
@@ -203,9 +204,13 @@ public abstract class Player implements Steppable, Serializable {
 	 */
 	public String toString() {
 		String ret = "id: " + id
-		+ "\nname: " + Name 
-		+ "\nimmobile: " + Immobile 
-		+ "\nlocation: " + location.getClass().getSimpleName() + location.getId();
+		+ "\nname: " + name 
+		+ "\nimmobile: " + immobile 
+		+ "\nlocation: ";
+		if(location != null)
+			ret += location.getClass().getSimpleName() + location.getId();
+		else
+			ret+= "null";
 		
 		return ret;
 	}

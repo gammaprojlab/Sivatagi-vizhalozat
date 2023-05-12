@@ -1,5 +1,5 @@
 package sivatagiVizhalozat;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +40,7 @@ public class Map implements Serializable {
      */
     public Cistern getCistern(int id) {
         for (Cistern cistern : cisterns) {
-            if(Cistern.getId() == id) {
+            if(cistern.getId() == id) {
                 return cistern;
             }
         }
@@ -81,7 +81,7 @@ public class Map implements Serializable {
      * @return The Spring object
      */
     public Spring getSpring(int id) {
-        for (Spring spring : Springs) {
+        for (Spring spring : springs) {
             if(spring.getId() == id) {
                 return spring;
             }
@@ -94,14 +94,45 @@ public class Map implements Serializable {
     * @param type The type of the object we want to add to the Map
     * @param field The object we want to add to the Map
     */
-    public void addFieldElement(string type, FieldElement field) {
+    public void addFieldElement(String type, FieldElement field) {
         switch (type) {
-            case "Pipe": if(!pipes.contains(field)) pipes.add(field); break;
-            case "Pump": if(!pumps.contains(field)) pumps.add(field); break;
-            case "Spring": if(!springs.contains(field)) springs.add(field); break;
-            case "Cistern": if(!cisterns.contains(field)) cisterns.add(field); break;
+            case "Pipe": if(!pipes.contains(field)) pipes.add((Pipe) field); break;
+            case "Pump": if(!pumps.contains(field)) pumps.add((Pump) field); break;
+            case "Spring": if(!springs.contains(field)) springs.add((Spring) field); break;
+            case "Cistern": if(!cisterns.contains(field)) cisterns.add((Cistern) field); break;
             default: return;
         }
     }
+    
+    
+    /**
+     * Gets the field element.
+     *
+     * @param str the str
+     * @return the field element
+     */
+    public FieldElement getFieldElement(String str)
+    {
+    	String type = str.replaceAll("\\d", "");
+    	int id = Integer.parseInt(str.replaceAll("[\\D]", ""));
+    	switch(type)
+    	{
+    	case"Pipe":
+    		return getPipe(id);
+    	case"Pump":
+    		return getPump(id);
+    	case"Spring":
+    		return getSpring(id);
+    	case"Cistern":
+    		return getCistern(id);
+    	}
+		return null;
+    }
 
 }
+
+
+
+
+
+

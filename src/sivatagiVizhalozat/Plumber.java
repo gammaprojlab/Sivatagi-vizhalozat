@@ -70,6 +70,7 @@ public class Plumber extends Player {
 	 *  */
 	public Plumber() {
 		super();
+		id = nextId++;
 		heldPipe = null;
 		heldPump = null;
 	}
@@ -129,7 +130,7 @@ public class Plumber extends Player {
 	public void PlacePump() {
 		if(heldPump != null && location.GetNeighbor().size() == 2) {
 			if(location.Split(heldPump)) {
-				game.AddSteppable(heldPump);
+				game.addSteppable(heldPump);
 				setHeldPump(null);
 				this.PlayerMove(heldPump);
 			}
@@ -140,13 +141,10 @@ public class Plumber extends Player {
 	 * Pick up the connected Pipe element.
 	 *  */
 	public void GrabPipe() {
-		ArrayList<FieldElement> elements = location.GetNeighbor();
 		if (heldPipe == null) {
-			for(FieldElement element: elements) {
-				Pipe p = location.Grab();
-				if(!p.getIsGrabbed())
-					setHeldPipe(p);
-			}
+			Pipe p = location.Grab();
+			if(p != null)
+				setHeldPipe(p);
 		}
 	}
 
@@ -155,7 +153,6 @@ public class Plumber extends Player {
 	*/
 	@Override
 	public void Step2() {
-		Skeleton.Println(this.toString()+"Step2()");
 	}
 	
 	/**
@@ -164,10 +161,27 @@ public class Plumber extends Player {
 	 */
 	public String toString() {
 		String ret = super.toString();
-		ret =  ret
-				+ "\nheldPipe: " + heldPipe.getClass().getSimpleName()
-				+ "\nheldPump: " + heldPump.getClass().getSimpleName();
+		
+		ret += "\nheldPipe: ";
+		if(heldPipe != null)
+			ret += heldPipe.getClass().getSimpleName() + heldPipe.getId();
+		else
+			ret += "null";
+		ret += "\nheldPump: ";
+		if(heldPump != null)
+				ret += heldPump.getClass().getSimpleName();
+		else
+			ret += "null";
 		
 		return ret;
+	}
+
+	public static int nextId() {
+		return nextId;
+	}
+
+	public static void setNextId(int id) {
+		nextId = id;
+		
 	}
 }

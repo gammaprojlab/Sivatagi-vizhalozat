@@ -17,7 +17,7 @@ package sivatagiVizhalozat;
 */
 public class Pipe extends FieldElement {
 
-	static int nextId = 1;
+	private static int nextId = 1;
 	/**
 	 * Stores the state of the Pipe if it is punctured or not
 	*/
@@ -74,15 +74,15 @@ public class Pipe extends FieldElement {
 	 * Sets the value of the nextId variable
 	 * @param value The value to be set
 	 */
-	public void setNextId(int i) {
-		nextId = i;
+	public static void setNextId(int id) {
+		nextId = id;
 	}
 
 	/**
 	 * Get the value of the nextId variable
 	 * @return What's going to be the next id of this class
 	 */
-	public int nextId() {
+	public static int nextId() {
 		return nextId;
 	}
 
@@ -283,7 +283,7 @@ public class Pipe extends FieldElement {
 				a.Add(newPipe);
 				newPipe.Add(a); newPipe.Add(p);
 				water = water/2;
-				game.AddSteppable(p);
+				game.addSteppable(p);
 				return true;
 			}
 			a.Add(this); Add(this);
@@ -360,7 +360,7 @@ public class Pipe extends FieldElement {
 	*/
 	public void Step1() {
 		if(game != null && !isGrabbed && (isPunctured || connections.size() == 1)) {
-			game.WaterSpilled(water);
+			game.addWaterSpilled(water);
 			water = 0;
 		}
 		if(state != PipeSurfaceState.Normal)  {
@@ -377,11 +377,11 @@ public class Pipe extends FieldElement {
 	public boolean StepOn(Player p) {
 		if(p != null) {
 			if(players.size() == 0) {
-				if(p.GetLocation() != null) {
-					p.GetLocation().StepOff(p);
+				if(p.getLocation() != null) {
+					p.getLocation().StepOff(p);
 				}
 
-				p.SetLocation(this);
+				p.setLocation(this);
 				players.add(p);
 
 				if(state == PipeSurfaceState.Slippery) {
@@ -443,5 +443,12 @@ public class Pipe extends FieldElement {
 			ret = ret.concat(Integer.toString(player.getId()));
 		}
 		return ret;
+	}
+	
+	public boolean addPlayer(Player player) {
+		if(players.size()>0)
+			return false;
+		players.add(player);
+		return true;
 	}
 }

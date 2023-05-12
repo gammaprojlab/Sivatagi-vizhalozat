@@ -143,7 +143,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * 
 	 * @return The ArrayList of players
 	 */
-	public ArrayList<Player> GetPlayers() {
+	public ArrayList<Player> getPlayers() {
 		if (players != null) {
 			return players;
 		}
@@ -178,6 +178,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 			game = null;
 		}
 	}
+
 
 	/**
 	 * Add a new field to connections
@@ -216,10 +217,10 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 */
 	public boolean StepOn(Player p) {
 		if (p != null && !players.contains(p)) {
-			if(p.GetLocation() != null)
-				p.GetLocation().StepOff(p);
+			if(p.getLocation() != null)
+				p.getLocation().StepOff(p);
 			players.add(p);
-			p.SetLocation(this);
+			p.setLocation(this);
 			return true;
 		}
 		return false;
@@ -244,7 +245,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * @return The successfulness of connecting the pipe to this field
 	 */
 	public boolean Connect(Pipe p) {
-		if (p != null) {
+		if (p != null && p.getClass() != this.getClass()) {
 			ArrayList<FieldElement> pipeConnections = p.GetNeighbor();
 			if (pipeConnections.contains(this))
 				return false;
@@ -264,7 +265,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	public Pipe Disconnect(int f) { 
 		for (FieldElement p : connections) {
 			if(p.getId() == f) {
-				Pipe ret = p.Disconnect(p.GetNeigbour().indexOf(this));
+				Pipe ret = p.Disconnect(p.GetNeighbor().indexOf(this));
 				if(ret != null) {
 					return ret;
 				}
@@ -351,6 +352,9 @@ public abstract class FieldElement implements Steppable, Serializable {
 	public boolean ChangeDirection(int p1, int p2) {
 		return false;
 	}
+	
+	public void setState(PipeSurfaceState s)
+	{}
 
 	/**
 	 * The implementation of the Step1 function of the Steppable interface
@@ -369,5 +373,10 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 */
 	public String toString() {
 		return "";
+	}
+
+	public boolean addPlayer(Player player) {
+		players.add(player);
+		return true;
 	}
 }

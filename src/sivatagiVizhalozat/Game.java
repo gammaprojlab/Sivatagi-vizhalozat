@@ -10,6 +10,7 @@ package sivatagiVizhalozat;
 //
 //
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /** 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * It stores and controls the mechanics, saboteurs and field elements present on the Playground.
  * Scores during the game are also credited to the teams by this department.
  * */
-public class Game {
+public class Game implements Serializable{
 	
 	/**
 	 * Saboteurs' points, as many spilled into the desert.
@@ -37,8 +38,10 @@ public class Game {
 	 *  */
 	private int tester;
 	
-
-	private ArrayList<int> classIdArray;
+	/**
+	 * The nextIds of the game elements for each class.
+	 *  */
+	private int[] classIdArray;
 
 	/**
 	 * Saboteurs who play the game.
@@ -50,6 +53,11 @@ public class Game {
 	 *  */
 	private ArrayList<Plumber> plumbers;
 	
+	/**
+	 * The map instance.
+	 *  */
+	private Map map = new Map();
+	
 	/////////////////////////////////////////////////////////////
 	/**
 	 * Fields of the map.
@@ -57,14 +65,33 @@ public class Game {
 	private ArrayList<Steppable> steppable;
 	//////////////////////////////////////////////////////////////
 	
-
-
+	/**
+	 * The number of rounds left till the end of the game.
+	 *  */
+	private int remainingRounds;
+	
+	/**
+	 * The currently active player. This player is performing the actions currently.
+	 *  */
+	private Player activePlayer;
+	
+	
+	
+	
+	/**
+	 * Gets the map instance, that the game is currently being played on.
+	 * @return The map instance
+	 *  */
+	public Map getMap()
+	{
+		return map;
+	}
 
 	/**
-	 * Sets the Point of the Saboteurs.
+	 * sets the Point of the Saboteurs.
 	 * @param s Points to what the Saboteurs point will be set.
 	 *  */
-	public void SetspilledWater(int s) {
+	public void setSpilledWater(int s) {
 		spilledWater = s;
 	}
 	
@@ -72,15 +99,49 @@ public class Game {
 	 * Gets the points of the Saboteurs.
 	 * @return spilledWater Points of the Saboteurs.
 	 *  */
-	public int GetspilledWater() {
+	public int getSpilledWater() {
 		return spilledWater;
 	}
 	
 	/**
-	 * Sets the Point of the Plumbers.
+	 * Gets the mode of the game.
+	 * @return The value of the mode of the game.
+	 *  */
+	public int getTester() {
+		return tester;
+	}
+	
+	/**
+	 * Sets the mode of the game.
+	 * @param The value of the mode of the game.
+	 *  */
+	public void getTester(int t) {
+		tester = t;
+	}
+	
+	/**
+	 * Gives the classIdArray back
+	 * @return The classIdArray.
+	 *  */
+	public int[] getClassIdArray() {
+		int[] array = null;
+		array = classIdArray;
+		return array;
+	}
+	
+	/**
+	 * Adds a value to the classIdArray.
+	 * @return The classIdArray.
+	 *  */
+	public void addClassIdArray(int i) {
+		classIdArray[classIdArray.length] = i;
+	}
+	
+	/**
+	 * sets the Point of the Plumbers.
 	 * @param c Points to what the Plumbers point will be set.
 	 *  */
-	public void SetcollectedWater(int c) {
+	public void setCollectedWater(int c) {
 		collectedWater = c;
 	}
 	
@@ -88,7 +149,7 @@ public class Game {
 	 * Gets the points of the Plumbers.
 	 * @return collectedWater Points of the Plumbers.
 	 *  */
-	public int GetcollectedWater() {
+	public int getCollectedWater() {
 		return collectedWater;
 	}
 	
@@ -96,7 +157,7 @@ public class Game {
 	 * Adds a Saboteur to the game.
 	 * @param s Saboteur who will be playing.
 	 *  */
-	public void AddSaboteur(Saboteur s) {
+	public void addSaboteur(Saboteur s) {
 		saboteurs.add(s);
 	}
 	
@@ -104,7 +165,7 @@ public class Game {
 	 * Gets the Saboteurs who play the game.
 	 * @return saboteurs Saboteurs who play.
 	 *  */
-	public ArrayList<Saboteur> GetSaboteurs() {
+	public ArrayList<Saboteur> getSaboteurs() {
 		return saboteurs;
 	}
 
@@ -113,7 +174,7 @@ public class Game {
 	 * Adds a Plumber to the game.
 	 * @param p Plumber who will be playing.
 	 * */
-	public void AddPlumber(Plumber p) {
+	public void addPlumber(Plumber p) {
 		plumbers.add(p);
 	}
 	
@@ -121,7 +182,7 @@ public class Game {
 	 * Gets the Plumbers who play the game.
 	 * @return plumbers Plumbers who play.
 	 *  */
-	public ArrayList<Plumber> GetPlumbers() {
+	public ArrayList<Plumber> getPlumbers() {
 		return plumbers;
 	}
 	
@@ -129,7 +190,7 @@ public class Game {
 	 * Adds to the Fields.
 	 * @param s New tiel to the map.
 	 *  */
-	public void AddSteppable(Steppable s) {
+	public void addSteppable(Steppable s) {
 		steppable.add(s);
 	}
 	
@@ -137,21 +198,65 @@ public class Game {
 	 * Gets the fields of the map.
 	 * @return steppable Fields of the map.
 	 *  */
-	public ArrayList<Steppable> GetSteppable() {
+	public ArrayList<Steppable> getSteppable() {
 		return steppable;
 	}
 	
 	/**
-	 * Konstruktor of the Game class.
+	 * Constructor of the Game class.
 	 *  */
 	public Game() {
+		tester = -1;
 		spilledWater = 0;
 		collectedWater = 0;
 		saboteurs = new ArrayList<Saboteur>();
 		plumbers = new ArrayList<Plumber>();
 		steppable = new ArrayList<Steppable>();
+		classIdArray = new int[6];
+		map = new Map();
+		remainingRounds = 40; 						///Ez mennyi legyen?
+		activePlayer = new Plumber();  				///???
+	}
+	/**
+	 * 8 parametered constructor of the Game class.
+	 * @param spilled The amount of water spilled.
+	 * @param collected The amount of water collected.
+	 * @param t The mode of the game.
+	 * @param pl The array list of plumbers playing the game.
+	 * @param sa The array list of saboteurs playing the game.
+	 * @param st The array list of all game elements in the current game.
+	 * @param classId The array of the next id values of all game elements.
+	 * @param maxrounds The max amount of round the game will be having. At 0 the game stops.
+	 *  */
+	public Game(int spilled, int collected,int t, ArrayList<Plumber> pl, ArrayList<Saboteur> sa, ArrayList<Steppable> st,int[] classId,int maxrounds) {
+		tester = t;
+		spilledWater = spilled;
+		collectedWater = collected;
+		saboteurs = sa;
+		plumbers = pl;
+		steppable = st;
+		classIdArray = classId;
+		map = new Map();
+		remainingRounds = maxrounds;
+		activePlayer = new Plumber();  				///???
 	}
 	
+	/**
+	 * Set activePlayer to the next Player. Plumbers start and the next player is 
+	 * selected in a zig-zag pattern between the two player types.
+	 *  */
+	public void NextPlayer () 
+	{ 
+		if(plumbers.contains(activePlayer)){
+			activePlayer = saboteurs.get(activePlayer.getId());
+		}
+		else if(saboteurs.contains(activePlayer)){
+			activePlayer = plumbers.get(activePlayer.getId()+1);
+		}
+		else
+			activePlayer = plumbers.get(0);
+		
+	}
 	/**
 	 * Imitates the flow of the water.
 	 *  */
@@ -168,7 +273,7 @@ public class Game {
 	 * Adds points to the Saboteurs.
 	 * @param water The points what will be added.
 	 *  */
-	public void WaterSpilled(int water) {
+	public void addWaterSpilled(int water) {
 		spilledWater += water;
 	}
 	
@@ -176,7 +281,7 @@ public class Game {
 	 * Adds points to the Plumbers.
 	 * @param water The points what will be added.
 	 *  */
-	public void WaterCollected(int water) {
+	public void addWaterCollected(int water) {
 		collectedWater += water;
 	}
 	
@@ -184,5 +289,46 @@ public class Game {
 	* Used for testing
 	*/
 	public String toString() {
+		String data = "";
+		data = data + "spilledWater: " + spilledWater + "\n";
+		data = data + "collectedWater: " + collectedWater + "\n";
+		return data;
+	}
+
+	public double getRandom() {
+		switch(tester) {
+			case -1:
+				return Math.random();
+		case 0:
+				return 0;
+			case 1:
+				return 1;
+		}
+		return Math.random();
+	}
+
+	public void setIdArray(int[] array) {
+		classIdArray = array;
+	}
+
+	public int[] getIdArray() {
+		return classIdArray;
+	}
+
+	public Plumber getPlumber(int id) {
+		for (Plumber plumber: plumbers)
+		{
+			if(plumber.getId() == id)
+				return plumber;
+		}
+		return null;
+	}
+
+	public void setTester(int mode) {
+		tester = mode;
+	}
+
+	public void setRemainingRounds(int remaining) {
+		remainingRounds = remaining;	
 	}
 }

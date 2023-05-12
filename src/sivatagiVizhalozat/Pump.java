@@ -109,7 +109,7 @@ public class Pump extends FieldElement {
 	/**
 	 * Set the index of the next pipe, that will be created.
 	 */
-	public void setNextId(int id) {
+	public static void setNextId(int id) {
 		nextId = id;
 	};
 
@@ -131,8 +131,6 @@ public class Pump extends FieldElement {
 	 * @return The index of the output pipe
 	 */
 	public int getOutput() {
-		Skeleton.Println(this.toString() + "getOutput()");
-		Skeleton.Println("return " + output);
 		return output;
 	}
 
@@ -143,7 +141,6 @@ public class Pump extends FieldElement {
 	 * @param o The index of the output
 	 */
 	public void setOutput(int o) {
-		Skeleton.Println(this.toString() + "setOutput(" + int.class.getSimpleName() + " " + o + ")");
 		if (o >= -1 && o < connections.size()) {
 			output = o;
 		}
@@ -155,8 +152,6 @@ public class Pump extends FieldElement {
 	 * @return The amount of water that's in the pump's tank currently
 	 */
 	public int getWater() {
-		Skeleton.Println(this.toString() + "getWater()");
-		Skeleton.Println("return " + water);
 		return water;
 	}
 
@@ -178,8 +173,8 @@ public class Pump extends FieldElement {
 	/**
 	 * Pump's own toString to make tests more visually informative.
 	 */
-	public string toString () {
-		string value = "";
+	public String toString () {
+		String value = "";
 
 		value += "Pump" + id + "\n" + "\n";
 		value += "id: " + id + "\n";
@@ -190,15 +185,15 @@ public class Pump extends FieldElement {
 		value += "input: " + input + "\n";
 		value += "output: " + output + "\n";
 		value += "connections: " + "\n";
-			for(Pipe p : connections){
+			for(FieldElement p : connections){
 				value += "Pipe";
 				value += p.id;
 				value += "\n";
 			}
 		value += "players: " + "\n";
-			for(Player p : connections){
-				value += p.getClass.getSimpleName();
-				value += p.id;
+			for(Player p : players){
+				value += p.getClass().getSimpleName();
+				value += p.getId();
 				value += "\n";
 			}	
 			
@@ -328,7 +323,6 @@ public class Pump extends FieldElement {
 	 * @param pipe The pipe to be removed
 	 */
 	public boolean Remove(FieldElement pipe) {
-		Skeleton.Println(this.toString() + "Remove(" + FieldElement.class.getSimpleName() + " " + pipe + ")");
 		if (pipe != null) {
 			if (connections.contains(pipe)) {
 				int inx = connections.indexOf(pipe);
@@ -364,13 +358,13 @@ public class Pump extends FieldElement {
 	 * @param o The index of the new output pipe
 	 */
 	public boolean ChangeDirection(int i, int o) {
-		if((i != -1 && i != o) || (i = -1 && i = o))
+		if((i != -1 && i != o) || (i == -1 && i == o))
 		{
-			if(i == -1 || connections.contains(game.map.getPipe(input))) 
+			if(i == -1 || connections.contains(game.getMap().getPipe(input))) 
 			{
 				input = i;
 			}
-			else if(o == -1 || connections.contains(game.map.getPipe(input)))
+			else if(o == -1 || connections.contains(game.getMap().getPipe(input)))
 			{
 				output = o;
 			}
@@ -384,16 +378,20 @@ public class Pump extends FieldElement {
 	 * If Input is closed( = -1) Skip it
 	 */
 	public void Step1() {
-		if (Game.getRandom() > 80)
+		if (game.getRandom() > 80)
 			StopWorking();
 		if (isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's
 																	// room for water in tank
 			
-			int w = connections.contains(game.map.getPipe(input)).SuckWater(tankCapacity - water);
-			if (water + w < tankCapacity)
-				water += w;
-			else
-				water = tankCapacity;
+			Pipe pipeOutput = game.getMap().getPipe(output);
+			if(connections.contains(pipeOutput))
+			{
+				int w = pipeOutput.SuckWater(water);
+				if (water + w < tankCapacity)
+					water += w;
+				else
+					water = tankCapacity;
+			}
 		}
 
 	}
@@ -404,11 +402,19 @@ public class Pump extends FieldElement {
 	 */
 	public void Step2() {
 		if (isWorking && output != -1) { // If pump is working and output is open
-			int w = connections.contains(game.map.getPipe(output)).PumpWater(water);
-			if (water - w >= 0)
-				water -= w;
-			else
-				water = 0;
+			Pipe pipeOutput = game.getMap().getPipe(output);
+			if(connections.contains(pipeOutput))
+			{
+				int w = pipeOutput.PumpWater(water);
+				if (water - w >= 0)
+					water -= w;
+				else
+					water = 0;
+			}
 		}
+	}
+
+	public static int nextId() {
+		return nextId;
 	}
 }
