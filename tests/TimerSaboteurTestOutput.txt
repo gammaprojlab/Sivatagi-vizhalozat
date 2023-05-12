@@ -1,0 +1,18 @@
+CreateGame() Success
+Create(Spring) Success Spring1 created
+Create(Pipe) Success Pipe1 created
+Create(Cistern) Success Cistern1 created
+Connect(Spring1,Pipe1) Success
+Connect(Cistern1,Pipe1) Success
+SetIsPunctured(Pipe1,true) Success
+Game:
+
+spilledWater: 0
+collectedWater: 0
+Tick() Success
+Tick() Success
+Tick() Success
+Game:
+
+spilledWater: 100
+collectedWater: 0
