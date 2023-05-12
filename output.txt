@@ -1,32 +1,11 @@
 CreateGame() Success
-Create(Plumber) Success Plumber1 created
+Create(Plumber) Success Plumber2 created
 Create(Pipe) Success Pipe1 created
 Create(Pipe) Success Pipe2 created
-Plumber1:
-
-id: 1
-name: Sanyi
-immobile: 0
-location: null
-heldPipe: null
-heldPump: null
-SetLocation(Plumber1,Pipe1) Success
-SetHeldPipe(Plumber1,Pipe2) Success
-Plumber1:
-
-id: 1
-name: Sanyi
-immobile: 0
-location: Pipe1
-heldPipe: Pipe2
-heldPump: null
-ConnectPipe(Plumber1) Success
-Plumber1:
-
-id: 1
-name: Sanyi
-immobile: 0
-location: Pipe1
-heldPipe: Pipe2
-heldPump: null
+ListParams(Plumber1)FAILED
+SetLocation(Plumber1,Pipe1)FAILED
+SetHeldPipe(Plumber1,Pipe2)FAILED
+ListParams(Plumber1)FAILED
+ConnectPipe(Plumber1)FAILED
+ListParams(Plumber1)FAILED
 SaveGame(save.txt) Success
