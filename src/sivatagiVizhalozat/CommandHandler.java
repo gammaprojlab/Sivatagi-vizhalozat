@@ -741,8 +741,8 @@ public class CommandHandler
 		}
 		int plumberId = 0;
 		//parse int only works if the entire string is numbers so we remove every non number from the input
-		plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
-		Plumber plumber = game.getPlumber(plumberId);
+		/*plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
+		Plumber plumber = game.getPlumber(plumberId);*/ // Ez kell ide?? TODO
 		switch(command[0])
 		{
 			case"ListParams":
@@ -752,6 +752,7 @@ public class CommandHandler
 				break;
 			case "Random":
 				game.setTester((arguments[0].equals("true") ? 1 : 0));
+				out.println(cmd + " Success");
 				break;
 		default:
 			if(command[0].contains("Set"))
