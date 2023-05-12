@@ -291,7 +291,7 @@ public class Game implements Serializable{
 	public String toString() {
 		String data = "";
 		data += "spilledWater: " + spilledWater + "\n";
-		data += "collectedWater: " + collectedWater + "\n";
+		data += "collectedWater: " + collectedWater;
 		return data;
 	}
 
