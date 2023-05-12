@@ -383,15 +383,20 @@ public class Pump extends FieldElement {
 		if (isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's
 																	// room for water in tank
 			
-			Pipe pipeOutput = game.getMap().getPipe(output);
-			if(connections.contains(pipeOutput))
+			Pipe pipeInput = game.getMap().getPipe(input);
+			if(connections.contains(pipeInput))
 			{
-				int w = pipeOutput.SuckWater(water);
+				int w = pipeInput.SuckWater(water);
 				if (water + w < tankCapacity)
 					water += w;
 				else
 					water = tankCapacity;
 			}
+			else
+			{
+				input = -1;
+			}
+				 
 		}
 
 	}
@@ -410,6 +415,10 @@ public class Pump extends FieldElement {
 					water -= w;
 				else
 					water = 0;
+			}
+			else
+			{
+				output = -1;
 			}
 		}
 	}

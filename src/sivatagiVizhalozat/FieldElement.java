@@ -172,6 +172,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 		if (mc >= 0 && g != null) {
 			maxConnections = mc;
 			game = g;
+			game.addSteppable(this);
 			game.getMap().addFieldElement(this.getClass().getSimpleName(), this);
 		} else {
 			maxConnections = 5;
@@ -262,9 +263,9 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * @param f The id of the pipe the player wants to disconnect from this field
 	 * @return The disconnected pipe
 	 */
-	public Pipe Disconnect(int f) { 
+	public Pipe Disconnect(int id) { 
 		for (FieldElement p : connections) {
-			if(p.getId() == f) {
+			if(p.getId() == id) {
 				Pipe ret = p.Disconnect(p.GetNeighbor().indexOf(this));
 				if(ret != null) {
 					return ret;
@@ -375,10 +376,5 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 */
 	public String toString() {
 		return "";
-	}
-
-	public boolean addPlayer(Player player) {
-		players.add(player);
-		return true;
 	}
 }

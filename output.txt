@@ -1,32 +1,35 @@
 CreateGame() Success
-Create(Plumber) Success Plumber1 created
 Create(Pipe) Success Pipe1 created
-Create(Pipe) Success Pipe2 created
-Plumber1:
-
-id: 1
-name: Sanyi
-immobile: 0
-location: null
-heldPipe: null
-heldPump: null
+Create(Plumber) Success Plumber1 created
 SetLocation(Plumber1,Pipe1) Success
-SetHeldPipe(Plumber1,Pipe2) Success
-Plumber1:
+Pipe1:
 
 id: 1
-name: Sanyi
-immobile: 0
-location: Pipe1
-heldPipe: Pipe2
-heldPump: null
-ConnectPipe(Plumber1) Success
-Plumber1:
+maxConnections: 2
+state: Normal
+isPunctured: false
+isGrabbed: false
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 0
+connections:
+players:
+Plumber1
+SaveGame(save.ser) Success
+LoadGame(save.ser) Success
+Pipe1:
 
 id: 1
-name: Sanyi
-immobile: 0
-location: Pipe1
-heldPipe: Pipe2
-heldPump: null
-SaveGame(save.txt) Success
+maxConnections: 2
+state: Normal
+isPunctured: false
+isGrabbed: false
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 0
+connections:
+players:
+Plumber1
+Create(Plumber) Success Plumber2 created

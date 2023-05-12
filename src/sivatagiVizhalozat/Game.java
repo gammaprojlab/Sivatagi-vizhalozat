@@ -73,7 +73,7 @@ public class Game implements Serializable{
 	/**
 	 * The currently active player. This player is performing the actions currently.
 	 *  */
-	private Player activePlayer;
+	private Player activePlayer = null;
 	
 	
 	
@@ -115,7 +115,7 @@ public class Game implements Serializable{
 	 * Sets the mode of the game.
 	 * @param The value of the mode of the game.
 	 *  */
-	public void getTester(int t) {
+	public void setTester(int t) {
 		tester = t;
 	}
 	
@@ -215,7 +215,6 @@ public class Game implements Serializable{
 		classIdArray = new int[6];
 		map = new Map();
 		remainingRounds = 40; 						///Ez mennyi legyen?
-		activePlayer = new Plumber();  				///???
 	}
 	/**
 	 * 8 parametered constructor of the Game class.
@@ -290,21 +289,23 @@ public class Game implements Serializable{
 	*/
 	public String toString() {
 		String data = "";
-		data = data + "spilledWater: " + spilledWater + "\n";
-		data = data + "collectedWater: " + collectedWater + "\n";
+		data += "spilledWater: " + spilledWater + "\n";
+		data += "collectedWater: " + collectedWater + "\n";
 		return data;
 	}
 
 	public double getRandom() {
-		switch(tester) {
+		switch(tester) 
+		{
 			case -1:
 				return Math.random();
-		case 0:
+			case 0:
 				return 0;
 			case 1:
 				return 1;
+			default:
+				return Math.random();
 		}
-		return Math.random();
 	}
 
 	public void setIdArray(int[] array) {
@@ -331,10 +332,6 @@ public class Game implements Serializable{
 				return saboteur;
 		}
 		return null;
-	}
-	
-	public void setTester(int mode) {
-		tester = mode;
 	}
 
 	public void setRemainingRounds(int remaining) {

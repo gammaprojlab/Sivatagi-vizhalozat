@@ -85,7 +85,7 @@ public class Plumber extends Player {
 	 * @param g The game, where the Player playes.
 	 *  */
 	public Plumber(Pump pu, Pipe pi, int id, String n, FieldElement f, Game g){
-		super(n, id, f, g);
+		super(n, f, g);
 		heldPipe = pi;
 		heldPump = pu;
 	}

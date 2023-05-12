@@ -98,9 +98,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * @param: f Where the Player is.
 	 * */
 	public void setLocation(FieldElement f) {
-		f.addPlayer(this);
 		location = f;
-		
 	}
 	
 	/** 
@@ -137,10 +135,9 @@ public abstract class Player implements Steppable, Serializable {
 	 * @param location The location where the player starts from
 	 * @param g The Game object where this element is created
 	 **/
-	public Player(String n, int id, FieldElement location, Game g) {
+	public Player(String n, FieldElement location, Game g) {
 		immobile = 0;
 		name = n;
-		this.id = id;
 		game = g;
 		this.location = location;
 	}
@@ -152,11 +149,8 @@ public abstract class Player implements Steppable, Serializable {
 	 *  */
 	public boolean PlayerMove(FieldElement f) {
 		ArrayList<FieldElement> fields = location.GetNeighbor();
-
-		if (fields.contains(f)) {
-			f.StepOn(this);
+		if (fields.contains(f) && f.StepOn(this)) 
 			return true;
-		}
 		return false;
 	}
 	

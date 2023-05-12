@@ -44,6 +44,7 @@ public class Saboteur extends Player {
 	 **/
 	public Saboteur() {
 		super();
+		id = nextId++;
 	}
 	
 	/**
@@ -53,8 +54,9 @@ public class Saboteur extends Player {
 	 * @param f The location where the player starts from
 	 * @param g The Game object where this element is created
 	 **/
-	public Saboteur(String n, int id, FieldElement f, Game g) {
-		super(n, nextId++, f, g);
+	public Saboteur(String n, FieldElement f, Game g) {
+		super(n, f, g);
+		id = nextId++;
 	}
 	
 	

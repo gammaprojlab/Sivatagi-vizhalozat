@@ -50,7 +50,7 @@ public class CommandHandler
 	 */
 	void loadGame(String path) throws IOException, ClassNotFoundException
 	{
-	         FileInputStream fileIn = new FileInputStream("/tmp/employee.ser");
+	         FileInputStream fileIn = new FileInputStream(path);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         game = (Game) in.readObject();
 	         in.close();
@@ -96,12 +96,14 @@ public class CommandHandler
 			Scanner test = new Scanner(testFile);
 			File outputFile = new File("output.txt");
 			Scanner output = new Scanner(outputFile);
-			
+			int i = 0;
 			boolean testCheck = true;
 			while(output.hasNextLine()) {
+				i++;
 				//compare the lines of the required output and the output
 				if(!output.nextLine().equals(test.nextLine())) {
 					testCheck = false;
+					System.out.println(i);
 				}
 			}
 			
@@ -118,6 +120,7 @@ public class CommandHandler
 			System.out.println("file not found");
 		} catch(Exception e) {
 			System.out.println("TestCheck FAILED");
+			e.printStackTrace();
 		}
 	}
 	
@@ -203,7 +206,6 @@ public class CommandHandler
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
-		
 		//we handle a few of the commands that are to be performed on the game here
 		switch(command[0])
 		{
@@ -213,10 +215,6 @@ public class CommandHandler
 					out.println(cmd + " Success");
 				else
 					out.println(cmd + " FAILED");
-				break;
-			case"Random":
-				//maybe no need for game handler? unless we move this switch in there
-				gameHandler(cmd);
 				break;
 			case"LoadGame":
 				loadGame(arguments[0]);
@@ -325,7 +323,7 @@ public class CommandHandler
 		case"PumpDirection":
 			int pipeId1;
 			int pipeId2;
-			if(arguments[1].equals("close"))
+			if(arguments[1].equals("close") && arguments[2].equals("close"))
 			{
 				pipeId1 = -1;
 				pipeId2 = -1;
@@ -365,7 +363,7 @@ public class CommandHandler
 						out.println(cmd + " FAILED");
 						break;
 					}
-					plumber.setLocation(location);
+					location.StepOn(plumber);
 					if(plumber.getLocation() == location)
 						out.println(cmd + " Success");
 					else
@@ -498,7 +496,7 @@ public class CommandHandler
 						out.println(cmd + " FAILED");
 						break;
 					}
-					saboteur.setLocation(location);
+					location.StepOn(saboteur);
 					if(saboteur.getLocation() == location)
 						out.println(cmd + " Success");
 					else
@@ -640,6 +638,13 @@ public class CommandHandler
 		pipeId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Pipe pipe = game.getMap().getPipe(pipeId);
 		
+		if(command[0].equals("ListParams"))
+		{
+			out.println(arguments[0]+":");
+			out.println();
+			out.println(pipe.toString());
+			return;
+		}
 		if(command[0].contains("Set") && pipe != null)
 		{
 			String attribute = command[0].substring(3);

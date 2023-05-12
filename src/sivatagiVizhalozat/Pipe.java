@@ -430,15 +430,15 @@ public class Pipe extends FieldElement {
 		+ "\nisGrabbed: " + ((isGrabbed) ? "true" : "false")
 		+ "\ncapacity: " + capacity
 		+ "\nwater: " + water
-		+ "unpuncturable: " + unpuncturable
-		+ "duration: " + duration
-		+ "connections: ";
+		+ "\nunpuncturable: " + unpuncturable
+		+ "\nduration: " + duration
+		+ "\nconnections:";
 		for (FieldElement neighbour : connections) {
 			ret = ret.concat("\n");
 			ret = ret.concat(neighbour.getClass().getSimpleName());
 			ret = ret.concat(Integer.toString(neighbour.getId()));
 		}
-		ret = ret.concat("\nplayers: ");
+		ret = ret.concat("\nplayers:");
 		for (Player player : players) {
 			ret = ret.concat("\n");
 			ret = ret.concat(player.getClass().getSimpleName());
