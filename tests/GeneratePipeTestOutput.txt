@@ -1,0 +1,17 @@
+CreateGame() Success
+Random(true) Success
+Create(Cistern) Success Cistern1 created
+Cistern1:
+
+id: 1
+maxConnections: infinite
+connections:
+players: 
+Tick() Success
+Cistern1:
+
+id: 1
+maxConnections: infinite
+connections:
+Pipe1
+players: 

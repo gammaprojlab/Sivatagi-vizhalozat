@@ -1,0 +1,6 @@
+CreateGame()
+Random(true)
+Create(Cistern)
+ListParams(Cistern1)
+Tick()
+ListParams(Cistern1)
