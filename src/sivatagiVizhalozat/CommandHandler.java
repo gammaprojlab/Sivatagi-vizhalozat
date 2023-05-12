@@ -88,43 +88,111 @@ public class CommandHandler
 	}
 	
 	/**
-	 * Read the test input from console, write the test output to output.txt.
+	 * Read the required output from test.txt, write the check result to console.
 	 */
-	public void TestMenu() {
-		boolean end = false;
-		int testCount = 1;
-		Scanner in = new Scanner(System.in);
-		//exit from test mode on "exit\n\n"
-		while(!end) {
-			out.println("\nTest" + testCount + ": ");
-			testCount++;
+	public void TestCheck() {
+		try {
+			File testFile = new File("test.txt");
+			Scanner test = new Scanner(testFile);
+			File outputFile = new File("output.txt");
+			Scanner output = new Scanner(outputFile);
 			
-			//the next line should not be read
-			boolean noMoreLines = false;
-			while(in.hasNextLine() && !noMoreLines) {
-				String sor = in.nextLine();
-				if(sor.equals("exit")) {
-					end = true;
-					noMoreLines = true;
-				} else if(sor.equals("")) {
-					//new game
-					game = null;
-					
-					//reset the static variables
-					Cistern.setNextId(1);
-					Pipe.setNextId(1);
-					Plumber.setNextId(1);
-					Pump.setNextId(1);
-					Saboteur.setNextId(1);
-					Spring.setNextId(1);
-					
-					noMoreLines = true;
-				} else {
-					executeCommand(sor);
+			boolean testCheck = true;
+			while(output.hasNextLine()) {
+				//compare the lines of the required output and the output
+				if(!output.nextLine().equals(test.nextLine())) {
+					testCheck = false;
 				}
 			}
 			
+			if(!testCheck) {
+				System.out.println("TestCheck FAILED");
+			} else {
+				System.out.println("TestCheck Success");
+			}
+			
+			
+			output.close();
+			test.close();
+		} catch(FileNotFoundException e) {
+			System.out.println("file not found");
+		} catch(Exception e) {
+			System.out.println("TestCheck FAILED");
 		}
+	}
+	
+	/**
+	 * Read the test input from input.txt, write the test output to output.txt.
+	 */
+	public void TestMenu() {
+		boolean end = false;
+		Scanner in = new Scanner(System.in);
+		//exit from test mode on "exit\n"
+		while(!end) {
+			//next line of the console
+			String nl = in.nextLine();
+			if(nl.equals("exit")) {
+				end = true;
+			} else if(nl.equals("check")) {
+				//delete the content of the output.txt
+				out.close();
+				//sets print stream to file
+				try {
+					File outFile = new File("output.txt");
+					out = new PrintStream(outFile);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				//new game
+				game = null;
+				
+				//reset the static variables
+				Cistern.setNextId(1);
+				Pipe.setNextId(1);
+				Plumber.setNextId(1);
+				Pump.setNextId(1);
+				Saboteur.setNextId(1);
+				Spring.setNextId(1);
+				
+				try {
+					File inputFile = new File("input.txt");
+					Scanner input = new Scanner(inputFile);
+					
+					//the next line should not be read
+					boolean noMoreLines = false;
+					while(input.hasNextLine() && !noMoreLines) {
+						String sor = input.nextLine();
+						
+						if(sor.equals("")) {
+							//new game
+							game = null;
+							
+							//reset the static variables
+							Cistern.setNextId(1);
+							Pipe.setNextId(1);
+							Plumber.setNextId(1);
+							Pump.setNextId(1);
+							Saboteur.setNextId(1);
+							Spring.setNextId(1);
+							
+							noMoreLines = true;
+						} else {
+							executeCommand(sor);
+						}
+					}
+					
+					input.close();
+				} catch(FileNotFoundException e) {
+					System.out.println("input.txt not found");
+				}
+				
+				TestCheck();
+			}
+		}
+		
 		in.close();
 	}
 	
