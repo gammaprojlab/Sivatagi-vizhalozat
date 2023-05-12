@@ -260,10 +260,11 @@ public class Game implements Serializable{
 	 * Imitates the flow of the water.
 	 *  */
 	public void Tick() {
-		for(Steppable step: steppable) {
+		ArrayList<Steppable> steppables = new ArrayList<>(steppable);
+		for(Steppable step: steppables) {
 			step.Step1();
 		}
-		for(Steppable step: steppable) {
+		for(Steppable step: steppables) {
 			step.Step2();
 		}
 	}
