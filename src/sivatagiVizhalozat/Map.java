@@ -105,6 +105,12 @@ public class Map implements Serializable {
     }
     
     
+    /**
+     * Gets the field element.
+     *
+     * @param str the str
+     * @return the field element
+     */
     public FieldElement getFieldElement(String str)
     {
     	String type = str.replaceAll("\\d", "");
