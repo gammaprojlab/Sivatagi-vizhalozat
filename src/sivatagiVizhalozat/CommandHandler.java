@@ -102,11 +102,11 @@ public class CommandHandler
 			//the next line should not be read
 			boolean noMoreLines = false;
 			while(in.hasNextLine() && !noMoreLines) {
-				String sor = in.nextLine();
-				if(sor.equals("exit")) {
+				String line = in.nextLine();
+				if(line.equals("exit")) {
 					end = true;
 					noMoreLines = true;
-				} else if(sor.equals("")) {
+				} else if(line.equals("")) {
 					//new game
 					game = null;
 					
@@ -120,7 +120,7 @@ public class CommandHandler
 					
 					noMoreLines = true;
 				} else {
-					executeCommand(sor);
+					executeCommand(line);
 				}
 			}
 			
@@ -257,7 +257,7 @@ public class CommandHandler
 		case"PumpDirection":
 			int pipeId1;
 			int pipeId2;
-			if(arguments[1].equals("close"))
+			if(arguments[1].equals("close") && arguments[2].equals("close"))
 			{
 				pipeId1 = -1;
 				pipeId2 = -1;

@@ -354,19 +354,19 @@ public class Pump extends FieldElement {
 	 * the two new values
 	 * are incorrect, function will return false
 	 * 
-	 * @param i The index of the new input pipe
-	 * @param o The index of the new output pipe
+	 * @param in The index of the new input pipe
+	 * @param out The index of the new output pipe
 	 */
-	public boolean ChangeDirection(int i, int o) {
-		if((i != -1 && i != o) || (i == -1 && i == o))
+	public boolean ChangeDirection(int in, int out) {
+		if((in != -1 && in != out) || (in == -1 && in == out))
 		{
-			if(i == -1 || connections.contains(game.getMap().getPipe(input))) 
+			if(in == -1 || connections.contains(game.getMap().getPipe(input))) 
 			{
-				input = i;
+				input = in;
 			}
-			else if(o == -1 || connections.contains(game.getMap().getPipe(input)))
+			else if(out == -1 || connections.contains(game.getMap().getPipe(input)))
 			{
-				output = o;
+				output = out;
 			}
 			return true;
 		}
