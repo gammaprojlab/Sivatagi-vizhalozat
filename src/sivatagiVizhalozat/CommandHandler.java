@@ -249,8 +249,6 @@ public class CommandHandler
 		}
 	}
 	
-	// Nem ír ki még semmit csak végrehajtja a parancsokat
-	
 	void plumberHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
@@ -266,9 +264,8 @@ public class CommandHandler
 			out.println(cmd + " Success Plumber" + newPlumber.getId() + " created");
 			return;
 		}
-		int plumberId = 0;
-		//parse int only works if the entire string is numbers so we remove every non number from the input
 		
+		int plumberId = 0;
 		plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Plumber plumber = game.getPlumber(plumberId);
 		if(plumber == null)
@@ -562,6 +559,7 @@ public class CommandHandler
 				out.println(cmd + " FAILURE");
 			break;
 		default:			
+			out.println(cmd + " FAILURE");
 		}
 	}
 	
@@ -578,6 +576,96 @@ public class CommandHandler
 			out.println(cmd + " Success Pump" + newPump.getId() + " created");
 			return;
 		}
+		
+		int pumpId = 0;
+		pumpId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
+		Pump pump = game.getMap().getPump(pumpId);
+		
+		if(pump == null)
+		{
+			out.println(cmd + "FAILED");
+			return;
+		}
+		
+		switch(command[0])
+		{
+		case"ListParams":
+			out.println(arguments[0]+":");
+			out.println();
+			out.println(pump.toString());
+			break;
+		case"Connect":
+			Pipe pipe = game.getMap().getPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
+			if(pump.Connect(pipe))
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILURE");
+			break;
+		case"Disconnect":
+			if(pump.Disconnect(Integer.parseInt(arguments[1].replaceAll("[\\D]", ""))) != null)
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILURE");
+			break;
+		default:	
+			if(command[0].contains("Set"))
+			{
+				String attribute = command[0].substring(3);
+				switch(attribute)
+				{
+				case"IsWorking":
+					switch(arguments[1]) 
+					{
+					case"true": 
+						pump.setIsWorking(true);
+						out.println(cmd + " Success");
+						break;
+					case"false":
+						pump.setIsWorking(false);
+						out.println(cmd + " Success");
+						break;
+					default:
+						out.println(cmd + " FAILED");
+						break;
+					}
+				case"Input":
+					int pipeId1 = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
+					if(pump.setInput(pipeId1))
+						out.println(cmd + " Success");
+					else
+						out.println(cmd + " FAILED");
+					break;
+				case"Output":
+					int pipeId2 = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
+					if(pump.setOutput(pipeId2))
+						out.println(cmd + " Success");
+					else
+						out.println(cmd + " FAILED");
+					break;
+				case"Water":
+					int water = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
+					pump.setWater(water);
+					out.println(cmd + " Success");
+					break;
+				default:
+					out.println(cmd + " FAILED");
+						
+				}
+			}
+			else
+				out.println(cmd + " FAILED");
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	void springHandler(String cmd)

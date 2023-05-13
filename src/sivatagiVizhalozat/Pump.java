@@ -117,12 +117,22 @@ public class Pump extends FieldElement {
 	 * Set the index of the input pipe, if i is -1, it means that the input is
 	 * closed
 	 * 
-	 * @param i The index of the input pipe in the pump's connections
+	 * @param i The id of the input pipe in the pump's connections
 	 */
-	public void setInput(int i) {
-		if (i >= -1 && i < connections.size()) {
-			input = i;
+	public boolean setInput(int id) 
+	{
+		if(id == -1)
+		{
+			input = -1;
+			return true;
 		}
+		for(FieldElement pipe: connections)
+		{
+			if(pipe.getId() == id);
+			input = id;
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -139,11 +149,22 @@ public class Pump extends FieldElement {
 	 * closed
 	 * 
 	 * @param o The index of the output
+	 * @return 
 	 */
-	public void setOutput(int o) {
-		if (o >= -1 && o < connections.size()) {
-			output = o;
+	public boolean setOutput(int o) 
+	{
+		if(id == -1)
+		{
+			output = -1;
+			return true;
 		}
+		for(FieldElement pipe: connections)
+		{
+			if(pipe.getId() == id);
+			output = id;
+			return true;
+		}
+		return false;
 	}
 
 	/**
