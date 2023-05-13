@@ -228,7 +228,7 @@ public class CommandHandler
 				}
 			}
 			
-			in.close();
+			//in.close();
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Index out of range!");
 		}

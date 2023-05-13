@@ -7,9 +7,9 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CommandHandler handler = new CommandHandler();
-		Scanner scanner = new Scanner(System.in);
 		String input;
 		boolean flag = true;
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("Choose:\n\t0. exit\n\t1. Test\n\t2. Game");
 		while(flag) {
 			if(scanner.hasNextLine()) {
@@ -31,7 +31,7 @@ public class Main {
 						break;
 				}
 				System.out.println("Choose:\n\t0. exit\n\t1. Test\n\t2. Game");
-			}	
+			}
 		}
 	}
 	
