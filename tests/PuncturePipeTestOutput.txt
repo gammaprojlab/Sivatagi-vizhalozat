@@ -1,0 +1,41 @@
+CreateGame() Success
+Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
+Create(Pump) Success Pump2 created
+Connect(Pump1,Pipe1) Success
+Connect(Pump2,Pipe1) Success
+Create(Plumber) Success Plumber1 created
+SetLocation(Plumber1,Pipe1) Success
+Pipe1:
+
+id: 1
+maxConnections: 2
+state: Normal
+isPunctured: false
+isGrabbed: false
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 0
+connections:
+Pump1
+Pump2
+players:
+Plumber1
+Puncture(Plumber1) Success
+Pipe1:
+
+id: 1
+maxConnections: 2
+state: Normal
+isPunctured: true
+isGrabbed: false
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 0
+connections:
+Pump1
+Pump2
+players:
+Plumber1

@@ -355,16 +355,11 @@ public class CommandHandler
 		case"PumpDirection":
 			int pipeId1;
 			int pipeId2;
-			if(arguments[1].equals("close") && arguments[2].equals("close"))
-			{
-				pipeId1 = -1;
-				pipeId2 = -1;
-			}
-			else
-			{
-				pipeId1 = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
-				pipeId2 = Integer.parseInt(arguments[2].replaceAll("[\\D]", ""));
-			}
+			if(arguments[1].equals("close")) pipeId1 = -1;
+			else pipeId1 = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
+			if(arguments[2].equals("close")) pipeId2 = -1;
+			else pipeId2 = Integer.parseInt(arguments[2].replaceAll("[\\D]", ""));
+			
 			if(plumber.PumpDirection(pipeId1, pipeId2))
 				out.println(cmd + " Success");
 			else

@@ -160,15 +160,17 @@ public class Pipe extends FieldElement {
 			if(s != PipeSurfaceState.Normal) {
 				duration = (int)Math.round(game.getRandom()*10);
 				state = s;
+				return true;
 			}
 		}
 		else {
 			if(s == PipeSurfaceState.Normal) {
 				state = s;
 				duration = 0;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**

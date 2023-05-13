@@ -1,0 +1,43 @@
+CreateGame() Success
+Random(true) Success
+Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
+Create(Pump) Success Pump2 created
+Connect(Pump1,Pipe1) Success
+Connect(Pump2,Pipe1) Success
+Create(Saboteur) Success Saboteur1 created
+SetLocation(Saboteur1,Pipe1) Success
+SetState(Pipe1,Sticky) Success
+Pipe1:
+
+id: 1
+maxConnections: 2
+state: Sticky
+isPunctured: false
+isGrabbed: false
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 10
+connections:
+Pump1
+Pump2
+players:
+Saboteur1
+MakeSticky(Saboteur1) FAILED
+Pipe1:
+
+id: 1
+maxConnections: 2
+state: Sticky
+isPunctured: false
+isGrabbed: false
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 10
+connections:
+Pump1
+Pump2
+players:
+Saboteur1

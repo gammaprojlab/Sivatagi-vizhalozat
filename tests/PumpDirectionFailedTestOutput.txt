@@ -1,0 +1,33 @@
+CreateGame() Success
+Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
+Connect(Pump1,Pipe1) Success
+Create(Plumber) Success Plumber1 created
+SetLocation(Plumber1,Pump1) Success
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: -1
+output: -1
+connections:
+Pipe1
+players:
+Plumber1
+PumpDirection(Plumber1,Pipe1,Pipe2) FAILED
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: -1
+output: -1
+connections:
+Pipe1
+players:
+Plumber1

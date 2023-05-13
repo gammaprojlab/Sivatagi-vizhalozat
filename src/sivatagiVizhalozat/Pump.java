@@ -388,17 +388,12 @@ public class Pump extends FieldElement {
 	 * @param o The index of the new output pipe
 	 */
 	public boolean ChangeDirection(int i, int o) {
-		if((i != -1 && i != o) || (i == -1 && i == o))
-		{
-			if(i == -1 || connections.contains(game.getMap().getPipe(input))) 
-			{
+		if((i != -1 && i != o) || (i == -1 && i == o)) {
+			if(i == -1 || connections.contains(game.getMap().getPipe(i)) && o == -1 || connections.contains(game.getMap().getPipe(o))) {
 				input = i;
-			}
-			else if(o == -1 || connections.contains(game.getMap().getPipe(input)))
-			{
 				output = o;
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}
