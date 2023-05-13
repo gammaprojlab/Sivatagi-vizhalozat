@@ -907,6 +907,10 @@ public class CommandHandler
 		}
 	}
 	
+	/**
+	 * Gets the current played game.
+	 * @return Played Game
+	 * */
 	public Game getGame() {
 		return game;
 	}

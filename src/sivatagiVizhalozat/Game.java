@@ -68,7 +68,7 @@ public class Game implements Serializable{
 	/**
 	 * The number of rounds left till the end of the game.
 	 *  */
-	private int remainingRounds;
+	private int remainingRounds = 0;
 	
 	
 	/**
@@ -76,7 +76,13 @@ public class Game implements Serializable{
 	 *  */
 	private Player activePlayer = null;
 	
-	
+	/**
+	 * Gets the current activePlayer.
+	 * @return The active Player.
+	 * */
+	public Player getactivePlayer() {
+		return activePlayer;
+	}
 	
 	
 	/**
@@ -253,8 +259,11 @@ public class Game implements Serializable{
 		else if(saboteurs.contains(activePlayer)){
 			activePlayer = plumbers.get(activePlayer.getId()+1);
 		}
-		else
+		else {
 			activePlayer = plumbers.get(0);
+			remainingRounds--;
+		}
+			
 		
 	}
 	/**
