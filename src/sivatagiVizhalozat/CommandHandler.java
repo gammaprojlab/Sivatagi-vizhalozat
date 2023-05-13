@@ -131,7 +131,7 @@ public class CommandHandler
 	/**
 	 * Read the test input from input.txt, write the test output to output.txt.
 	 */
-	public void TestMenu() {
+	public void TestMenu(Scanner console) {
 		try {
 			ArrayList<String> lst = new ArrayList<String>();
 		
@@ -154,7 +154,7 @@ public class CommandHandler
 			
 			
 			boolean end = false;
-			Scanner in = new Scanner(System.in);
+			Scanner in = console;
 			//exit from test mode on "exit\n"
 			while(!end) {
 				//next line of the console
@@ -228,7 +228,6 @@ public class CommandHandler
 				}
 			}
 			
-			//in.close();
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Index out of range!");
 		}
