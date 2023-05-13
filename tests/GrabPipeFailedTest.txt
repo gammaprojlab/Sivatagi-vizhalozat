@@ -1,0 +1,7 @@
+CreateGame()
+Create(Pump)
+Create(Plumber)
+SetLocation(Plumber1,Pump1)
+ListParams(Plumber1)
+GrabPipe(Plumber1)
+ListParams(Plumber1)

@@ -119,12 +119,24 @@ public abstract class Player implements Steppable, Serializable {
 	
 	/**
 	 * Player class's konstruktor without parameters.
-	 * */
+	 */
 	public Player() {
 		immobile = 0;
 		name = "Sanyi";
 		location = null;
 		game = null;
+		
+	}
+	
+	/**
+	 * One parameter constructor.
+	 * @param g Game object
+	 */
+	public Player(Game g) {
+		immobile = 0;
+		name = "Sanyi";
+		location = null;
+		game = g;
 		
 	}
 	

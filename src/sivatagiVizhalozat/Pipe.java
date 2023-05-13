@@ -279,10 +279,10 @@ public class Pipe extends FieldElement {
 	public boolean Split(Pump p) {
 		if(p != null && connections.size() == 2 && !isGrabbed) {
 			Pipe newPipe = new Pipe(game, capacity, water/2);
-			FieldElement a = connections.get(0);
+			FieldElement a = connections.get(1);
 			if(a.Remove(this) && Remove(a)) {
-				p.Add(newPipe); p.Add(this);
-				a.Add(newPipe);
+				p.Add(this); p.Add(newPipe);
+				a.Add(newPipe); this.Add(p);
 				newPipe.Add(a); newPipe.Add(p);
 				water = water/2;
 				game.addSteppable(p);

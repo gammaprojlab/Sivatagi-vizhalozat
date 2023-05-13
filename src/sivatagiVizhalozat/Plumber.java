@@ -76,6 +76,17 @@ public class Plumber extends Player {
 	}
 	
 	/**
+	 * One parameter constructor.
+	 * @param g Game object
+	 *  */
+	public Plumber(Game g) {
+		super(g);
+		id = nextId++;
+		heldPipe = null;
+		heldPump = null;
+	}
+	
+	/**
 	 * Konstruktor of te Plumber class, with params.
 	 * @param pu The Pump what the Player as in is inventory.
 	 * @param pi The Pipe what the Player as in is inventory.
@@ -150,10 +161,10 @@ public class Plumber extends Player {
 	public boolean PlacePump() {
 		if(heldPump != null && location.GetNeighbor().size() == 2) {
 			if(location.Split(heldPump)) {
-				game.addSteppable(heldPump);
-				setHeldPump(null);
-				if(this.PlayerMove(heldPump))
+				if(this.PlayerMove(heldPump)) {
+					setHeldPump(null);
 					return true;
+				}
 			}
 		}
 		return false;

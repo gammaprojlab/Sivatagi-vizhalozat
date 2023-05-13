@@ -1,0 +1,21 @@
+CreateGame() Success
+Create(Cistern) Success Cistern1 created
+Create(Plumber) Success Plumber1 created
+SetLocation(Plumber1,Cistern1) Success
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: Cistern1
+heldPipe: null
+heldPump: null
+TakePump(Plumber1) Success
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: Cistern1
+heldPipe: null
+heldPump: Pump1

@@ -48,6 +48,15 @@ public class Saboteur extends Player {
 	}
 	
 	/**
+	 * One parameter constructor.
+	 * @param g Game object
+	 */
+	public Saboteur(Game g) {
+		super(g);
+		id = nextId++;
+	}
+	
+	/**
 	 * Konstruktor of the Saboteur with params.
 	 * @param n The player's name
 	 * @param id The identification of the player

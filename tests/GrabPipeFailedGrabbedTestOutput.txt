@@ -1,0 +1,32 @@
+CreateGame() Success
+Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
+Create(Plumber) Success Plumber1 created
+Create(Plumber) Success Plumber2 created
+Connect(Pump1,Pipe1) Success
+SetLocation(Plumber1,Pump1) Success
+SetLocation(Plumber2,Pump1) Success
+GrabPipe(Plumber1) Success
+Pipe1:
+
+id: 1
+maxConnections: 2
+state: Normal
+isPunctured: false
+isGrabbed: true
+capacity: 50
+water: 0
+unpuncturable: 0
+duration: 0
+connections:
+Pump1
+players:
+GrabPipe(Plumber2) FAILED
+Plumber2:
+
+id: 2
+name: Sanyi
+immobile: 0
+location: Pump1
+heldPipe: null
+heldPump: null

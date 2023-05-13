@@ -293,7 +293,7 @@ public class CommandHandler
 		
 		if(command[0].equals("Create"))
 		{
-			Plumber newPlumber = new Plumber();
+			Plumber newPlumber = new Plumber(game);
 			game.addPlumber(newPlumber);
 			out.println(cmd + " Success Plumber" + newPlumber.getId() + " created");
 			return;
@@ -461,7 +461,7 @@ public class CommandHandler
 		
 		if(command[0].equals("Create"))
 		{
-			Saboteur newSaboteur = new Saboteur();
+			Saboteur newSaboteur = new Saboteur(game);
 			game.addSaboteur(newSaboteur);
 			out.println(cmd + " Success Saboteur" + newSaboteur.getId() + " created");
 			return;
