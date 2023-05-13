@@ -161,7 +161,7 @@ public abstract class Player implements Steppable, Serializable {
 	 *  */
 	public boolean PlayerMove(FieldElement f) {
 		ArrayList<FieldElement> fields = location.GetNeighbor();
-		if (fields.contains(f) && f.StepOn(this)) 
+		if (immobile <= 0 && fields.contains(f) && f.StepOn(this)) 
 			return true;
 		return false;
 	}

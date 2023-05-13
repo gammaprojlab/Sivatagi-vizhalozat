@@ -13,7 +13,7 @@ PlacePumpTest
 PlayerMoveTest
 PlayerStepsOnSlipperyPipeTest
 PlayerStepsOnSlipperyPipeFailedTest
-PlayerMoveFailedImmobile
+PlayerMoveFailedImmobileTest
 PlayerStepsOnStickyPipeTest
 PlayerStepsOnStickyPipeFailedTest
 PumpDirectionTest

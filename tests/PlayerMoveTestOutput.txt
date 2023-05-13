@@ -1,5 +1,4 @@
 CreateGame() Success
-Random(true) Success
 Create(Pump) Success Pump1 created
 Create(Pump) Success Pump2 created
 Create(Pipe) Success Pipe1 created
@@ -7,7 +6,6 @@ Create(Plumber) Success Plumber1 created
 Connect(Pump1,Pipe1) Success
 Connect(Pump2,Pipe1) Success
 SetLocation(Plumber1,Pump1) Success
-SetState(Pipe1,Sticky) Success
 Plumber1:
 
 id: 1
@@ -21,7 +19,7 @@ Plumber1:
 
 id: 1
 name: Sanyi
-immobile: 10
+immobile: 0
 location: Pipe1
 heldPipe: null
 heldPump: null

@@ -7,7 +7,7 @@ Create(Plumber) Success Plumber1 created
 Connect(Pump1,Pipe1) Success
 Connect(Pump2,Pipe1) Success
 SetLocation(Plumber1,Pump1) Success
-SetState(Pipe1,Sticky) Success
+SetState(Pipe1,Slippery) Success
 Plumber1:
 
 id: 1
@@ -21,7 +21,7 @@ Plumber1:
 
 id: 1
 name: Sanyi
-immobile: 10
-location: Pipe1
+immobile: 0
+location: Pump2
 heldPipe: null
 heldPump: null

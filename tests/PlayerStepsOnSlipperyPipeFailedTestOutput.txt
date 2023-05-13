@@ -1,13 +1,14 @@
 CreateGame() Success
-Random(true) Success
 Create(Pump) Success Pump1 created
 Create(Pump) Success Pump2 created
 Create(Pipe) Success Pipe1 created
 Create(Plumber) Success Plumber1 created
+Create(Saboteur) Success Saboteur1 created
 Connect(Pump1,Pipe1) Success
 Connect(Pump2,Pipe1) Success
 SetLocation(Plumber1,Pump1) Success
-SetState(Pipe1,Sticky) Success
+SetLocation(Saboteur1,Pipe1) Success
+SetState(Pipe1,Slippery) Success
 Plumber1:
 
 id: 1
@@ -16,12 +17,12 @@ immobile: 0
 location: Pump1
 heldPipe: null
 heldPump: null
-Move(Plumber1,Pipe1) Success
+Move(Plumber1,Pipe1) FAILED
 Plumber1:
 
 id: 1
 name: Sanyi
-immobile: 10
-location: Pipe1
+immobile: 0
+location: Pump1
 heldPipe: null
 heldPump: null

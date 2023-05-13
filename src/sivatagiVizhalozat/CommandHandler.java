@@ -805,15 +805,15 @@ public class CommandHandler
 			case"State":
 				switch(arguments[1])
 				{
-				case"normal":
+				case"Normal":
 					pipe.setState(PipeSurfaceState.Normal);
 					out.println(cmd + " Success");
 					break;
-				case"slippery":
+				case"Slippery":
 					pipe.setState(PipeSurfaceState.Slippery);
 					out.println(cmd + " Success");
 					break;
-				case"sticky":
+				case"Sticky":
 					pipe.setState(PipeSurfaceState.Sticky);
 					out.println(cmd + " Success");
 					break;
