@@ -119,18 +119,19 @@ public class Pump extends FieldElement {
 	 * 
 	 * @param i The id of the input pipe in the pump's connections
 	 */
-	public boolean setInput(int id) 
+	public boolean setInput(int i) 
 	{
-		if(id == -1)
+		if(i == -1)
 		{
 			input = -1;
 			return true;
 		}
 		for(FieldElement pipe: connections)
 		{
-			if(pipe.getId() == id);
-			input = id;
-			return true;
+			if(pipe.getId() == i) {
+				input = i;
+				return true;
+			}
 		}
 		return false;
 	}
@@ -153,18 +154,19 @@ public class Pump extends FieldElement {
 	 */
 	public boolean setOutput(int o) 
 	{
-		if(id == -1)
+		if(o == -1)
 		{
 			output = -1;
 			return true;
 		}
 		for(FieldElement pipe: connections)
 		{
-			if(pipe.getId() == id);
-			output = id;
-			return true;
+			if(pipe.getId() == o) {
+				output = o;
+				return true;
+			}
 		}
-		return false;
+		return false; 
 	}
 
 	/**
@@ -197,7 +199,6 @@ public class Pump extends FieldElement {
 	public String toString () {
 		String value = "";
 
-		value += "Pump" + id + "\n" + "\n";
 		value += "id: " + id + "\n";
 		value += "maxConnections: " + maxConnections + "\n";
 		value += "isWorking: " + isWorking + "\n";
@@ -205,17 +206,17 @@ public class Pump extends FieldElement {
 		value += "water: " + water + "\n";
 		value += "input: " + input + "\n";
 		value += "output: " + output + "\n";
-		value += "connections: " + "\n";
+		value += "connections:\n";
 			for(FieldElement p : connections){
 				value += "Pipe";
 				value += p.id;
 				value += "\n";
 			}
-		value += "players: " + "\n";
+		value += "players:";
 			for(Player p : players){
+				value += "\n";
 				value += p.getClass().getSimpleName();
 				value += p.getId();
-				value += "\n";
 			}	
 			
 		return value;	
@@ -346,23 +347,13 @@ public class Pump extends FieldElement {
 	public boolean Remove(FieldElement pipe) {
 		if (pipe != null) {
 			if (connections.contains(pipe)) {
-				int inx = connections.indexOf(pipe);
+				int id = pipe.getId();
 				// If the removed pipe was the input pipe, close the input
-				if (inx == input)
+				if (id == input)
 					input = -1;
-				// In this case the input pipe would get a higher index which could mean we
-				// point out of the list,
-				// so we decrease the value to stop it from happening
-				else if (inx < input)
-					input--;
 				// Same as the input pipe, if they're the same than close the output
-				if (inx == output)
+				if (id == output)
 					output = -1;
-				// Same as the input pipe, if the output index was higher, than when removing a
-				// lower indexed item
-				// it could point to nothing or not the pipe we wanted
-				else if (inx < output)
-					output--;
 				connections.remove(pipe);
 				return true;
 			}
@@ -370,6 +361,24 @@ public class Pump extends FieldElement {
 		return false;
 	}
 
+	
+	/**
+	 * @param f The id of the pipe the player wants to disconnect from this field
+	 * @return The disconnected pipe
+	 */
+	public Pipe Disconnect(int id) { 
+		for (FieldElement p : connections) {
+			if(p.getId() == id) {
+				Pipe ret = p.Disconnect(p.GetNeighbor().indexOf(this));
+				if(ret != null) {
+					Remove(ret);
+					return ret;
+				}
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Both Plumbers and Sabouteurs can change the direction of pumping. If any of
 	 * the two new values
@@ -399,7 +408,7 @@ public class Pump extends FieldElement {
 	 * If Input is closed( = -1) Skip it
 	 */
 	public void Step1() {
-		if (game.getRandom() > 80)
+		if (game.getRandom() * 100 > 80)
 			StopWorking();
 		if (isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's
 																	// room for water in tank

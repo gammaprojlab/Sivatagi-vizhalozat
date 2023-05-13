@@ -1,0 +1,67 @@
+CreateGame() Success
+Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
+Create(Pipe) Success Pipe2 created
+Create(Pipe) Success Pipe3 created
+Create(Pipe) Success Pipe4 created
+Create(Pipe) Success Pipe5 created
+Create(Pipe) Success Pipe6 created
+Connect(Pump1,Pipe1) Success
+Connect(Pump1,Pipe2) Success
+Connect(Pump1,Pipe3) Success
+Connect(Pump1,Pipe4) Success
+Connect(Pump1,Pipe5) Success
+Create(Plumber) Success Plumber1 created
+SetLocation(Plumber1,Pump1) Success
+SetHeldPipe(Plumber1,Pipe6) Success
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: -1
+output: -1
+connections:
+Pipe1
+Pipe2
+Pipe3
+Pipe4
+Pipe5
+players:
+Plumber1
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: Pump1
+heldPipe: Pipe6
+heldPump: null
+ConnectPipe(Plumber1) FAILED
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: -1
+output: -1
+connections:
+Pipe1
+Pipe2
+Pipe3
+Pipe4
+Pipe5
+players:
+Plumber1
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: Pump1
+heldPipe: Pipe6
+heldPump: null

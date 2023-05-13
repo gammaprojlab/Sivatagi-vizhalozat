@@ -1,21 +1,9 @@
 CreateGame() Success
 Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
 Create(Plumber) Success Plumber1 created
 SetLocation(Plumber1,Pump1) Success
-SetIsWorking(Pump1,false) Success
-Pump1:
-
-id: 1
-maxConnections: 5
-isWorking: false
-tankCapacity: 100
-water: 0
-input: -1
-output: -1
-connections:
-players:
-Plumber1
-Repair(Plumber1) Success
+SetHeldPipe(Plumber1,Pipe1) Success
 Pump1:
 
 id: 1
@@ -28,3 +16,33 @@ output: -1
 connections:
 players:
 Plumber1
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: Pump1
+heldPipe: Pipe1
+heldPump: null
+ConnectPipe(Plumber1) Success
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: -1
+output: -1
+connections:
+Pipe1
+players:
+Plumber1
+Plumber1:
+
+id: 1
+name: Sanyi
+immobile: 0
+location: Pump1
+heldPipe: null
+heldPump: null

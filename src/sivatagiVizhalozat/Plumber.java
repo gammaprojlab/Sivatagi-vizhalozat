@@ -92,9 +92,12 @@ public class Plumber extends Player {
 	
 	/**
 	 * Repairs the location.
+	 * @return 
 	 *  */
-	public void Repair() {
-		location.Repair();
+	public boolean Repair() {
+		if(location != null)
+			return location.Repair();
+		return false;
 	}
 	
 	/**
@@ -192,7 +195,7 @@ public class Plumber extends Player {
 			ret += "null";
 		ret += "\nheldPump: ";
 		if(heldPump != null)
-				ret += heldPump.getClass().getSimpleName();
+				ret += heldPump.getClass().getSimpleName() + heldPump.getId();
 		else
 			ret += "null";
 		

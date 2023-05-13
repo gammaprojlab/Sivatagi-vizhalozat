@@ -99,7 +99,7 @@ public class CommandHandler
 			Scanner output = new Scanner(outputFile);
 			int i = 0;
 			boolean testCheck = true;
-			while(output.hasNextLine()) {
+			while(output.hasNextLine() && test.hasNextLine()) {
 				i++;
 				//compare the lines of the required output and the output
 				String outputLine = output.nextLine();
@@ -110,7 +110,7 @@ public class CommandHandler
 				}
 			}
 			
-			if(!testCheck || test.hasNextLine()) {
+			if(!testCheck || test.hasNextLine() || output.hasNextLine()) {
 				System.out.println("TestCheck FAILED");
 			} else {
 				System.out.println("TestCheck Success");
@@ -382,6 +382,12 @@ public class CommandHandler
 			else
 				out.println(cmd + " FAILED");
 			break;
+		case "Repair":
+			if(plumber.Repair())
+				out.println(cmd + " Success");
+			else
+				out.println(cmd + " FAILED");
+			break;
 		default:
 			if(command[0].contains("Set"))
 			{
@@ -641,7 +647,7 @@ public class CommandHandler
 			else
 				out.println(cmd + " FAILURE");
 			break;
-		default:	
+		default:
 			if(command[0].contains("Set"))
 			{
 				String attribute = command[0].substring(3);
@@ -662,6 +668,7 @@ public class CommandHandler
 						out.println(cmd + " FAILED");
 						break;
 					}
+					break;
 				case"Input":
 					int pipeId1 = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
 					if(pump.setInput(pipeId1))
@@ -683,7 +690,7 @@ public class CommandHandler
 					break;
 				default:
 					out.println(cmd + " FAILED");
-						
+					break;
 				}
 			}
 			else

@@ -1,0 +1,8 @@
+CreateGame()
+Create(Pump)
+Create(Plumber)
+SetLocation(Plumber1,Pump1)
+SetIsWorking(Pump1,false)
+ListParams(Pump1)
+Repair(Plumber1)
+ListParams(Pump1)

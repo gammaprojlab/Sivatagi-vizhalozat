@@ -1,0 +1,6 @@
+CreateGame()
+Random(true)
+Create(Pump)
+ListParams(Pump1)
+Tick()
+ListParams(Pump1)
