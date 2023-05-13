@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class CommandHandler 
 {
@@ -90,9 +91,9 @@ public class CommandHandler
 	/**
 	 * Read the required output from test.txt, write the check result to console.
 	 */
-	public void TestCheck() {
+	public void TestCheck(String file) {
 		try {
-			File testFile = new File("test.txt");
+			File testFile = new File("tests/" + file + "Output.txt");
 			Scanner test = new Scanner(testFile);
 			File outputFile = new File("output.txt");
 			Scanner output = new Scanner(outputFile);
@@ -101,13 +102,15 @@ public class CommandHandler
 			while(output.hasNextLine()) {
 				i++;
 				//compare the lines of the required output and the output
-				if(!output.nextLine().equals(test.nextLine())) {
+				String outputLine = output.nextLine();
+				String testLine = test.nextLine();
+				if(!outputLine.equals(testLine)) {
 					testCheck = false;
-					System.out.println(i);
+					System.out.println("Row:\t\t\t" + i + "\nRequired output:\t" + testLine + "\nActual output:\t\t" + outputLine + "\n");
 				}
 			}
 			
-			if(!testCheck) {
+			if(!testCheck || test.hasNextLine()) {
 				System.out.println("TestCheck FAILED");
 			} else {
 				System.out.println("TestCheck Success");
@@ -117,7 +120,8 @@ public class CommandHandler
 			output.close();
 			test.close();
 		} catch(FileNotFoundException e) {
-			System.out.println("file not found");
+			System.out.println(file + "Output.txt not found");
+			e.printStackTrace();
 		} catch(Exception e) {
 			System.out.println("TestCheck FAILED");
 			e.printStackTrace();
@@ -128,75 +132,106 @@ public class CommandHandler
 	 * Read the test input from input.txt, write the test output to output.txt.
 	 */
 	public void TestMenu() {
-		boolean end = false;
-		Scanner in = new Scanner(System.in);
-		//exit from test mode on "exit\n"
-		while(!end) {
-			//next line of the console
-			String nl = in.nextLine();
-			if(nl.equals("exit")) {
-				end = true;
-			} else if(nl.equals("check")) {
-				//delete the content of the output.txt
-				out.close();
-				//sets print stream to file
-				try {
-					File outFile = new File("output.txt");
-					out = new PrintStream(outFile);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-				
-				//new game
-				game = null;
-				
-				//reset the static variables
-				Cistern.setNextId(1);
-				Pipe.setNextId(1);
-				Plumber.setNextId(1);
-				Pump.setNextId(1);
-				Saboteur.setNextId(1);
-				Spring.setNextId(1);
-				
-				try {
-					File inputFile = new File("input.txt");
-					Scanner input = new Scanner(inputFile);
-					
-					//the next line should not be read
-					boolean noMoreLines = false;
-					while(input.hasNextLine() && !noMoreLines) {
-						String sor = input.nextLine();
-						
-						if(sor.equals("")) {
-							//new game
-							game = null;
-							
-							//reset the static variables
-							Cistern.setNextId(1);
-							Pipe.setNextId(1);
-							Plumber.setNextId(1);
-							Pump.setNextId(1);
-							Saboteur.setNextId(1);
-							Spring.setNextId(1);
-							
-							noMoreLines = true;
-						} else {
-							executeCommand(sor);
-						}
-					}
-					
-					input.close();
-				} catch(FileNotFoundException e) {
-					System.out.println("input.txt not found");
-				}
-				
-				TestCheck();
-			}
-		}
+		try {
+			ArrayList<String> lst = new ArrayList<String>();
 		
-		//in.close(); // Kommentezve mert a mainben is problémák lépnek fel. Ezzel megoldodik
+			try {
+				//get testlist
+				File testListFile = new File("tests/TestList.txt");
+				Scanner testList = new Scanner(testListFile);
+				
+				while(testList.hasNextLine()) {
+					lst.add(testList.nextLine());
+					int size = lst.size();
+					System.out.println(size + "\t" + lst.get(size - 1) + "\n-------------------------------------------");
+				}
+				
+				testList.close();
+			} catch(FileNotFoundException e) {
+				System.out.println("TestList.txt not found");
+				e.printStackTrace();
+			}
+			
+			
+			boolean end = false;
+			Scanner in = new Scanner(System.in);
+			//exit from test mode on "exit\n"
+			while(!end) {
+				//next line of the console
+				String nl = in.nextLine();
+				if(nl.equals("exit")) {
+					end = true;
+				} else {
+					try {
+						int num = Integer.parseInt(nl);
+						
+						//delete the content of out
+						out.close();
+						//sets print stream to file
+						try {
+							File outFile = new File("output.txt");
+							out = new PrintStream(outFile);
+						}
+						catch(Exception e) {
+							System.out.println("output.txt not found");
+							e.printStackTrace();
+						}
+						
+						//new game
+						game = null;
+						
+						//reset the static variables
+						Cistern.setNextId(1);
+						Pipe.setNextId(1);
+						Plumber.setNextId(1);
+						Pump.setNextId(1);
+						Saboteur.setNextId(1);
+						Spring.setNextId(1);
+						
+						try {
+							File inputFile = new File("tests/" + lst.get(num - 1) + ".txt");
+							Scanner input = new Scanner(inputFile);
+							
+							//the next line should not be read
+							boolean noMoreLines = false;
+							while(input.hasNextLine() && !noMoreLines) {
+								String line = input.nextLine();
+								
+								if(line.equals("")) {
+									//new game
+									game = null;
+									
+									//reset the static variables
+									Cistern.setNextId(1);
+									Pipe.setNextId(1);
+									Plumber.setNextId(1);
+									Pump.setNextId(1);
+									Saboteur.setNextId(1);
+									Spring.setNextId(1);
+									
+									noMoreLines = true;
+								} else {
+									executeCommand(line);
+								}
+							}
+							
+							input.close();
+						} catch(FileNotFoundException e) {
+							System.out.println(lst.get(num - 1) + ".txt not found");
+							e.printStackTrace();
+						}
+					
+						TestCheck(lst.get(num - 1));
+					} catch(NumberFormatException e) {
+						System.out.println("Invalid number!");
+					}
+				}
+			}
+			
+			in.close();
+		} catch(IndexOutOfBoundsException e) {
+			System.out.println("Index out of range!");
+		}
 	}
 	
 	void executeCommand(String cmd)
