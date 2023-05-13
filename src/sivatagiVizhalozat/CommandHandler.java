@@ -196,7 +196,7 @@ public class CommandHandler
 			}
 		}
 		
-		in.close();
+		//in.close(); // Kommentezve mert a mainben is problémák lépnek fel. Ezzel megoldodik
 	}
 	
 	void executeCommand(String cmd)
@@ -655,17 +655,7 @@ public class CommandHandler
 			else
 				out.println(cmd + " FAILED");
 			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		}	
 	}
 	
 	void springHandler(String cmd)

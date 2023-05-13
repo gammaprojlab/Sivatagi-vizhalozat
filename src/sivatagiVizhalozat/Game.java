@@ -70,6 +70,7 @@ public class Game implements Serializable{
 	 *  */
 	private int remainingRounds;
 	
+	
 	/**
 	 * The currently active player. This player is performing the actions currently.
 	 *  */
@@ -214,7 +215,7 @@ public class Game implements Serializable{
 		steppable = new ArrayList<Steppable>();
 		classIdArray = new int[6];
 		map = new Map();
-		remainingRounds = 40; 						///Ez mennyi legyen?
+		remainingRounds = 40;///Ez mennyi legyen?
 	}
 	/**
 	 * 8 parametered constructor of the Game class.
@@ -237,7 +238,7 @@ public class Game implements Serializable{
 		classIdArray = classId;
 		map = new Map();
 		remainingRounds = maxrounds;
-		activePlayer = new Plumber();  				///???
+		activePlayer = null;  				///???
 	}
 	
 	/**
@@ -336,7 +337,7 @@ public class Game implements Serializable{
 	}
 
 	public void setRemainingRounds(int remaining) {
-		remainingRounds = remaining;	
+		remainingRounds = remaining;
 	}
 
 

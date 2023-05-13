@@ -1,35 +1,15 @@
 CreateGame() Success
 Create(Pipe) Success Pipe1 created
-Create(Plumber) Success Plumber1 created
-SetLocation(Plumber1,Pipe1) Success
-Pipe1:
-
-id: 1
-maxConnections: 2
-state: Normal
-isPunctured: false
-isGrabbed: false
-capacity: 50
-water: 0
-unpuncturable: 0
-duration: 0
-connections:
-players:
-Plumber1
-SaveGame(save.ser) Success
-LoadGame(save.ser) Success
-Pipe1:
-
-id: 1
-maxConnections: 2
-state: Normal
-isPunctured: false
-isGrabbed: false
-capacity: 50
-water: 0
-unpuncturable: 0
-duration: 0
-connections:
-players:
-Plumber1
-Create(Plumber) Success Plumber2 created
+Create(Pipe) Success Pipe2 created
+Create(Pipe) Success Pipe3 created
+Create(Pipe) Success Pipe4 created
+Create(Pipe) Success Pipe5 created
+Create(Pump) Success Pump1 created
+Create(Pump) Success Pump2 created
+Create(Pump) Success Pump3 created
+Create(Pump) Success Pump4 created
+Create(Cistern) Success Cistern1 created
+Create(Cistern) Success Cistern2 created
+Create(Spring) Success Spring1 created
+Connect(Cistern,Pipe1) FAILED
+SaveGame(map1.ser) Success
