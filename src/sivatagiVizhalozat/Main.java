@@ -27,8 +27,10 @@ public class Main {
 						mapHandle(scanner, handler);
 						ParamSetting(scanner, handler);
 						System.out.println("Start!");
-						handler.executeCommand("NextPlayer()");
-						GameRounds(scanner, handler);
+						while(handler.getGame().TurnsLeft()) {
+							handler.executeCommand("NextPlayer()");
+							GameRounds(scanner, handler);
+						}
 						break;
 					default: 
 						System.out.println("Wrong input, try again!");
@@ -95,19 +97,85 @@ public class Main {
 	public static void GameRounds(Scanner scanner, CommandHandler handler) {
 		System.out.println(handler.getGame().getactivePlayer().getName() + "'s turn it is.");
 		System.out.println("Choose an action (you can call for 'help' or 'list'): ");
-		String input = scanner.nextLine();
-		if(input.toLowerCase() == "help" && handler.getGame().getactivePlayer().getClass().getSimpleName() == "Plumber")
-			System.out.println("Move\nConnectPipe\nDisconnectPipe\nTakePump\nPlacePump\nGrabPipe\nPumpDirection\nPuncture\nMakeSticky\nRepair");
-		
-		else if(input.toLowerCase() == "help")
-			System.out.println("Move\nPumpDirection\nPuncture\nMakeSticky\nMakeSlippery");
-		
-		else if(input.toLowerCase() == "list")
-			handler.executeCommand("ListParams("+handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
-		
-		else
-			handler.executeCommand(input + "(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
-		
+		boolean flag = true;
+		while(flag) {
+			String in = scanner.nextLine();
+			String[] input1 = in.split(" ");
+			if(input1[0].toLowerCase() == "help" && handler.getGame().getactivePlayer().getClass().getSimpleName() == "Plumber")
+				System.out.println("Move\nConnectPipe\nDisconnectPipe\nTakePump\nPlacePump\nGrabPipe\nPumpDirection\nPuncture\nMakeSticky\nRepair");
+			
+			else if(input1[0].toLowerCase() == "help")
+				System.out.println("Move\nPumpDirection\nPuncture\nMakeSticky\nMakeSlippery");
+			
+			else if(input1[0].toLowerCase() == "list")
+				handler.executeCommand("ListParams("+handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+			
+			else {
+				flag = false;
+				if(handler.getGame().getactivePlayer().getClass().getSimpleName() == "Plumber") {
+					switch(input1[0].toLowerCase()) {
+						case "move":
+							handler.executeCommand("Move(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + "," + input1[1] + ")");
+							break;
+						case "connectpipe":
+							handler.executeCommand("ConnectPipe(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "disconnectpipe":
+							handler.executeCommand("DisconnectPipe(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + "," +input1[1] + ")");
+							break;
+						case "takepump":
+							handler.executeCommand("TakePump(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "placepump":
+							handler.executeCommand("PlacePump(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "grabepipe":
+							handler.executeCommand("GrabPipe(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "pumpdirection":
+							handler.executeCommand("PumpDiection(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + "," + input1[1] + "," + input1[2] +")");
+							break;
+						case "puncture":
+							handler.executeCommand("Puncture(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "makesticky":
+							handler.executeCommand("MakeSticky(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "repair":
+							handler.executeCommand("Repair(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						default:
+							System.out.println("Invalid command, try again!");
+							flag = true;
+							break;
+					}
+				}
+				
+				else {
+					switch (input1[0]) {
+						case "move":
+							handler.executeCommand("Move(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + "," + input1[1] + ")");
+							break;
+						case "pumpdirection":
+							handler.executeCommand("PumpDiection(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + "," + input1[1] + "," + input1[2] +")");
+							break;
+						case "puncture":
+							handler.executeCommand("Puncture(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "makesticky":
+							handler.executeCommand("MakeSticky(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						case "makeslippery":
+							handler.executeCommand("MakeSlippery(" + handler.getGame().getactivePlayer().getClass().getSimpleName() + String.valueOf(handler.getGame().getactivePlayer().getId()) + ")");
+							break;
+						default:
+							System.out.println("Invalid command, try again!");
+							flag = true;
+							break;	
+					}
+				}
+			}
+		}
 		handler.executeCommand("Tick()");
 	}
 }
