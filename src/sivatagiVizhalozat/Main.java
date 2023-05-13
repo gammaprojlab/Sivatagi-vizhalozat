@@ -21,7 +21,7 @@ public class Main {
 						flag = false;
 						break;
 					case "1": 
-						handler.TestMenu();
+						handler.TestMenu(scanner);
 						break;
 					case "2": 
 						mapHandle(scanner, handler);
