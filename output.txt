@@ -1,0 +1,39 @@
+CreateGame() Success
+Create(Pump) Success Pump1 created
+Create(Pipe) Success Pipe1 created
+Create(Pipe) Success Pipe2 created
+Connect(Pump1,Pipe1) Success
+Connect(Pump1,Pipe2) Success
+Create(Saboteur) Success Saboteur1 created
+SetLocation(Saboteur1,Pump1) Success
+SetInput(Pump1,1) Success
+SetOutput(Pump1,2) Success
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: 1
+output: 2
+connections:
+Pipe1
+Pipe2
+players:
+Saboteur1
+PumpDirection(Saboteur1,close,close) Success
+Pump1:
+
+id: 1
+maxConnections: 5
+isWorking: true
+tankCapacity: 100
+water: 0
+input: -1
+output: -1
+connections:
+Pipe1
+Pipe2
+players:
+Saboteur1

@@ -161,68 +161,21 @@ public class CommandHandler
 				String nl = in.nextLine();
 				if(nl.equals("exit")) {
 					end = true;
-				} else {
+				}
+				else if(nl.equals("all")) {
+					for(String test : lst) {
+						System.out.print(test + ": ");
+						runTest(test);
+					}
+				}
+				else {
 					try {
 						int num = Integer.parseInt(nl);
-						
-						//delete the content of out
-						out.close();
-						//sets print stream to file
-						try {
-							File outFile = new File("output.txt");
-							out = new PrintStream(outFile);
+						if(num > 0 && num <= lst.size()) {
+							runTest(lst.get(num - 1));
 						}
-						catch(Exception e) {
-							System.out.println("output.txt not found");
-							e.printStackTrace();
-						}
-						
-						//new game
-						game = null;
-						
-						//reset the static variables
-						Cistern.setNextId(1);
-						Pipe.setNextId(1);
-						Plumber.setNextId(1);
-						Pump.setNextId(1);
-						Saboteur.setNextId(1);
-						Spring.setNextId(1);
-						
-						try {
-							File inputFile = new File("tests/" + lst.get(num - 1) + ".txt");
-							Scanner input = new Scanner(inputFile);
-							
-							//the next line should not be read
-							boolean noMoreLines = false;
-							while(input.hasNextLine() && !noMoreLines) {
-								String line = input.nextLine();
-								
-								if(line.equals("")) {
-									//new game
-									game = null;
-									
-									//reset the static variables
-									Cistern.setNextId(1);
-									Pipe.setNextId(1);
-									Plumber.setNextId(1);
-									Pump.setNextId(1);
-									Saboteur.setNextId(1);
-									Spring.setNextId(1);
-									
-									noMoreLines = true;
-								} else {
-									executeCommand(line);
-								}
-							}
-							
-							input.close();
-						} catch(FileNotFoundException e) {
-							System.out.println(lst.get(num - 1) + ".txt not found");
-							e.printStackTrace();
-						}
-					
-						TestCheck(lst.get(num - 1));
-					} catch(NumberFormatException e) {
+					}
+					catch(NumberFormatException e) {
 						System.out.println("Invalid number!");
 					}
 				}
@@ -231,6 +184,66 @@ public class CommandHandler
 		} catch(IndexOutOfBoundsException e) {
 			System.out.println("Index out of range!");
 		}
+	}
+	
+	private void runTest( String test) {
+		//delete the content of out
+		out.close();
+		//sets print stream to file
+		try {
+			File outFile = new File("output.txt");
+			out = new PrintStream(outFile);
+		}
+		catch(Exception e) {
+			System.out.println("output.txt not found");
+			e.printStackTrace();
+		}
+		
+		//new game
+		game = null;
+		
+		//reset the static variables
+		Cistern.setNextId(1);
+		Pipe.setNextId(1);
+		Plumber.setNextId(1);
+		Pump.setNextId(1);
+		Saboteur.setNextId(1);
+		Spring.setNextId(1);
+		
+		try {
+			File inputFile = new File("tests/" + test + ".txt");
+			Scanner input = new Scanner(inputFile);
+			
+			//the next line should not be read
+			boolean noMoreLines = false;
+			while(input.hasNextLine() && !noMoreLines) {
+				String line = input.nextLine();
+				
+				if(line.equals("")) {
+					//new game
+					game = null;
+					
+					//reset the static variables
+					Cistern.setNextId(1);
+					Pipe.setNextId(1);
+					Plumber.setNextId(1);
+					Pump.setNextId(1);
+					Saboteur.setNextId(1);
+					Spring.setNextId(1);
+					
+					noMoreLines = true;
+				} else {
+					executeCommand(line);
+				}
+			}
+			
+			input.close();
+		} catch(FileNotFoundException e) {
+			System.out.println(test + ".txt not found");
+			e.printStackTrace();
+		}
+	
+		TestCheck(test);
 	}
 	
 	void executeCommand(String cmd)
@@ -884,11 +897,6 @@ public class CommandHandler
 					game.setSpilledWater(cWater);
 					out.println(cmd + " Success");
 					break;
-				case"Tester":
-					int tester = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));  //arguments[0] maybe?
-					game.setTester(tester);
-					out.println(cmd + " Success");
-					break;
 				case"remainingRounds":
 					int remaining = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));  //arguments[0] maybe?
 					game.setRemainingRounds(remaining);
@@ -896,8 +904,10 @@ public class CommandHandler
 					break;			
 				}
 			}
-			
 		}
 	}
 	
+	public Game getGame() {
+		return game;
+	}
 }
