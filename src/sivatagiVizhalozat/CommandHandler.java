@@ -7,11 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+
+/**
+ * Class to handle commands
+ */
 public class CommandHandler {
 
 	/**
@@ -270,7 +273,7 @@ public class CommandHandler {
 
 		// If we are not creating a new Plumber we get the id of the plumber
 		// Then we load it into the plumber variable
-		// We use this to execute commands
+		// We use this plumber to execute commands
 		int plumberId = 0;
 		plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Plumber plumber = game.getPlumber(plumberId);
@@ -438,9 +441,11 @@ public class CommandHandler {
 			return;
 		}
 
+
+		// If we are not creating a new Saboteur we get the id of the saboteur
+		// Then we load it into the saboteur variable
+		// We use this saboteur to execute commands
 		int saboteurId = 0;
-		// parse int only works if the entire string is numbers so we remove every
-		// non-number from the input
 		saboteurId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Saboteur saboteur = game.getSaboteur(saboteurId);
 		switch (command[0]) {
@@ -534,14 +539,17 @@ public class CommandHandler {
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
 
+		// Creates a Cistern
 		if (command[0].equals("Create")) {
 			Cistern newCistern = new Cistern(game);
 			out.println(cmd + " Success Cistern" + newCistern.getId() + " created");
 			return;
 		}
+
+		// If we are not creating a new Cistern we get the id of the cistern
+		// Then we load it into the cistern variable
+		// We use this cistern to execute commands
 		int cisternId = 0;
-		// parse int only works if the entire string is numbers so we remove every non
-		// number from the input
 		cisternId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Cistern cistern = game.getMap().getCistern(cisternId);
 		switch (command[0]) {
@@ -580,12 +588,17 @@ public class CommandHandler {
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
 
+
+		// Creates a Pump
 		if (command[0].equals("Create")) {
 			Pump newPump = new Pump(game);
 			out.println(cmd + " Success Pump" + newPump.getId() + " created");
 			return;
 		}
 
+		// If we are not creating a new Pump we get the id of the pump
+		// Then we load it into the pump variable
+		// We use this pump to execute commands
 		int pumpId = 0;
 		pumpId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Pump pump = game.getMap().getPump(pumpId);
@@ -675,14 +688,17 @@ public class CommandHandler {
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
 
+		// Creates a Spring
 		if (command[0].equals("Create")) {
 			Spring newSpring = new Spring(game);
 			out.println(cmd + " Success Spring" + newSpring.getId() + " created");
 			return;
 		}
+
+		// If we are not creating a new Spring we get the id of the spring
+		// Then we load it into the spring variable
+		// We use this spring to execute commands
 		int springId = 0;
-		// parse int only works if the entire string is numbers so we remove every non
-		// number from the input
 		springId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Spring spring = game.getMap().getSpring(springId);
 		switch (command[0]) {
@@ -719,18 +735,22 @@ public class CommandHandler {
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
-
+		
+		// Creates a Pipe
 		if (command[0].equals("Create")) {
 			Pipe newPipe = new Pipe(game);
 			out.println(cmd + " Success Pipe" + newPipe.getId() + " created");
 			return;
 		}
-		int pipeId = 0;
 
+		// If we are not creating a new Pipe we get the id of the pipe
+		// Then we load it into the pipe variable
+		// We use this pipe to execute commands
+		int pipeId = 0;
 		pipeId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
 		Pipe pipe = game.getMap().getPipe(pipeId);
 
-		if (command[0].equals("ListParams")) {
+		if (command[0].equals("ListParams") && pipe != null) {
 			out.println(arguments[0] + ":");
 			out.println();
 			out.println(pipe.toString());
@@ -816,17 +836,23 @@ public class CommandHandler {
 	 * 
 	 * @param cmd The command we want to execute
 	 * @throws NumberFormatException
+	 * @throws ClassNotFoundException
+	 * @throws IOException
 	 */
 	void GameHandler(String cmd) throws NumberFormatException, ClassNotFoundException, IOException {
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
 		command[1] = command[1].strip();
 		String[] arguments = command[1].split(",", 0);
+
+		// Creates a new game and sets it as the game of the CommandHandler
 		if (command[0].equals("Create")) {
 			game = new Game();
 			out.println(cmd + " Success Game created");
 			return;
 		}
+
+
 		switch (command[0]) {
 			case "CreateGame":
 				game = new Game();
@@ -913,9 +939,13 @@ public class CommandHandler {
 				ExecuteCommand(line);
 			}
 		}
-
 		out = temp;
 	}
+
+	/**
+	 * It sets the output stream to the str given as patameter
+	 * @param str the PrintStrem we set the output to
+	 */
 
 	public void setOutput(PrintStream str) {
 		out = str;

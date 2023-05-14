@@ -18,6 +18,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		// Normal mode
 		if (args.length == 0) {
 			PrintStream out = new PrintStream(OutputStream.nullOutputStream());
 			CommandHandler handler = new CommandHandler(out);
