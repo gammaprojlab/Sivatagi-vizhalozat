@@ -84,6 +84,7 @@ public class Plumber extends Player {
 		id = nextId++;
 		heldPipe = null;
 		heldPump = null;
+		g.addPlumber(this);
 	}
 	
 	/**
@@ -99,6 +100,7 @@ public class Plumber extends Player {
 		super(n, f, g);
 		heldPipe = pi;
 		heldPump = pu;
+		g.addPlumber(this);
 	}
 	
 	/**
