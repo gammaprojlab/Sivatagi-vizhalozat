@@ -54,6 +54,7 @@ public class Saboteur extends Player {
 	public Saboteur(Game g) {
 		super(g);
 		id = nextId++;
+		g.addSaboteur(this);
 	}
 	
 	/**
@@ -66,6 +67,7 @@ public class Saboteur extends Player {
 	public Saboteur(String n, FieldElement f, Game g) {
 		super(n, f, g);
 		id = nextId++;
+		g.addSaboteur(this);
 	}
 	
 	

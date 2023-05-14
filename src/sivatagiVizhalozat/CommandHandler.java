@@ -186,7 +186,12 @@ public class CommandHandler
 		}
 	}
 	
-	private void runTest( String test) {
+	/**
+	 * The method, that runs the test received as a parameter.
+	 * 
+	 * @param test That we want to run
+	 */
+	private void runTest(String test) {
 		//delete the content of out
 		out.close();
 		//sets print stream to file
@@ -246,6 +251,11 @@ public class CommandHandler
 		TestCheck(test);
 	}
 	
+	/**
+	 * Executes the received command.
+	 * 
+	 * @param cmd The command we want to execute.
+	 */
 	void executeCommand(String cmd)
 	{
 		try {
@@ -296,6 +306,12 @@ public class CommandHandler
 		}
 	}
 	
+	/**
+	 * Handles all the possible commands, that can be executed with a plumber.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
 	void plumberHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
@@ -460,7 +476,13 @@ public class CommandHandler
 		}
 	}
 	
-	void saboteurHandler(String cmd)
+	/**
+	 * Handles all the possible commands, that can be executed with a saboteur.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
+	void saboteurHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
@@ -562,14 +584,16 @@ public class CommandHandler
 			}
 			else
 				out.println(cmd + " FAILED");
-		}
-		
-		
-		
-		
+		}	
 	}
 	
-	void cisternHandler(String cmd)
+	/**
+	 * Handles all the commands we can execute with a cistern.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
+	void cisternHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
@@ -611,7 +635,13 @@ public class CommandHandler
 		}
 	}
 	
-	void pumpHandler(String cmd)
+	/**
+	 * Handles all the commands we can execute with a pump.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
+	void pumpHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
@@ -707,7 +737,13 @@ public class CommandHandler
 		}	
 	}
 	
-	void springHandler(String cmd)
+	/**
+	 * Handles all the commands we can execute with a spring.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
+	void springHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
@@ -748,7 +784,13 @@ public class CommandHandler
 		}
 	}
 	
-	void pipeHandler(String cmd)
+	/**
+	 * Handles all the commands we can execute with a pipe.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
+	void pipeHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
@@ -854,7 +896,13 @@ public class CommandHandler
 		
 	}
 	
-	void gameHandler(String cmd)
+	/**
+	 * Handles all the commands we can execute with the game object.
+	 * 
+	 * @param cmd The command we want to execute
+	 * @throws NumberFormatException
+	 */
+	void gameHandler(String cmd) throws NumberFormatException
 	{
 		String[] command = cmd.split("[(]", 0);
 		command[1] = command[1].replace(')', ' ');
@@ -866,10 +914,7 @@ public class CommandHandler
 			out.println(cmd + " Success Game created");
 			return;
 		}
-		int plumberId = 0;
-		//parse int only works if the entire string is numbers so we remove every non number from the input
-		/*plumberId = Integer.parseInt(arguments[0].replaceAll("[\\D]", ""));
-		Plumber plumber = game.getPlumber(plumberId);*/ // Ez kell ide?? TODO
+		
 		switch(command[0])
 		{
 			case"ListParams":
@@ -906,7 +951,11 @@ public class CommandHandler
 			}
 		}
 	}
-	
+	/**
+	 * Get a reference to the currently running game.
+	 * 
+	 * @return game This game instance
+	 */
 	public Game getGame() {
 		return game;
 	}

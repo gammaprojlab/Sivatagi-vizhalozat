@@ -23,7 +23,11 @@ import java.util.Scanner;
  * */
 public class Game implements Serializable{
 	
+	/**
+	 * The flag that signs whether the game is running or not.
+	 * */
 	private boolean isRunning;
+	
 	/**
 	 * Saboteurs' points, as many spilled into the desert.
 	 * */
@@ -62,12 +66,10 @@ public class Game implements Serializable{
 	 *  */
 	private Map map = new Map();
 	
-	/////////////////////////////////////////////////////////////
 	/**
 	 * Fields of the map.
 	 *  */
 	private ArrayList<Steppable> steppable;
-	//////////////////////////////////////////////////////////////
 	
 	/**
 	 * The number of rounds left till the end of the game.
@@ -80,9 +82,11 @@ public class Game implements Serializable{
 	 *  */
 	private Player activePlayer = null;
 	
+	//------------------------------------------------------------------------------------
 	
-	
-	
+	/**
+	 * Gets the private isRunning value.
+	 * */
 	public boolean getIsRunning() 
 	{
 		return isRunning;
@@ -262,11 +266,11 @@ public class Game implements Serializable{
 		else if(saboteurs.contains(activePlayer)){
 			activePlayer = plumbers.get(activePlayer.getId()+1);
 		}
-		else
+		else {
 			activePlayer = plumbers.get(0);
-		
+			remainingRounds -= 1;
+		}
 		Tick();
-		remainingRounds -= 1;	
 	}
 	/**
 	 * Imitates the flow of the water.
@@ -309,7 +313,12 @@ public class Game implements Serializable{
 		data += "collectedWater: " + collectedWater;
 		return data;
 	}
-
+	
+	/**
+	 * Receive a random number (or fix number dependent of the tester's value).
+	 * 
+	 * @return A random value
+	 */
 	public double getRandom() {
 		switch(tester) 
 		{
@@ -323,15 +332,31 @@ public class Game implements Serializable{
 				return Math.random();
 		}
 	}
-
+	
+	/**
+	 * Set the IdArray to the received parameters value.
+	 * 
+	 * @param array The array we want to IdArray to be.
+	 */
 	public void setIdArray(int[] array) {
 		classIdArray = array;
 	}
-
+	
+	/**
+	 * Get the array of ids of the elements that are present in the game.
+	 * 
+	 * @return int[] The array of the class ids.
+	 */
 	public int[] getIdArray() {
 		return classIdArray;
 	}
 
+	/**
+	 * Find and return the Plumber with the received id.
+	 * 
+	 * @param id The id of the Plumber we are looking for.
+	 * @return The needed Plumber.
+	 * */
 	public Plumber getPlumber(int id) {
 		for (Plumber plumber: plumbers)
 		{
@@ -340,7 +365,13 @@ public class Game implements Serializable{
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Find and return the Saboteur with the received id.
+	 * 
+	 * @param id The id of the Saboteur we are looking for.
+	 * @return The needed Saboteur.
+	 * */
 	public Saboteur getSaboteur(int id) {
 		for (Saboteur saboteur: saboteurs)
 		{
@@ -349,11 +380,19 @@ public class Game implements Serializable{
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Set the remaining rounds value.
+	 * */
 	public void setRemainingRounds(int remaining) {
 		remainingRounds = remaining;
 	}
 	
+	/**
+	 * If the remaining rounds have reached 0, then call this function. 
+	 * This handles the end of the game and writes out the scores of the 
+	 * 2 opposing groups.
+	 * */
 	public void EndGame()
 	{
 		System.out.println("THE GAME HAS ENDED!");
@@ -362,13 +401,17 @@ public class Game implements Serializable{
 			System.out.println("The plumbers have won the game");
 		else if (collectedWater>spilledWater)
 			System.out.println("The saboteurs have won the game");
+		else if(collectedWater == spilledWater)
+			System.out.println("The game is a tie");
 		
 		System.out.println("The plumbers have collected:     " + collectedWater + " unit water");
 		System.out.println("The saboteurs have spilled:     " + spilledWater + " unit water\n");
 		System.out.println("Press any key to continue!");
+		
+		isRunning=false;
+		
 		Scanner scanner = new Scanner(System.in);
 		scanner.nextLine();
-		scanner.close();
 	}
 	
 
