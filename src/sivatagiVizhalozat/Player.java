@@ -137,6 +137,7 @@ public abstract class Player implements Steppable, Serializable {
 		name = "Sanyi";
 		location = null;
 		game = g;
+		g.addSteppable(this);
 		
 	}
 	
@@ -152,6 +153,7 @@ public abstract class Player implements Steppable, Serializable {
 		name = n;
 		game = g;
 		this.location = location;
+		g.addSteppable(this);
 	}
 	
 	/**

@@ -392,13 +392,13 @@ public class Pipe extends FieldElement {
 				if(state == PipeSurfaceState.Slippery) {
 					if(game.getRandom() < 0.5) connections.get(0).StepOn(p);
 					else connections.get(1).StepOn(p);
-					state = PipeSurfaceState.Normal;
+					setState(PipeSurfaceState.Normal);
 				}
 
 				else if(state == PipeSurfaceState.Sticky) {
 					p.setImmobile(duration);
 					duration = 0;
-					state = PipeSurfaceState.Normal;
+					setState(PipeSurfaceState.Normal);
 				}
 
 				return true;

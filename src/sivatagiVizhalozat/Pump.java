@@ -389,7 +389,7 @@ public class Pump extends FieldElement {
 	 */
 	public boolean ChangeDirection(int i, int o) {
 		if((i != -1 && i != o) || (i == -1 && i == o)) {
-			if(i == -1 || connections.contains(game.getMap().getPipe(i)) && o == -1 || connections.contains(game.getMap().getPipe(o))) {
+			if((i == -1 || connections.contains(game.getMap().getPipe(i))) && (o == -1 || connections.contains(game.getMap().getPipe(o)))) {
 				input = i;
 				output = o;
 				return true;
@@ -403,15 +403,14 @@ public class Pump extends FieldElement {
 	 * If Input is closed( = -1) Skip it
 	 */
 	public void Step1() {
-		if (game.getRandom() * 100 > 80)
+		if (game.getRandom() > 0.9)
 			StopWorking();
 		if (isWorking && input != -1 && water != tankCapacity) { // If pump is working, the input is open and there's
 																	// room for water in tank
-			
 			Pipe pipeInput = game.getMap().getPipe(input);
 			if(connections.contains(pipeInput))
 			{
-				int w = pipeInput.SuckWater(water);
+				int w = pipeInput.SuckWater(tankCapacity - water);
 				if (water + w < tankCapacity)
 					water += w;
 				else
@@ -420,10 +419,8 @@ public class Pump extends FieldElement {
 			else
 			{
 				input = -1;
-			}
-				 
+			}		 
 		}
-
 	}
 
 	/**

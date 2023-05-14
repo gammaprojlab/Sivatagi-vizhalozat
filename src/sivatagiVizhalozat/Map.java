@@ -115,15 +115,15 @@ public class Map implements Serializable {
     {
     	String type = str.replaceAll("\\d", "");
     	int id = Integer.parseInt(str.replaceAll("[\\D]", ""));
-    	switch(type)
+    	switch(type.toLowerCase())
     	{
-    	case"Pipe":
+    	case"pipe":
     		return getPipe(id);
-    	case"Pump":
+    	case"pump":
     		return getPump(id);
-    	case"Spring":
+    	case"spring":
     		return getSpring(id);
-    	case"Cistern":
+    	case"cistern":
     		return getCistern(id);
     	}
 		return null;

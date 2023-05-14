@@ -35,18 +35,21 @@ public abstract class FieldElement implements Steppable, Serializable {
 
 	/**
 	 * It returns the value of the id
+	 * 
 	 * @return The id of the object
 	 */
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Set the objects id
+	 * 
 	 * @param i The new id of the object
 	 */
 	public void setId(int i) {
-		if(i > 0) id = i;
+		if (i > 0)
+			id = i;
 	}
 
 	/**
@@ -112,7 +115,8 @@ public abstract class FieldElement implements Steppable, Serializable {
 	}
 
 	/**
-	 * 
+	 * Gets the value of the game variable.
+	 *
 	 * @return The Game object
 	 */
 	public Game getGame() {
@@ -180,7 +184,6 @@ public abstract class FieldElement implements Steppable, Serializable {
 		}
 	}
 
-
 	/**
 	 * Add a new field to connections
 	 * 
@@ -200,6 +203,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 
 	/**
 	 * Remove a field from connections
+	 * 
 	 * @param field The field to be removed
 	 */
 	public boolean Remove(FieldElement field) {
@@ -218,7 +222,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 */
 	public boolean StepOn(Player p) {
 		if (p != null && !players.contains(p)) {
-			if(p.getLocation() != null)
+			if (p.getLocation() != null)
 				p.getLocation().StepOff(p);
 			players.add(p);
 			p.setLocation(this);
@@ -263,11 +267,11 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * @param f The id of the pipe the player wants to disconnect from this field
 	 * @return The disconnected pipe
 	 */
-	public Pipe Disconnect(int id) { 
+	public Pipe Disconnect(int id) {
 		for (FieldElement p : connections) {
-			if(p.getId() == id) {
+			if (p.getId() == id) {
 				Pipe ret = p.Disconnect(p.GetNeighbor().indexOf(this));
-				if(ret != null) {
+				if (ret != null) {
 					return ret;
 				}
 			}
@@ -353,9 +357,8 @@ public abstract class FieldElement implements Steppable, Serializable {
 	public boolean ChangeDirection(int p1, int p2) {
 		return false;
 	}
-	
-	public boolean setState(PipeSurfaceState s)
-	{
+
+	public boolean setState(PipeSurfaceState s) {
 		return false;
 	}
 

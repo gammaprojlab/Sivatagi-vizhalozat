@@ -69,7 +69,7 @@ public class Cistern extends FieldElement {
 	 * @return The newly created pump
 	 */
 	public Pump ProvidePump() {
-		Pump ret = new Pump();
+		Pump ret = new Pump(game);
 		return ret;
 	}
 	
