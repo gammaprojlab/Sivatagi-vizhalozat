@@ -1,54 +1,15 @@
-CreateGame() Success
-Create(Pump) Success Pump1 created
-Create(Pipe) Success Pipe1 created
-Create(Pipe) Success Pipe2 created
 Create(Plumber) Success Plumber1 created
-Connect(Pump1,Pipe1) Success
-Connect(Pump1,Pipe2) Success
-SetInput(Pump1,Pipe1) Success
-SetOutput(Pump1,Pipe2) Success
-SetLocation(Plumber1,Pump1) Success
-Pump1:
-
-id: 1
-maxConnections: 5
-isWorking: true
-tankCapacity: 100
-water: 0
-input: 1
-output: 2
-connections:
-Pipe1
-Pipe2
-players:
-Plumber1
+SetName(Plumber1,Sanyi) Success
+SetLocation(Plumber1,Cistern1) Success
+Create(Saboteur) Success Saboteur1 created
+SetName(Saboteur1,Pista) Success
+SetLocation(Saboteur1,Spring1) Success
+SetremainingRounds(Game1,2) Success
 Plumber1:
 
 id: 1
 name: Sanyi
 immobile: 0
-location: Pump1
+location: Cistern1
 heldPipe: null
-heldPump: null
-DisconnectPipe(Plumber1,Pipe1) Success
-Pump1:
-
-id: 1
-maxConnections: 5
-isWorking: true
-tankCapacity: 100
-water: 0
-input: -1
-output: 2
-connections:
-Pipe2
-players:
-Plumber1
-Plumber1:
-
-id: 1
-name: Sanyi
-immobile: 0
-location: Pump1
-heldPipe: Pipe1
 heldPump: null

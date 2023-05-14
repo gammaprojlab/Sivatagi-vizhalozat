@@ -35,7 +35,7 @@ public class Saboteur extends Player {
 	 * Get the value of the nextId variable
 	 * @return The identification of the saboteur
 	 */
-	public int getNextId() {
+	public static int getNextId() {
 		return nextId;
 	}
 	
@@ -93,9 +93,5 @@ public class Saboteur extends Player {
 	 */
 	public String toString() {
 		return super.toString();
-	}
-
-	public static int nextId() {
-		return nextId;
 	}
 }

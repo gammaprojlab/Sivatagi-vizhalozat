@@ -78,19 +78,20 @@ public class Game implements Serializable{
 	
 	
 	/**
-	 * Tells if there are any turns left of the game.
-	 * @return True if there are still any turns left.
-	 * */
-	public boolean TurnsLeft() {
-		if(remainingRounds > -1)
-			return false;
-		return true;
-	}
-	
-	/**
 	 * The currently active player. This player is performing the actions currently.
 	 *  */
 	private Player activePlayer = null;
+	
+	
+	
+	
+	public Player getActivePlayer() {
+		return activePlayer;
+	}
+	
+	public void setIsRunning(boolean b) {
+		isRunning = b;
+	}
 	
 	/**
 	 * Gets the private isRunning value.
@@ -268,15 +269,21 @@ public class Game implements Serializable{
 	 *  */
 	public void NextPlayer () 
 	{ 
+		System.out.println(remainingRounds);
+		if(activePlayer == null) {
+			activePlayer = plumbers.get(0);
+			return;
+		}
 		if(plumbers.contains(activePlayer)){
 			activePlayer = saboteurs.get(activePlayer.getId());
 		}
-		else if(saboteurs.contains(activePlayer)){
+		else if(saboteurs.contains(activePlayer) && activePlayer.getId()+1 < Plumber.getNextId()){
 			activePlayer = plumbers.get(activePlayer.getId()+1);
 		}
 		else {
 			activePlayer = plumbers.get(0);
 			remainingRounds -= 1;
+			System.out.println(remainingRounds);
 		}
 		Tick();
 	}
@@ -291,7 +298,7 @@ public class Game implements Serializable{
 		for(Steppable step: steppables) {
 			step.Step2();
 		}
-		if(remainingRounds == 0) {
+		if(remainingRounds < 0) {
 			EndGame();
 		}
 	}
@@ -421,6 +428,4 @@ public class Game implements Serializable{
 		Scanner scanner = new Scanner(System.in);
 		scanner.nextLine();
 	}
-	
-
 }

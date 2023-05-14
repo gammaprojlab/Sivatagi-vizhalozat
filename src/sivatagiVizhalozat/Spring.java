@@ -27,7 +27,7 @@ public class Spring extends FieldElement {
 	 * Get the value of the nextId variable
 	 * @return What's going to be the next id of this class
 	 */
-	public static int nextId() {
+	public static int getNextId() {
 		return nextId;
 	}
 

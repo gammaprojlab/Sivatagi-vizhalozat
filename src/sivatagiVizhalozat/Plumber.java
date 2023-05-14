@@ -215,7 +215,7 @@ public class Plumber extends Player {
 		return ret;
 	}
 
-	public static int nextId() {
+	public static int getNextId() {
 		return nextId;
 	}
 

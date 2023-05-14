@@ -102,7 +102,7 @@ public class Pump extends FieldElement {
 	 * 
 	 * @return The index of the next pipe
 	 */
-	public int getNextId() {
+	public static int getNextId() {
 		return nextId;
 	};
 
@@ -446,9 +446,5 @@ public class Pump extends FieldElement {
 				output = -1;
 			}
 		}
-	}
-
-	public static int nextId() {
-		return nextId;
 	}
 }

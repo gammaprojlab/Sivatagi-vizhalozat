@@ -34,7 +34,7 @@ public class CommandHandler
 		//sets print stream to file
 		try {
 		File outFile = new File("output.txt");
-		out = new PrintStream(outFile);
+		//out = new PrintStream(outFile);
 		}
 		catch(Exception e)
 		{
@@ -76,7 +76,7 @@ public class CommandHandler
 	void saveGame(String path) throws IOException
 	{
 			// Saves the static id of every class to the game
-			int array[] = {Plumber.nextId(), Saboteur.nextId(), Cistern.nextId(), Pump.nextId(), Spring.nextId(), Pipe.nextId()};
+			int array[] = {Plumber.getNextId(), Saboteur.getNextId(), Cistern.getNextId(), Pump.getNextId(), Spring.getNextId(), Pipe.getNextId()};
 			game.setIdArray(array);
 			
 			FileOutputStream fileOut = new FileOutputStream(path);
@@ -958,5 +958,31 @@ public class CommandHandler
 	 */
 	public Game getGame() {
 		return game;
+	}
+	
+	public void Read(Scanner input, PrintStream output) {
+		//new game
+		game = null;
+		
+		PrintStream temp = out;
+		out = output;
+		
+		//reset the static variables
+		Cistern.setNextId(1);
+		Pipe.setNextId(1);
+		Plumber.setNextId(1);
+		Pump.setNextId(1);
+		Saboteur.setNextId(1);
+		Spring.setNextId(1);
+
+		while(input.hasNextLine()) {
+			String line = input.nextLine();
+			
+			if(!line.isBlank()) {
+				executeCommand(line);
+			} 
+		}
+		
+		out = temp;
 	}
 }
