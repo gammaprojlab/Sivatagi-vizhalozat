@@ -74,15 +74,23 @@ public class Game implements Serializable{
 	/**
 	 * The number of rounds left till the end of the game.
 	 *  */
-	private int remainingRounds;
+	private int remainingRounds = 0;
 	
+	
+	/**
+	 * Tells if there are any turns left of the game.
+	 * @return True if there are still any turns left.
+	 * */
+	public boolean TurnsLeft() {
+		if(remainingRounds > -1)
+			return false;
+		return true;
+	}
 	
 	/**
 	 * The currently active player. This player is performing the actions currently.
 	 *  */
 	private Player activePlayer = null;
-	
-	//------------------------------------------------------------------------------------
 	
 	/**
 	 * Gets the private isRunning value.
