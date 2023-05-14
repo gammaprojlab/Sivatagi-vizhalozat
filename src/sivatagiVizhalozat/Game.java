@@ -10,8 +10,11 @@ package sivatagiVizhalozat;
 //
 //
 
+import java.io.Console;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /** 
  * The class that implements the Game functionality.
@@ -20,6 +23,7 @@ import java.util.ArrayList;
  * */
 public class Game implements Serializable{
 	
+	private boolean isRunning;
 	/**
 	 * Saboteurs' points, as many spilled into the desert.
 	 * */
@@ -94,6 +98,11 @@ public class Game implements Serializable{
 		return activePlayer;
 	}
 	
+	
+	public boolean getIsRunning() 
+	{
+		return isRunning;
+	}
 	
 	/**
 	 * Gets the map instance, that the game is currently being played on.
@@ -231,7 +240,7 @@ public class Game implements Serializable{
 		steppable = new ArrayList<Steppable>();
 		classIdArray = new int[6];
 		map = new Map();
-		remainingRounds = 40;///Ez mennyi legyen?
+		remainingRounds = 40;
 	}
 	/**
 	 * 8 parametered constructor of the Game class.
@@ -254,12 +263,12 @@ public class Game implements Serializable{
 		classIdArray = classId;
 		map = new Map();
 		remainingRounds = maxrounds;
-		activePlayer = null;  				///???
+		activePlayer = null;
 	}
 	
 	/**
 	 * Set activePlayer to the next Player. Plumbers start and the next player is 
-	 * selected in a zig-zag pattern between the two player types.
+	 * selected in a zig-zag pattern between the two player types. And invokes the tick method.
 	 *  */
 	public void NextPlayer () 
 	{ 
@@ -275,6 +284,8 @@ public class Game implements Serializable{
 		}
 			
 		
+		Tick();
+		remainingRounds -= 1;	
 	}
 	/**
 	 * Imitates the flow of the water.
@@ -286,6 +297,9 @@ public class Game implements Serializable{
 		}
 		for(Steppable step: steppables) {
 			step.Step2();
+		}
+		if(remainingRounds == 0) {
+			EndGame();
 		}
 	}
 	
@@ -358,6 +372,23 @@ public class Game implements Serializable{
 	public void setRemainingRounds(int remaining) {
 		remainingRounds = remaining;
 	}
-
+	
+	public void EndGame()
+	{
+		System.out.println("THE GAME HAS ENDED!");
+		
+		if(collectedWater>spilledWater)
+			System.out.println("The plumbers have won the game");
+		else if (collectedWater>spilledWater)
+			System.out.println("The saboteurs have won the game");
+		
+		System.out.println("The plumbers have collected:     " + collectedWater + " unit water");
+		System.out.println("The saboteurs have spilled:     " + spilledWater + " unit water\n");
+		System.out.println("Press any key to continue!");
+		Scanner scanner = new Scanner(System.in);
+		scanner.nextLine();
+		scanner.close();
+	}
+	
 
 }
