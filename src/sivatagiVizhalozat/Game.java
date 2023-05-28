@@ -320,7 +320,7 @@ public class Game implements Serializable {
 		for (Steppable step : steppables) {
 			step.Step2();
 		}
-		if (remainingRounds < 0) {
+		if (remainingRounds <= 0) {
 			EndGame();
 		}
 	}
