@@ -13,7 +13,7 @@ public class UIController extends JFrame{
 	
 	private ArrayList<IObserver> Observers;
 	
-	private JButton moveButton = new JButton("move"); 
+	private JButton moveButton = new JButton("move");
 	private JButton connectButton = new JButton("connect");
 	private JButton disconnectButton = new JButton("disconnect");
 	private JButton takePumpButton = new JButton("takePump");
