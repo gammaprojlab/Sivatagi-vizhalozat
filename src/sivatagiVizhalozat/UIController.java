@@ -13,7 +13,7 @@ public class UIController extends JFrame{
 	
 	private ArrayList<IObserver> Observers;
 	
-	private JButton moveButton = new JButton("move");
+	private JButton moveButton = new JButton("move"); 
 	private JButton connectButton = new JButton("connect");
 	private JButton disconnectButton = new JButton("disconnect");
 	private JButton takePumpButton = new JButton("takePump");
@@ -34,21 +34,24 @@ public class UIController extends JFrame{
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setBackground(Color.cyan);
         
-     // Create a JPanel with BorderLayout and light blue background
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(Color.cyan); // Light blue color
+        mainPanel.setBackground(new Color(173, 216, 230));
 
         // Create a JPanel with BoxLayout for vertical alignment
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBackground(new Color(173, 216, 230));
 
         // Create and customize the buttons
-        JButton startButton = createButton("Start", Color.GREEN);
-        JButton settingsButton = createButton("Settings", Color.YELLOW);
-        JButton loadGameButton = createButton("LoadGame", Color.GRAY);
-        JButton exitButton = createButton("Exit", Color.RED);
-
+        JButton startButton = createButton("Start", Color.GREEN, new Dimension(150, 30));
+        
+        
+        
+        JButton settingsButton = createButton("Settings", Color.YELLOW, new Dimension(150, 30));
+        JButton loadGameButton = createButton("LoadGame", Color.GRAY, new Dimension(150, 30));
+        JButton exitButton = createButton("Exit", Color.RED, new Dimension(150, 30));
 
         // Add the buttons to the button panel with vertical spacing
         buttonPanel.add(Box.createVerticalGlue()); // Aligns buttons to the middle of the panel
@@ -67,6 +70,7 @@ public class UIController extends JFrame{
         horizontalPanel.add(Box.createHorizontalGlue()); // Aligns buttons to the middle of the panel
         horizontalPanel.add(buttonPanel);
         horizontalPanel.add(Box.createHorizontalGlue()); // Aligns buttons to the middle of the panel
+        horizontalPanel.setBackground(new Color(173, 216, 230));
 
         // Add the horizontal panel to the center of the main panel
         mainPanel.add(horizontalPanel, BorderLayout.CENTER);
@@ -75,9 +79,12 @@ public class UIController extends JFrame{
         setContentPane(mainPanel);
     }
 
-    private JButton createButton(String text, Color backgroundColor) {
+    private JButton createButton(String text, Color backgroundColor, Dimension size) {
         JButton button = new JButton(text);
         button.setBackground(backgroundColor);
+        button.setPreferredSize(size);
+        button.setMaximumSize(size);
+        button.setFocusPainted(false);
         return button;
     }
     
@@ -88,7 +95,7 @@ public class UIController extends JFrame{
 		}
 	}
 	
-	public void Mainmenu() {
+	public void MainMenu() {
 		
 	}
 	
