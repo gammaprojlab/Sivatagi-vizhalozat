@@ -16,6 +16,27 @@ package sivatagiVizhalozat;
  * With the help of this, the saboteur players can pierce the pipes.
  */
 public class Saboteur extends Player {
+	
+	/**
+	 * This class's Observer.
+	 */
+	private SaboteurObserver Observer;
+	
+	/**
+	 * 
+	 * @return Observer This class's observer.
+	 */
+	public SaboteurObserver GetObserver() {
+		return Observer;
+	}
+	
+	/**
+	 * Updates the state of this class on the screen.
+	 */
+	public void Update() {
+		
+	}
+	
 	/**
 	 * The next Saboteur's id
 	 */
@@ -44,6 +65,7 @@ public class Saboteur extends Player {
 	 **/
 	public Saboteur() {
 		super();
+		Observer = new SaboteurObserver();
 		id = nextId++;
 	}
 

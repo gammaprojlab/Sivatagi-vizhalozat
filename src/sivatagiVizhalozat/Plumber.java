@@ -20,6 +20,27 @@ import java.util.ArrayList;
  * them down.
  */
 public class Plumber extends Player {
+	
+	/**
+	 * This class's Observer.
+	 */
+	private PlumberObserver Observer;
+	
+	/**
+	 * 
+	 * @return Observer This class's observer.
+	 */
+	public PlumberObserver GetObserver() {
+		return Observer;
+	}
+	
+	/**
+	 * Updates the state of this class on the screen.
+	 */
+	public void Update() {
+		
+	}
+	
 	/**
 	 * The next Plumber's id
 	 */
