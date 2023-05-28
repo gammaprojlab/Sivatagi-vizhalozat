@@ -14,7 +14,12 @@ package sivatagiVizhalozat;
 public class Spring extends FieldElement {
 
 	private static int nextId = 1;
+	private final IObserver observer = new SpringObserver(this);
 
+	public IObserver getObserver() {
+		return observer;
+	}
+	
 	/**
 	 * Sets the value of the nextId variable
 	 * @param value The value to be set
