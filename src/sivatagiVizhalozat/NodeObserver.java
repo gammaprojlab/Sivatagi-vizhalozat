@@ -40,5 +40,4 @@ public class NodeObserver implements IObserver, Serializable {
 	public void Update() {
 		// TODO Implement
 	}
-	
 }
