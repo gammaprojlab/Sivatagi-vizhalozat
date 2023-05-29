@@ -216,7 +216,7 @@ public abstract class Player implements Steppable, Serializable {
 	 * Returns a string containing the data of the object
 	 * @return A string containing the data of the object
 	 */
-	public String toString() {
+	public String List() {
 		String ret = "id: " + id
 		+ "\nname: " + name 
 		+ "\nimmobile: " + immobile 
@@ -227,5 +227,9 @@ public abstract class Player implements Steppable, Serializable {
 			ret+= "null";
 		
 		return ret;
+	}
+	
+	public String toString() {
+		return this.getClass().getSimpleName() + this.getId();
 	}
 }

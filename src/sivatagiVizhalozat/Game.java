@@ -353,6 +353,13 @@ public class Game implements Serializable {
 		return data;
 	}
 
+	public String List() {
+		String ret = "";
+		ret += "Plumbers: " + collectedWater + "\n";
+		ret += "Saboteurs: " + spilledWater;
+		return ret;
+	}
+	
 	/**
 	 * Receive a random number (or fix number dependent of the tester's value).
 	 * 

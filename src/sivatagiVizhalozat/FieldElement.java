@@ -378,6 +378,10 @@ public abstract class FieldElement implements Steppable, Serializable {
 	 * Used for testing
 	 */
 	public String toString() {
+		return this.getClass().getSimpleName() + getId();
+	}
+	
+	public String List() {
 		return "";
 	}
 }
