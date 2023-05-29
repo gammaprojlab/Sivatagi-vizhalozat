@@ -16,6 +16,12 @@ package sivatagiVizhalozat;
  * It also deals with new pumps being placed in the middle of it.
 */
 public class Pipe extends FieldElement {
+	
+	private final PipeObserver observer = new PipeObserver(this);
+	
+	public IObserver getObserver() {
+		return observer;
+	}
 
 	private static int nextId = 1;
 	/**

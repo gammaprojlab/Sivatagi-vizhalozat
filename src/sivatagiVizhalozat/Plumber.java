@@ -233,8 +233,8 @@ public class Plumber extends Player {
 	 * 
 	 * @return A string containing the data of the object
 	 */
-	public String toString() {
-		String ret = super.toString();
+	public String List() {
+		String ret = super.List();
 
 		ret += "\nheldPipe: ";
 		if (heldPipe != null)

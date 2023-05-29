@@ -288,7 +288,7 @@ public class CommandHandler {
 			case "ListParams":
 				out.println(arguments[0] + ":");
 				out.println();
-				out.println(plumber.toString());
+				out.println(plumber.List());
 				break;
 			case "Move":
 				if (plumber.PlayerMove(game.getMap().getFieldElement(arguments[1])))
@@ -452,7 +452,7 @@ public class CommandHandler {
 			case "ListParams":
 				out.println(arguments[0] + ":");
 				out.println();
-				out.println(saboteur.toString());
+				out.println(saboteur.List());
 				break;
 			case "Move":
 				if (saboteur.PlayerMove(game.getMap().getFieldElement(arguments[1])))
@@ -556,7 +556,7 @@ public class CommandHandler {
 			case "ListParams":
 				out.println(arguments[0] + ":");
 				out.println();
-				out.println(cistern.toString());
+				out.println(cistern.List());
 				break;
 			case "Connect":
 				Pipe pipe = game.getMap().getPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
@@ -612,7 +612,7 @@ public class CommandHandler {
 			case "ListParams":
 				out.println(arguments[0] + ":");
 				out.println();
-				out.println(pump.toString());
+				out.println(pump.List());
 				break;
 			case "Connect":
 				Pipe pipe = game.getMap().getPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
@@ -705,7 +705,7 @@ public class CommandHandler {
 			case "ListParams":
 				out.println(arguments[0] + ":");
 				out.println();
-				out.println(spring.toString());
+				out.println(spring.List());
 				break;
 			case "Connect":
 				Pipe pipe = game.getMap().getPipe(Integer.parseInt(arguments[1].replaceAll("[\\D]", "")));
@@ -753,7 +753,7 @@ public class CommandHandler {
 		if (command[0].equals("ListParams") && pipe != null) {
 			out.println(arguments[0] + ":");
 			out.println();
-			out.println(pipe.toString());
+			out.println(pipe.List());
 			return;
 		}
 		// A separate switch for all the setting of variables
@@ -875,7 +875,7 @@ public class CommandHandler {
 			case "ListParams":
 				out.println(arguments[0] + ":");
 				out.println();
-				out.println(game.toString());
+				out.println(game.List());
 				break;
 			case "Random":
 				game.setTester((arguments[0].equals("true") ? 1 : 0));

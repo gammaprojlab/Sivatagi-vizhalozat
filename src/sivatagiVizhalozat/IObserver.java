@@ -1,5 +1,10 @@
 package sivatagiVizhalozat;
 
+import java.awt.Graphics;
+import java.awt.Point;
+
+import javax.swing.JPanel;
+
 /**
  * Interface for the Observers
  */
@@ -22,6 +27,13 @@ public interface IObserver {
 	
 	/**
 	 * Updates the view of the object
+	 * @param graphics 
 	 */
-	public void Update();
+	public void Update(Graphics graphics);
+	
+	public Point getPosition();
+	
+	public void setPosition(Point pos);
+	
+	public void setSelected(Boolean s);
 }

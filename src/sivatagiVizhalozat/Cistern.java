@@ -15,6 +15,11 @@ package sivatagiVizhalozat;
 */
 public class Cistern extends FieldElement {
 
+	private final IObserver observer = new CisternObserver(this);
+
+	public IObserver getObserver() {
+		return observer;
+	}
 	/**
 	 * Stores the id of the next created Cistern
 	 */
@@ -106,7 +111,7 @@ public class Cistern extends FieldElement {
 	 * Returns a string containing the data of the object
 	 * @return A string containing the data of the object
 	 */
-	public String toString() {
+	public String List() {
 		String ret = "id: " + getId()
 		+ "\nmaxConnections: " + ((maxConnections < Integer.MAX_VALUE) ? maxConnections : "infinite")  
 		+ "\nconnections:";

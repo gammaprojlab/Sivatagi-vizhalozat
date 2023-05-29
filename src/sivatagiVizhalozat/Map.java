@@ -128,6 +128,15 @@ public class Map implements Serializable {
     	}
 		return null;
     }
+    
+    public ArrayList<FieldElement> getFields() {
+    	ArrayList<FieldElement> fields = new ArrayList<>();
+    	fields.addAll(pipes);
+    	fields.addAll(pumps);
+    	fields.addAll(cisterns);
+    	fields.addAll(springs);
+    	return fields;
+    }
 
 }
 

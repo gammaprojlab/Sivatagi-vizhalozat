@@ -22,7 +22,11 @@ import java.io.Serializable;
  * To simulate water flow, it implements the Steppable interface
  */
 public abstract class FieldElement implements Steppable, Serializable {
-
+	
+	public IObserver getObserver() {
+		return null;
+	}
+	
 	/**
 	 * It stores how many connections a this element can have
 	 */

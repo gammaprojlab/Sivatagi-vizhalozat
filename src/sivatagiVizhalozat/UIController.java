@@ -4,6 +4,8 @@ package sivatagiVizhalozat;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,13 +20,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.swing.JOptionPane;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-public class UIController extends JFrame{
+public class UIController extends JFrame implements IObserver {
 	
-	private FieldElement selectedObject;
 	private CommandHandler controller = new CommandHandler(new PrintStream(OutputStream.nullOutputStream()));
 	
 	private ArrayList<IObserver> Observers;
@@ -32,6 +34,8 @@ public class UIController extends JFrame{
 	static int playerCount = 2;
 	static int turn = 5;
 	static String map = "map1.txt";
+	
+	private GamePanel gamePanel = new GamePanel(this);
 	
 	public UIController() {
 		//window Game Initialize
@@ -42,7 +46,7 @@ public class UIController extends JFrame{
         setBackground(Color.cyan);
         setContentPane(MainMenu());
     }
-
+	
     private JButton createButton(String text, Color backgroundColor, Dimension size) {
         JButton button = new JButton(text);
         button.setBackground(backgroundColor);
@@ -52,11 +56,12 @@ public class UIController extends JFrame{
         return button;
     }
     
-	
-	public void Redraw(){
-		for (IObserver io: Observers) {
-			io.Update();
+	public void Redraw() {
+		for (FieldElement f: controller.getGame().getMap().getFields()) {
+			gamePanel.Add(f.getObserver());
 		}
+		gamePanel.revalidate();
+		gamePanel.repaint();
 	}
 	
 	public JPanel MainMenu() {
@@ -105,10 +110,144 @@ public class UIController extends JFrame{
 	public JPanel StartGame() {
 		JPanel gamePanel = new JPanel(new BorderLayout());
 		gamePanel.setBackground(new Color(173, 216, 230));
-		loadMap(controller);
+		loadMap();
+		ChangePane(SettingGameData());
 		// Ask users for name
 		// and maybe location???
 		return null;
+	}
+	
+	public JPanel TheMiddle(){
+		JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(173, 216, 230));
+		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		centerPanel.setBackground(new Color(173, 216, 230));
+		
+		JPanel settingGamePanel = new JPanel(new GridLayout(2,2));
+		settingGamePanel.setBackground(new Color(173, 216, 230));
+		
+		JLabel NameS = new JLabel("Saboteur's Name:");
+		JLabel NameP = new JLabel("Plumber's Name:");
+
+		JTextField SaboteurName = new JTextField();
+		SaboteurName.setColumns(1);
+		SaboteurName.setPreferredSize(new Dimension(150, 30));
+		SaboteurName.setMaximumSize(new Dimension(150, 30));
+		
+		JTextField PlumberName = new JTextField();
+		PlumberName.setColumns(1);
+		PlumberName.setPreferredSize(new Dimension(150, 30));
+		PlumberName.setMaximumSize(new Dimension(150, 30));
+		
+		JButton start = new JButton("Next");
+		start.setBackground(Color.green);
+		start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.ExecuteCommand("Create(Plumber)");
+				controller.ExecuteCommand("SetName(Plumber" + (playerCount + 1) + "," + PlumberName.getText() + ")");
+				controller.ExecuteCommand("SetLocation(Plumber" + (playerCount + 1) + ",Cistern1)");
+
+				controller.ExecuteCommand("Create(Saboteur)");
+				controller.ExecuteCommand("SetName(Saboteur" + (playerCount + 1) + "," + SaboteurName.getText() + ")");
+				controller.ExecuteCommand("SetLocation(Saboteur" + (playerCount + 1) + ",Spring1)");
+			}
+        });
+		start.setPreferredSize(new Dimension(150, 30));
+		start.setMaximumSize(new Dimension(150, 30));
+		
+		JButton back = new JButton("Back");
+		back.setBackground(Color.red);
+		back.addActionListener(action -> ChangePane(MainMenu()));
+		back.setPreferredSize(new Dimension(150, 30));
+		back.setMaximumSize(new Dimension(150, 30));
+		
+		settingGamePanel.add(NameS);
+		settingGamePanel.add(SaboteurName);
+		settingGamePanel.add(NameP);
+		settingGamePanel.add(PlumberName);
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.insets = new Insets(20, 20, 20, 20); // Add spacing around the panel
+		gbc.anchor = GridBagConstraints.CENTER; // Center the panel within the cell
+		centerPanel.add(settingGamePanel, gbc);
+		
+		JPanel functionP = new JPanel(); 
+		functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
+		functionP.setBackground(new Color(173, 216, 230));
+		functionP.setBorder(BorderFactory.createEmptyBorder(10, (getWidth() - 300) / 2, 10, 10));
+		functionP.add(back);
+		functionP.add(Box.createRigidArea(new Dimension(10, 10)));
+		functionP.add(start);
+		
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
+		mainPanel.add(functionP, BorderLayout.SOUTH);
+		return mainPanel;
+	}
+
+	public JPanel SettingGameData(){
+		JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(173, 216, 230));
+
+		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerPanel.setBackground(new Color(173, 216, 230));
+		
+		JPanel wrapperPanel = new JPanel(new GridBagLayout());
+        wrapperPanel.setBackground(new Color(173, 216, 230));
+
+		JPanel settingGamePanel = new JPanel(new GridLayout(2,2));
+        settingGamePanel.setBackground(new Color(173, 216, 230));
+        
+		JLabel NameS = new JLabel("Saboteur's Name:");
+		JLabel NameP = new JLabel("Plumber's Name:");
+
+        JTextField SaboteurName = new JTextField();
+        SaboteurName.setColumns(1);
+		SaboteurName.setPreferredSize(new Dimension(150, 30));
+		SaboteurName.setMaximumSize(new Dimension(150, 30));
+		
+		JTextField PlumberName = new JTextField();
+        PlumberName.setColumns(1);
+		PlumberName.setPreferredSize(new Dimension(150, 30));
+		PlumberName.setMaximumSize(new Dimension(150, 30));
+        
+        JButton start = new JButton("Start Game");
+        start.setBackground(Color.green);
+        start.addActionListener(action -> ChangePane(MainMenu()));
+		start.setPreferredSize(new Dimension(150, 30));
+		start.setMaximumSize(new Dimension(150, 30));
+        
+        JButton back = new JButton("Back");
+        back.setBackground(Color.red);
+        back.addActionListener(action -> ChangePane(MainMenu()));
+		back.setPreferredSize(new Dimension(150, 30));
+		back.setMaximumSize(new Dimension(150, 30));
+        
+        settingGamePanel.add(NameS);
+        settingGamePanel.add(SaboteurName);
+        settingGamePanel.add(NameP);
+        settingGamePanel.add(PlumberName);
+		
+		wrapperPanel.add(settingGamePanel);
+
+        centerPanel.add(wrapperPanel, BorderLayout.CENTER);
+		
+		JPanel functionP = new JPanel(); 
+		functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
+        functionP.setBackground(new Color(173, 216, 230));
+        functionP.setBorder(BorderFactory.createEmptyBorder(10, (getWidth() - 300) / 2, 10, 10));
+        functionP.add(back);
+        functionP.add(Box.createRigidArea(new Dimension(10, 10)));
+        functionP.add(start);
+		
+		mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(functionP, BorderLayout.SOUTH);
+		
+		return mainPanel;
 	}
 	
 	public JPanel SettingsMenu() {
@@ -227,7 +366,7 @@ public class UIController extends JFrame{
 		JPanel selectedGame =  new JPanel();
 		selectedGame.setLayout(new BoxLayout(selectedGame, BoxLayout.Y_AXIS));
 		selectedGame.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-		selectedGame.setBackground(new Color(197, 197, 197)); // #C5C5C5
+		selectedGame.setBackground(new Color(197, 197, 197));
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -252,7 +391,7 @@ public class UIController extends JFrame{
 			JButton g = createButton(game.substring(0, game.length()-4), Color.WHITE, new Dimension(200, 80));
 			g.addActionListener(action -> {
 				System.out.println("Action not implemented");
-				// TODO Load selcted game, fill missing values, create image
+				// TODO Load selected game, fill missing values, create image
 				selectedGame.removeAll();
 				JLabel[] labels = new JLabel[4];
 				labels[0] = new JLabel("Plumbers: ");
@@ -266,16 +405,13 @@ public class UIController extends JFrame{
 				}
 				labels[0].setBorder(BorderFactory.createEmptyBorder(25, 50, 0, 0));
 				try {
-					CommandHandler handler = new CommandHandler();
-					loadMap(handler);
-					ImageIcon icon = new ImageIcon(createImage(InGame(handler), 400, 300)); // TODO get actual image of game
+					loadMap();
+					ImageIcon icon = new ImageIcon(createImage(InGame(), 640, 360));
 					int dist = (selectedGame.getWidth() - icon.getIconWidth()) / 2;
 					JLabel image = new JLabel(icon);
 					image.setBorder(BorderFactory.createEmptyBorder(20, dist,0,0));
 					selectedGame.add(image);
 				} catch (Exception e) {}
-				selectedGame.doLayout();
-				selectedGame.repaint();
 			});
 			pGames.add(g);
 			pGames.add(Box.createRigidArea(new Dimension(0, 10))); // Adds vertical spacing
@@ -295,70 +431,155 @@ public class UIController extends JFrame{
 		return loadGame;
 	}
 	
-	public JPanel InGame(CommandHandler handler) {
-		JButton moveButton = new JButton("Move");
-		moveButton.addActionListener(action -> handler.ExecuteCommand("Move(" + handler.getGame().getActivePlayer() + "," + selectedObject + ")"));
+	public JPanel InGame() {
+		JButton[] actions = new JButton[14];
+		actions[0] = createButton("Move", Color.WHITE, new Dimension(170,25));
+		actions[0].addActionListener(action -> {
+			controller.ExecuteCommand("Move(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton connectButton = new JButton("Connect");
-		connectButton.addActionListener(action -> handler.ExecuteCommand("ConnectPipe(" + handler.getGame().getActivePlayer() + ")"));
+		actions[1] = createButton("Connect", Color.WHITE, new Dimension(170,25));
+		actions[1].addActionListener(action -> {
+			controller.ExecuteCommand("ConnectPipe(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton disconnectButton = new JButton("Disconnect");
-		disconnectButton.addActionListener(action -> handler.ExecuteCommand("DisconnectPipe(" + handler.getGame().getActivePlayer() + "," + selectedObject + ")"));
+		actions[2] = createButton("Disconnect", Color.WHITE, new Dimension(170,25));
+		actions[2].addActionListener(action -> {
+			controller.ExecuteCommand("DisconnectPipe(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton takePumpButton = new JButton("TakePump");
-		takePumpButton.addActionListener(action -> handler.ExecuteCommand("TakePump(" + handler.getGame().getActivePlayer() + ")"));
+		actions[3] = createButton("TakePump", Color.WHITE, new Dimension(170,25));
+		actions[3].addActionListener(action -> {
+			controller.ExecuteCommand("TakePump(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton placePumpButton = new JButton("PlacePump");
-		placePumpButton.addActionListener(action -> handler.ExecuteCommand("PlacePump(" + handler.getGame().getActivePlayer() + ")"));
+		actions[4] = createButton("PlacePump", Color.WHITE, new Dimension(170,25));
+		actions[4].addActionListener(action -> {
+			controller.ExecuteCommand("PlacePump(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton grabPipeButton = new JButton("GrabPipe");
-		grabPipeButton.addActionListener(action -> handler.ExecuteCommand("GrabPipe(" + handler.getGame().getActivePlayer() + ")"));
+		actions[5] = createButton("GrabPipe", Color.WHITE, new Dimension(170,25));
+		actions[5].addActionListener(action -> {
+			controller.ExecuteCommand("GrabPipe(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton pumpDirectionButton = new JButton("PumpDirection");
-		//pumpDirectionButton.addActionListener(action -> controller.ExecuteCommand("")); TODO
+		actions[6] = createButton("PumpDirection", Color.WHITE, new Dimension(170,25));
+		//actions[6].addActionListener(action -> controller.ExecuteCommand("")); TODO
 		
-		JButton punctureButton = new JButton("Puncture");
-		punctureButton.addActionListener(action -> handler.ExecuteCommand("Puncture(" + handler.getGame().getActivePlayer() + ")"));
+		actions[7] = createButton("Puncture", Color.WHITE, new Dimension(170,25));
+		actions[7].addActionListener(action -> {
+			controller.ExecuteCommand("Puncture(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton makeStickyButton = new JButton("MakeSticky");
-		makeStickyButton.addActionListener(action -> handler.ExecuteCommand("MakeSticky(" + handler.getGame().getActivePlayer() + ")"));
+		actions[8] = createButton("MakeSticky", Color.WHITE, new Dimension(170,25));
+		actions[8].addActionListener(action -> {
+			controller.ExecuteCommand("MakeSticky(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton makeSlipperyButton = new JButton("MakeSlippery");
-		makeSlipperyButton.addActionListener(action -> handler.ExecuteCommand("MakeSlippery(" + handler.getGame().getActivePlayer() + ")"));
+		actions[9] = createButton("MakeSlippery", Color.WHITE, new Dimension(170,25));
+		actions[9].addActionListener(action -> {
+			controller.ExecuteCommand("MakeSlippery(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton repairButton = new JButton("Repair");
-		repairButton.addActionListener(action -> handler.ExecuteCommand("Repair(" + handler.getGame().getActivePlayer() + ")"));
+		actions[10] = createButton("Repair", Color.WHITE, new Dimension(170,25));
+		actions[10].addActionListener(action -> {
+			controller.ExecuteCommand("Repair(" + controller.getGame().getActivePlayer() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton saveButton = new JButton("Save");
-		//saveButton.addActionListener(action -> controller.ExecuteCommand("Save(" + controller.getGame().getActivePlayer() + "," + selectedObject + ")"));
+		actions[11] = createButton("Save", Color.WHITE, new Dimension(170,25));
+		actions[11].addActionListener(action -> {
+			String name = JOptionPane.showInputDialog("Please provide name to save game: ");
+			controller.ExecuteCommand("Save(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
+			Update(getGraphics());
+		});
 		
-		JButton exitButton = new JButton("Exit");
-		exitButton.addActionListener(action -> ChangePane(MainMenu()));
+		actions[12] = createButton("Exit", Color.WHITE, new Dimension(170,25));
+		actions[12].addActionListener(action -> ChangePane(MainMenu()));
 		
-		JButton skipButton = new JButton("Skip");
-		//skipButton.addActionListener(action -> controller.ExecuteCommand("")); TODO
+		actions[13] = createButton("Skip", Color.WHITE, new Dimension(170,25));
+		actions[13].addActionListener(action -> {
+			controller.getGame().NextPlayer();
+			Update(getGraphics());
+		});
 		
 		JPanel inGame = new JPanel(new BorderLayout());
 		inGame.setBackground(new Color(173, 216, 230));
 		
         JPanel lPanel = new JPanel();
         lPanel.setLayout(new BoxLayout(lPanel, BoxLayout.Y_AXIS));
-        lPanel.setPreferredSize(new Dimension(250,580));
+        lPanel.setPreferredSize(new Dimension(350,700));
         lPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
         // UserList panel
-        Player p = handler.getGame().getActivePlayer();
-        if(p != null) lPanel.add(listPanel(p.getName(),p.List()));
+        Player p = controller.getGame().getActivePlayer();
+        if(gamePanel.getSelectedObject() == null) gamePanel.setSelectedObject(controller.getGame().getMap().getFieldElement("Pipe1"));
+        // TODO kiszedni
+        if(p == null) {
+    	   p = new Plumber(controller.getGame());
+    	   gamePanel.getSelectedObject().StepOn(p);
+    	   controller.getGame().NextPlayer();
+        }
+        lPanel.add(listPanel(p.getName(),p.List()));
 		
 		JPanel btPanel = new JPanel();
-		selectedObject = handler.getGame().getMap().getFieldElement("Pipe1");
-		lPanel.add(listPanel(selectedObject.toString(), selectedObject.List()));
+		btPanel.setLayout(new BoxLayout(btPanel, BoxLayout.Y_AXIS));
+		for(int i = 0; i < actions.length; i++) {
+			JPanel panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			JPanel p1 = new JPanel();
+			p1.setPreferredSize(new Dimension(170,25));
+			p1.setSize(p1.getPreferredSize());
+			p1.add(actions[i++]);
+			panel.add(p1);
+			JPanel p2 = new JPanel();
+			p2.setPreferredSize(new Dimension(170,25));
+			p2.setSize(p2.getPreferredSize());
+			p2.add(actions[i]);
+			panel.add(p2);
+			btPanel.add(panel);
+		}
+		lPanel.add(btPanel);
 		
-		lPanel.add(new JPanel().add(new JLabel(handler.getGame().List().split("\n")[0])));
-		lPanel.add(new JPanel().add(new JLabel(handler.getGame().List().split("\n")[1])));
+		lPanel.add(listPanel(gamePanel.getSelectedObject().toString(), gamePanel.getSelectedObject().List()));
+		
+		JLabel lRR = new JLabel("   " + controller.getGame().List().split("\n")[0]); lRR.setFont(new Font("Hack", Font.PLAIN, 18));
+		lRR.setPreferredSize(new Dimension(345,45));
+		JLabel lPlu = new JLabel("   " + controller.getGame().List().split("\n")[1]); lPlu.setFont(new Font("Hack", Font.PLAIN, 18));
+		lPlu.setPreferredSize(new Dimension(345,45));
+		JLabel lSab = new JLabel("   " + controller.getGame().List().split("\n")[2]); lSab.setFont(new Font("Hack", Font.PLAIN, 18));
+		lSab.setPreferredSize(new Dimension(345,45));
+		JPanel pRR = new JPanel();
+		pRR.add(lRR); pRR.setPreferredSize(new Dimension(350,25));
+		JPanel pPlu = new JPanel();
+		pPlu.add(lPlu); pPlu.setPreferredSize(new Dimension(350,25));
+		JPanel pSab = new JPanel();
+		pSab.add(lSab); pSab.setPreferredSize(new Dimension(350,25));
+		lPanel.add(pRR);
+		lPanel.add(pPlu);
+		lPanel.add(pSab);
 		
 		inGame.add(lPanel, BorderLayout.WEST);
-		//ChangePane(inGame);
-		return inGame;
+		gamePanel.Clear();
+		for (FieldElement f: controller.getGame().getMap().getFields()) {
+			gamePanel.Add(f.getObserver());
+		}
+		gamePanel.setBackground(new Color(199,184,135));
+		gamePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		gamePanel.setSize(new Dimension(getWidth() - lPanel.getWidth(), getHeight()));
+		gamePanel.addMouseListener(gamePanel);
+		inGame.add(gamePanel, BorderLayout.CENTER);
+		inGame.setPreferredSize(getSize());
+		ChangePane(inGame);
+		return null; //inGame;
 	}
 	
 	private void ChangePane(JPanel pane) {
@@ -374,8 +595,11 @@ public class UIController extends JFrame{
 		JPanel lPanel = new JPanel();
 		lPanel.setLayout(new BoxLayout(lPanel, BoxLayout.Y_AXIS));
 		if(!name.isEmpty()) {
+			JPanel lName = new JPanel();
 			JLabel oName = new JLabel(name);
-			lPanel.add(oName);
+			oName.setFont(new Font("Hack", Font.PLAIN, 18));
+			lName.add(oName);
+			lPanel.add(lName);
 		}
 		lPanel.add(extractList(list));
 		
@@ -398,46 +622,48 @@ public class UIController extends JFrame{
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 			JPanel p1 = new JPanel();
-			JLabel l1 = new JLabel(params.get(i));
+			JLabel l1 = new JLabel("   ".concat(params.get(i)));
 			p1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p1.setPreferredSize(new Dimension(100,25));
+			p1.setPreferredSize(new Dimension(170,25));
 			p1.setSize(p1.getPreferredSize());
 			p1.add(l1);
-			l1.setPreferredSize(new Dimension(100,25));
+			l1.setPreferredSize(new Dimension(170,25));
 			l1.setSize(l1.getPreferredSize());
 			panel.add(p1);
 			if(params.size() == ++i) break;
 			if(params.get(i).contains("connections:")) break;
 			JPanel p2 = new JPanel();
-			JLabel l2 = new JLabel(params.get(i));
+			JLabel l2 = new JLabel("   ".concat(params.get(i)));
+			l2.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
 			p2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p2.setPreferredSize(new Dimension(100,25));
+			p2.setPreferredSize(new Dimension(170,25));
 			p2.setSize(p2.getPreferredSize());
-			l2.setPreferredSize(new Dimension(100,25));
+			l2.setPreferredSize(new Dimension(170,25));
 			l2.setSize(l2.getPreferredSize());
 			p2.add(l2);
 			panel.add(p2);
 			oList.add(panel);
 		}
+		i++;
 		if(params.size() > i) {
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 			JPanel p1 = new JPanel();
-			JLabel l1 = new JLabel("connections");
+			JLabel l1 = new JLabel("   connections");
 			p1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p1.setPreferredSize(new Dimension(100,25));
+			p1.setPreferredSize(new Dimension(170,25));
 			p1.setSize(p1.getPreferredSize());
-			l1.setPreferredSize(new Dimension(100,25));
+			l1.setPreferredSize(new Dimension(170,25));
 			l1.setSize(l1.getPreferredSize());
 			p1.add(l1);
 			panel.add(p1);
-			l1.setPreferredSize(new Dimension(100,25));
+			l1.setPreferredSize(new Dimension(170,25));
 			JPanel p2 = new JPanel();
-			JLabel l2 = new JLabel("players");
+			JLabel l2 = new JLabel("   players");
 			p2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p2.setPreferredSize(new Dimension(100,25));
+			p2.setPreferredSize(new Dimension(170,25));
 			p2.setSize(p2.getPreferredSize());
-			l2.setPreferredSize(new Dimension(100,25));
+			l2.setPreferredSize(new Dimension(170,25));
 			l2.setSize(l2.getPreferredSize());
 			p2.add(l2);
 			panel.add(p2);
@@ -449,11 +675,11 @@ public class UIController extends JFrame{
 			for(int j = 0; j < 2; j++) {
 				JPanel pCon = new JPanel();
 				pCon.setLayout(new BoxLayout(pCon, BoxLayout.Y_AXIS));
-				pCon.setPreferredSize(new Dimension(100,25));
-				pCon.setSize(getPreferredSize());
 				JScrollPane spCon = new JScrollPane(pCon);
+				spCon.setPreferredSize(new Dimension(160,25));
+				spCon.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				while(i < params.size() && !params.get(i).contains("players")) {
-					pCon.add(new JLabel(params.get(i)));
+					pCon.add(new JLabel("   ".concat(params.get(i))));
 					i++;
 				}
 				panel2.add(spCon);
@@ -488,12 +714,7 @@ public class UIController extends JFrame{
 	 * @param height The height of the image
 	 * @return The created image
 	 */
-	private BufferedImage createImage(JPanel panel, int width, int height) {	
-		Dimension dim = new Dimension(800,600);
-		panel.setPreferredSize(dim);
-		panel.setMinimumSize(dim);
-		panel.setMaximumSize(dim);
-		panel.doLayout();
+	private BufferedImage createImage(JPanel panel, int width, int height) {
 		Dimension size = panel.getPreferredSize();
 		BufferedImage bi = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = bi.createGraphics();
@@ -503,7 +724,6 @@ public class UIController extends JFrame{
 		BufferedImage ret = resize(bi, width, height);
 		return ret;
 	}
-	
 	/**
 	 * Resizes a given image to the given size
 	 * source: https://stackoverflow.com/questions/9417356/bufferedimage-resize
@@ -519,7 +739,7 @@ public class UIController extends JFrame{
 	    Graphics2D g2d = dimg.createGraphics();
 	    g2d.drawImage(tmp, 0, 0, null);
 	    g2d.dispose();
-	    
+
 	    return dimg;
 	}  
 
@@ -527,18 +747,50 @@ public class UIController extends JFrame{
 	 * Small inner menu to list and select wich preset map we would like to use
 	 *
 	 * @param scanner The scanner that we use to receive input
-	 * @param handler The command handler used to execute the read commands
+	 * @param controller The command controller used to execute the read commands
 	 */
-	private void loadMap(CommandHandler handler) {
+	private void loadMap() {
 		File inputFile = new File("maps/" + map);
 		try {
 			Scanner in = new Scanner(inputFile);
-			handler.Read(in, new PrintStream(System.out));
+			controller.Read(in, new PrintStream(OutputStream.nullOutputStream()));
 			in.close();
 			return;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@Override
+	public FieldElement Clicked(int x, int y) {
+		return null;
+	}
+
+	@Override
+	public void Move(int x, int y) {
+		
+	}
+
+	@Override
+	public void Update(Graphics graphics) {
+		ChangePane(InGame());
+		
+	}
+
+	@Override
+	public void setSelected(Boolean s) {
+		
+	}
+
+	@Override
+	public Point getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPosition(Point pos) {
+		// TODO Auto-generated method stub
+		
+	}
 }

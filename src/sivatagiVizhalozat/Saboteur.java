@@ -116,7 +116,7 @@ public class Saboteur extends Player {
 	 * 
 	 * @return A string containing the data of the object
 	 */
-	public String toString() {
-		return super.toString();
+	public String List() {
+		return super.List();
 	}
 }

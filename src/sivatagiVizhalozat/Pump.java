@@ -18,6 +18,12 @@ package sivatagiVizhalozat;
  */
 public class Pump extends FieldElement {
 
+	private final IObserver observer = new PumpObserver(this);
+
+	public IObserver getObserver() {
+		return observer;
+	}
+	
 	/**
 	 * It storest what the next created Pump's ID will be.
 	 * After creating a new Pump this counter will increase by one.
@@ -196,7 +202,7 @@ public class Pump extends FieldElement {
 	/**
 	 * Pump's own toString to make tests more visually informative.
 	 */
-	public String toString () {
+	public String List () {
 		String value = "";
 
 		value += "id: " + id + "\n";

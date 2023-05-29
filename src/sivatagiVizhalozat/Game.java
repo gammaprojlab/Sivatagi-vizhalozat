@@ -355,6 +355,7 @@ public class Game implements Serializable {
 
 	public String List() {
 		String ret = "";
+		ret += "Remaining rounds: " + remainingRounds + "\n";
 		ret += "Plumbers: " + collectedWater + "\n";
 		ret += "Saboteurs: " + spilledWater;
 		return ret;
