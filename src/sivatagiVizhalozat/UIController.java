@@ -47,6 +47,8 @@ public class UIController extends JFrame implements IObserver {
         setLocationRelativeTo(null);
         setBackground(Color.cyan);
         setContentPane(MainMenu());
+        gamePanel.addMouseListener(gamePanel);
+		gamePanel.addMouseMotionListener(gamePanel);
     }
 	
     private JButton createButton(String text, Color backgroundColor, Dimension size) {
@@ -390,6 +392,10 @@ public class UIController extends JFrame implements IObserver {
         return settingsPanel;
 	}
 	
+	/**
+	 * List saved Games and load if needed
+	 * @return The UI of the LoadGame Menu
+	 */
 	public JPanel LoadGame() {
 		JPanel loadGame = new JPanel(new BorderLayout());
         loadGame.setBackground(new Color(173, 216, 230));
@@ -425,8 +431,6 @@ public class UIController extends JFrame implements IObserver {
 		for(String game : games) {
 			JButton g = createButton(game.substring(0, game.length()-4), Color.WHITE, new Dimension(200, 80));
 			g.addActionListener(action -> {
-				System.out.println("Action not implemented");
-				// TODO Load selected game, fill missing values, create image
 				selectedGame.removeAll();
 				JLabel[] labels = new JLabel[4];
 				try {
@@ -442,10 +446,10 @@ public class UIController extends JFrame implements IObserver {
 				}
 				labels[0].setBorder(BorderFactory.createEmptyBorder(25, 50, 0, 0));
 				
-					ImageIcon icon = new ImageIcon(createImage(InGame(), 640, 360));
+					ImageIcon icon = new ImageIcon(createImage(InGame(), getWidth()/2, getHeight()/2));
 					int dist = (selectedGame.getWidth() - icon.getIconWidth()) / 2;
 					JLabel image = new JLabel(icon);
-					image.setBorder(BorderFactory.createEmptyBorder(20, dist,0,0));
+					image.setBorder(BorderFactory.createEmptyBorder(20, dist+(pGames.getWidth()/2),0,0));
 					selectedGame.add(image);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -469,6 +473,10 @@ public class UIController extends JFrame implements IObserver {
 		return loadGame;
 	}
 	
+	/**
+	 * Creates the inGame UI
+	 * @return The created panel of the inGame UI
+	 */
 	public JPanel InGame() {
 		JButton[] actions = new JButton[14];
 		actions[0] = createButton("Move", Color.WHITE, new Dimension(170,25));
@@ -583,6 +591,7 @@ public class UIController extends JFrame implements IObserver {
         }
         lPanel.add(listPanel(p.toString() + ": " + p.getName(),p.List()));
 		
+        // ButtonPanel/Actions List
 		JPanel btPanel = new JPanel();
 		btPanel.setLayout(new BoxLayout(btPanel, BoxLayout.Y_AXIS));
 		for(int i = 0; i < actions.length; i++) {
@@ -602,8 +611,10 @@ public class UIController extends JFrame implements IObserver {
 		}
 		lPanel.add(btPanel);
 		
+		// ObjectList - SelectedObject
 		lPanel.add(listPanel(gamePanel.getSelectedObject().toString(), gamePanel.getSelectedObject().List()));
 		
+		// Game status list
 		JLabel lRR = new JLabel("   " + controller.getGame().List().split("\n")[0]); lRR.setFont(new Font("Hack", Font.PLAIN, 18));
 		lRR.setPreferredSize(new Dimension(345,45));
 		JLabel lPlu = new JLabel("   " + controller.getGame().List().split("\n")[1]); lPlu.setFont(new Font("Hack", Font.PLAIN, 18));
@@ -620,21 +631,27 @@ public class UIController extends JFrame implements IObserver {
 		lPanel.add(pPlu);
 		lPanel.add(pSab);
 		
+		// Add the list panel
 		inGame.add(lPanel, BorderLayout.WEST);
+		
+		// Add game panel
 		gamePanel.Clear();
 		for (FieldElement f: controller.getGame().getMap().getFields()) {
 			gamePanel.Add(f.getObserver());
 		}
 		gamePanel.setBackground(new Color(199,184,135));
 		gamePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		gamePanel.setSize(new Dimension(getWidth() - lPanel.getWidth(), getHeight()));
-		gamePanel.addMouseListener(gamePanel);
-		gamePanel.addMouseMotionListener(gamePanel);
+		gamePanel.setSize(new Dimension(getWidth() - lPanel.getPreferredSize().width, getHeight()));
+		
 		inGame.add(gamePanel, BorderLayout.CENTER);
 		inGame.setPreferredSize(getSize());
 		return inGame;
 	}
 	
+	/** Change content pane to given panel
+	 * 
+	 * @param pane A panel to change the contentPane to
+	 */
 	private void ChangePane(JPanel pane) {
 		if(pane == null) return;
 		getContentPane().removeAll();
@@ -644,6 +661,12 @@ public class UIController extends JFrame implements IObserver {
 		getContentPane().repaint();
 	}
 	
+	/**
+	 * Creates the list view of an object
+	 * @param name The name of the object
+	 * @param list The list of the object's parameters
+	 * @return The created panel, containing the list view
+	 */
 	public JPanel listPanel(String name, String list) {
 		JPanel lPanel = new JPanel();
 		lPanel.setLayout(new BoxLayout(lPanel, BoxLayout.Y_AXIS));
@@ -659,6 +682,11 @@ public class UIController extends JFrame implements IObserver {
 		return lPanel;
 	}
 	
+	/**
+	 * Processes a list String, and creates the panel for the list view
+	 * @param list The list of the object's parameters
+	 * @return The created panel, containing the list view
+	 */
 	public JPanel extractList(String list) {
 		JPanel oList = new JPanel();
 		oList.setLayout(new BoxLayout(oList, BoxLayout.Y_AXIS));
@@ -743,6 +771,11 @@ public class UIController extends JFrame implements IObserver {
 		return oList;
 	}
 	
+	/**
+	 * Get all files from a directory and store them in a List
+	 * @param dir The Path to the directory
+	 * @return The created List containing all files found in the given directory
+	 */
 	public List<String> GetFiles(String dir){
 
 		try (Stream<Path> stream = Files.list(Paths.get(dir))) {
