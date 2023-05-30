@@ -1,7 +1,9 @@
 package sivatagiVizhalozat;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.Serializable;
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ public class NodeObserver implements IObserver, Serializable {
 	protected Color innerColor;
 	protected Color outerColor;
 	protected boolean selected;
+	static double epsilon = 10;
 	
 	/**
 	 * 5 parameter constructor
@@ -52,18 +55,31 @@ public class NodeObserver implements IObserver, Serializable {
 
 	@Override
 	public void Update(Graphics g) {
-		// TODO Implement
+		Graphics2D g2d = (Graphics2D) g;
+		int rad = radius*2;
+		if(selected){
+			g2d.setColor(Color.BLACK); 
+			g2d.setStroke(new BasicStroke(15));
+			g2d.drawOval(position.x-radius-3, position.y-radius-3, rad+6, rad+6);
+		}
+		//Make border
+		g2d.setColor(outerColor); 
+
+		g2d.setStroke(new BasicStroke(15));
+		g2d.drawOval(position.x-radius, position.y-radius, rad, rad);
+
+		//Fill circle
+		g2d.setColor(innerColor);
+        g2d.fillOval(position.x-radius, position.y-radius, rad, rad);
 	}
 
 	@Override
-	public void setSelected(Boolean s) {
-		// TODO Auto-generated method stub
+	public void setSelected(boolean s) {
 		selected = s;
 	}
 
 	@Override
 	public Point getPosition() {
-		// TODO Auto-generated method stub
 		return position;
 	}
 

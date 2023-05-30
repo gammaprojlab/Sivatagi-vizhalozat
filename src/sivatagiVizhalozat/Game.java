@@ -321,7 +321,7 @@ public class Game implements Serializable {
 			step.Step2();
 		}
 		if (remainingRounds <= 0) {
-			EndGame();
+			isRunning = false;
 		}
 	}
 
@@ -437,23 +437,18 @@ public class Game implements Serializable {
 	 * This handles the end of the game and writes out the scores of the
 	 * 2 opposing groups.
 	 */
-	public void EndGame() {
-		System.out.println("THE GAME HAS ENDED!");
+	public String EndGame() {
+		String ret = "THE GAME HAS ENDED!\n";
 
 		if (collectedWater > spilledWater)
-			System.out.println("The plumbers have won the game");
+			ret += "The plumbers have won the game";
 		else if (collectedWater > spilledWater)
-			System.out.println("The saboteurs have won the game");
+			ret += "The saboteurs have won the game";
 		else if (collectedWater == spilledWater)
-			System.out.println("The game is a tie");
+			ret += "The game is a tie";
 
-		System.out.println("The plumbers have collected:     " + collectedWater + " unit water");
-		System.out.println("The saboteurs have spilled:     " + spilledWater + " unit water\n");
-		System.out.println("Press any key to continue!");
-
-		isRunning = false;
-
-		Scanner scanner = new Scanner(System.in);
-		scanner.nextLine();
+		ret += "\nThe plumbers have collected:     " + collectedWater + " unit water";
+		ret += "\nThe saboteurs have spilled:     " + spilledWater + " unit water\n";
+		return ret;
 	}
 }

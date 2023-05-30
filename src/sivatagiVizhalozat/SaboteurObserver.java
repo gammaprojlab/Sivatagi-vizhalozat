@@ -37,7 +37,7 @@ public class SaboteurObserver implements IObserver, Serializable {
 	}
 	
 	@Override
-	public void setSelected(Boolean s) {
+	public void setSelected(boolean s) {
 		// TODO Auto-generated method stub
 		selected = s;
 	}

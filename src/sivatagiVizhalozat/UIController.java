@@ -2,6 +2,7 @@ package sivatagiVizhalozat;
 
 
 import java.awt.*;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -31,9 +32,10 @@ public class UIController extends JFrame implements IObserver {
 	
 	private ArrayList<IObserver> Observers;
 	
-	static int playerCount = 2;
-	static int turn = 5;
-	static String map = "map1.txt";
+	static int playerCount = 1;
+	static int generated = 0;
+	static int turn = 1;
+	static String map = "map2.txt";
 	
 	private GamePanel gamePanel = new GamePanel(this);
 	
@@ -57,6 +59,7 @@ public class UIController extends JFrame implements IObserver {
     }
     
 	public void Redraw() {
+		gamePanel.Clear();
 		for (FieldElement f: controller.getGame().getMap().getFields()) {
 			gamePanel.Add(f.getObserver());
 		}
@@ -111,20 +114,23 @@ public class UIController extends JFrame implements IObserver {
 		JPanel gamePanel = new JPanel(new BorderLayout());
 		gamePanel.setBackground(new Color(173, 216, 230));
 		loadMap();
-		ChangePane(SettingGameData());
-		// Ask users for name
-		// and maybe location???
+		ChangePane(TheMiddle());
 		return null;
 	}
 	
 	public JPanel TheMiddle(){
 		JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(173, 216, 230));
-		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		centerPanel.setBackground(new Color(173, 216, 230));
+
+		JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setBackground(new Color(173, 216, 230));
 		
+		JPanel wrapperPanel = new JPanel(new GridBagLayout());
+        wrapperPanel.setBackground(new Color(173, 216, 230));
+		wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.Y_AXIS));
+
 		JPanel settingGamePanel = new JPanel(new GridLayout(2,2));
-		settingGamePanel.setBackground(new Color(173, 216, 230));
+        settingGamePanel.setBackground(new Color(173, 216, 230));
 		
 		JLabel NameS = new JLabel("Saboteur's Name:");
 		JLabel NameP = new JLabel("Plumber's Name:");
@@ -145,12 +151,19 @@ public class UIController extends JFrame implements IObserver {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.ExecuteCommand("Create(Plumber)");
-				controller.ExecuteCommand("SetName(Plumber" + (playerCount + 1) + "," + PlumberName.getText() + ")");
-				controller.ExecuteCommand("SetLocation(Plumber" + (playerCount + 1) + ",Cistern1)");
+				controller.ExecuteCommand("SetName(Plumber" + (generated + 1) + "," + PlumberName.getText() + ")");
+				controller.ExecuteCommand("SetLocation(Plumber" + (generated + 1) + ",Cistern1)");
 
 				controller.ExecuteCommand("Create(Saboteur)");
-				controller.ExecuteCommand("SetName(Saboteur" + (playerCount + 1) + "," + SaboteurName.getText() + ")");
-				controller.ExecuteCommand("SetLocation(Saboteur" + (playerCount + 1) + ",Spring1)");
+				controller.ExecuteCommand("SetName(Saboteur" + (generated + 1) + "," + SaboteurName.getText() + ")");
+				controller.ExecuteCommand("SetLocation(Saboteur" + (generated + 1) + ",Spring1)");
+				generated++;
+				if(generated < playerCount-1){
+					ChangePane(TheMiddle());
+				}
+				else{
+					ChangePane(SettingGameData());
+				}
 			}
         });
 		start.setPreferredSize(new Dimension(150, 30));
@@ -167,15 +180,12 @@ public class UIController extends JFrame implements IObserver {
 		settingGamePanel.add(NameP);
 		settingGamePanel.add(PlumberName);
 		
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.insets = new Insets(20, 20, 20, 20); // Add spacing around the panel
-		gbc.anchor = GridBagConstraints.CENTER; // Center the panel within the cell
-		centerPanel.add(settingGamePanel, gbc);
-		
+		wrapperPanel.add(Box.createVerticalGlue());
+        wrapperPanel.add(settingGamePanel);
+        wrapperPanel.add(Box.createVerticalGlue());
+
+        centerPanel.add(wrapperPanel, BorderLayout.CENTER);
+
 		JPanel functionP = new JPanel(); 
 		functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
 		functionP.setBackground(new Color(173, 216, 230));
@@ -190,34 +200,57 @@ public class UIController extends JFrame implements IObserver {
 	}
 
 	public JPanel SettingGameData(){
+		controller.getGame().setRemainingRounds(turn);
 		JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(173, 216, 230));
 
-		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBackground(new Color(173, 216, 230));
 		
 		JPanel wrapperPanel = new JPanel(new GridBagLayout());
         wrapperPanel.setBackground(new Color(173, 216, 230));
+		wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.Y_AXIS));
 
 		JPanel settingGamePanel = new JPanel(new GridLayout(2,2));
         settingGamePanel.setBackground(new Color(173, 216, 230));
         
 		JLabel NameS = new JLabel("Saboteur's Name:");
+		NameS.setMaximumSize(new Dimension(150, 30));
+
 		JLabel NameP = new JLabel("Plumber's Name:");
+		NameP.setMaximumSize(new Dimension(150, 30));
 
         JTextField SaboteurName = new JTextField();
         SaboteurName.setColumns(1);
 		SaboteurName.setPreferredSize(new Dimension(150, 30));
 		SaboteurName.setMaximumSize(new Dimension(150, 30));
+		SaboteurName.setMinimumSize(new Dimension(150, 30));
 		
 		JTextField PlumberName = new JTextField();
         PlumberName.setColumns(1);
 		PlumberName.setPreferredSize(new Dimension(150, 30));
 		PlumberName.setMaximumSize(new Dimension(150, 30));
+		PlumberName.setMinimumSize(new Dimension(150, 30));
         
         JButton start = new JButton("Start Game");
         start.setBackground(Color.green);
-        start.addActionListener(action -> ChangePane(MainMenu()));
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.ExecuteCommand("Create(Plumber)");
+				controller.ExecuteCommand("SetName(Plumber" + (generated + 1) + "," + PlumberName.getText() + ")");
+				controller.ExecuteCommand("SetLocation(Plumber" + (generated + 1) + ",Cistern1)");
+
+				controller.ExecuteCommand("Create(Saboteur)");
+				controller.ExecuteCommand("SetName(Saboteur" + (generated + 1) + "," + SaboteurName.getText() + ")");
+				controller.ExecuteCommand("SetLocation(Saboteur" + (generated + 1) + ",Spring1)");
+
+				generated = 0;
+				controller.getGame().NextPlayer();
+				controller.getGame().setIsRunning(true);
+				ChangePane(InGame());
+			}
+        });
 		start.setPreferredSize(new Dimension(150, 30));
 		start.setMaximumSize(new Dimension(150, 30));
         
@@ -232,7 +265,9 @@ public class UIController extends JFrame implements IObserver {
         settingGamePanel.add(NameP);
         settingGamePanel.add(PlumberName);
 		
-		wrapperPanel.add(settingGamePanel);
+		wrapperPanel.add(Box.createVerticalGlue());
+        wrapperPanel.add(settingGamePanel);
+        wrapperPanel.add(Box.createVerticalGlue());
 
         centerPanel.add(wrapperPanel, BorderLayout.CENTER);
 		
@@ -394,31 +429,34 @@ public class UIController extends JFrame implements IObserver {
 				// TODO Load selected game, fill missing values, create image
 				selectedGame.removeAll();
 				JLabel[] labels = new JLabel[4];
-				labels[0] = new JLabel("Plumbers: ");
-				labels[1] = new JLabel("Saboteurs: ");
-				labels[2] = new JLabel("Springs: ");
-				labels[3] = new JLabel("Cisterns: ");
+				try {
+				controller.LoadGame("saves/" + game);
+				labels[0] = new JLabel("Plumbers: " + controller.getGame().getPlumbers().size());
+				labels[1] = new JLabel("Saboteurs: " + controller.getGame().getSaboteurs().size());
+				labels[2] = new JLabel("Springs: " + controller.getGame().getMap().getSprings().size());
+				labels[3] = new JLabel("Cisterns: " + controller.getGame().getMap().getCisterns().size());
 				for(JLabel label : labels) {
 					label.setFont(new Font("Hack", Font.PLAIN, 18));
 					label.setBorder(BorderFactory.createEmptyBorder(5, 50, 0, 0));
 					selectedGame.add(label);
 				}
 				labels[0].setBorder(BorderFactory.createEmptyBorder(25, 50, 0, 0));
-				try {
-					loadMap();
+				
 					ImageIcon icon = new ImageIcon(createImage(InGame(), 640, 360));
 					int dist = (selectedGame.getWidth() - icon.getIconWidth()) / 2;
 					JLabel image = new JLabel(icon);
 					image.setBorder(BorderFactory.createEmptyBorder(20, dist,0,0));
 					selectedGame.add(image);
-				} catch (Exception e) {}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			});
 			pGames.add(g);
 			pGames.add(Box.createRigidArea(new Dimension(0, 10))); // Adds vertical spacing
 		}
 		
 		JButton btBack = createButton("Back", Color.RED, new Dimension(200,50)); btBack.addActionListener(action -> ChangePane(MainMenu()));
-		JButton btLoad = createButton("Load", Color.GREEN, new Dimension(200,50));
+		JButton btLoad = createButton("Load", Color.GREEN, new Dimension(200,50)); btLoad.addActionListener(action -> ChangePane(InGame()));
 		buttonPanel.add(btBack);
 		buttonPanel.add(btLoad);
 		buttonPanel.setBackground(new Color(173, 216, 230));
@@ -436,36 +474,42 @@ public class UIController extends JFrame implements IObserver {
 		actions[0] = createButton("Move", Color.WHITE, new Dimension(170,25));
 		actions[0].addActionListener(action -> {
 			controller.ExecuteCommand("Move(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[1] = createButton("Connect", Color.WHITE, new Dimension(170,25));
 		actions[1].addActionListener(action -> {
 			controller.ExecuteCommand("ConnectPipe(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[2] = createButton("Disconnect", Color.WHITE, new Dimension(170,25));
 		actions[2].addActionListener(action -> {
 			controller.ExecuteCommand("DisconnectPipe(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[3] = createButton("TakePump", Color.WHITE, new Dimension(170,25));
 		actions[3].addActionListener(action -> {
 			controller.ExecuteCommand("TakePump(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[4] = createButton("PlacePump", Color.WHITE, new Dimension(170,25));
 		actions[4].addActionListener(action -> {
 			controller.ExecuteCommand("PlacePump(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[5] = createButton("GrabPipe", Color.WHITE, new Dimension(170,25));
 		actions[5].addActionListener(action -> {
 			controller.ExecuteCommand("GrabPipe(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
@@ -475,36 +519,46 @@ public class UIController extends JFrame implements IObserver {
 		actions[7] = createButton("Puncture", Color.WHITE, new Dimension(170,25));
 		actions[7].addActionListener(action -> {
 			controller.ExecuteCommand("Puncture(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[8] = createButton("MakeSticky", Color.WHITE, new Dimension(170,25));
 		actions[8].addActionListener(action -> {
 			controller.ExecuteCommand("MakeSticky(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[9] = createButton("MakeSlippery", Color.WHITE, new Dimension(170,25));
 		actions[9].addActionListener(action -> {
 			controller.ExecuteCommand("MakeSlippery(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[10] = createButton("Repair", Color.WHITE, new Dimension(170,25));
 		actions[10].addActionListener(action -> {
 			controller.ExecuteCommand("Repair(" + controller.getGame().getActivePlayer() + ")");
+			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
 		actions[11] = createButton("Save", Color.WHITE, new Dimension(170,25));
 		actions[11].addActionListener(action -> {
-			String name = JOptionPane.showInputDialog("Please provide name to save game: ");
-			controller.ExecuteCommand("Save(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
+			String name = "";
+			name = JOptionPane.showInputDialog("Please provide name to save game: ");
+			if(!name.isBlank()) {
+				controller.ExecuteCommand("SaveGame("+ name + ")");
+			}
 			Update(getGraphics());
 		});
 		
 		actions[12] = createButton("Exit", Color.WHITE, new Dimension(170,25));
-		actions[12].addActionListener(action -> ChangePane(MainMenu()));
+		actions[12].addActionListener(action -> {
+			ChangePane(MainMenu());
+			controller.setGame(new Game());
+		});
 		
 		actions[13] = createButton("Skip", Color.WHITE, new Dimension(170,25));
 		actions[13].addActionListener(action -> {
@@ -519,16 +573,15 @@ public class UIController extends JFrame implements IObserver {
         lPanel.setLayout(new BoxLayout(lPanel, BoxLayout.Y_AXIS));
         lPanel.setPreferredSize(new Dimension(350,700));
         lPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+        
         // UserList panel
         Player p = controller.getGame().getActivePlayer();
-        if(gamePanel.getSelectedObject() == null) gamePanel.setSelectedObject(controller.getGame().getMap().getFieldElement("Pipe1"));
-        // TODO kiszedni
-        if(p == null) {
-    	   p = new Plumber(controller.getGame());
-    	   gamePanel.getSelectedObject().StepOn(p);
-    	   controller.getGame().NextPlayer();
+        if(gamePanel.getSelectedObject() == null) {
+        	FieldElement f = controller.getGame().getMap().getFieldElement("Pipe1");
+        	f.getObserver().setSelected(true);
+        	gamePanel.setSelectedObject(f);
         }
-        lPanel.add(listPanel(p.getName(),p.List()));
+        lPanel.add(listPanel(p.toString() + ": " + p.getName(),p.List()));
 		
 		JPanel btPanel = new JPanel();
 		btPanel.setLayout(new BoxLayout(btPanel, BoxLayout.Y_AXIS));
@@ -576,10 +629,10 @@ public class UIController extends JFrame implements IObserver {
 		gamePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		gamePanel.setSize(new Dimension(getWidth() - lPanel.getWidth(), getHeight()));
 		gamePanel.addMouseListener(gamePanel);
+		gamePanel.addMouseMotionListener(gamePanel);
 		inGame.add(gamePanel, BorderLayout.CENTER);
 		inGame.setPreferredSize(getSize());
-		ChangePane(inGame);
-		return null; //inGame;
+		return inGame;
 	}
 	
 	private void ChangePane(JPanel pane) {
@@ -715,14 +768,23 @@ public class UIController extends JFrame implements IObserver {
 	 * @return The created image
 	 */
 	private BufferedImage createImage(JPanel panel, int width, int height) {
-		Dimension size = panel.getPreferredSize();
-		BufferedImage bi = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = bi.createGraphics();
-		panel.setSize(panel.getPreferredSize());
-		panel.paint(g);
-		g.dispose();
-		BufferedImage ret = resize(bi, width, height);
-		return ret;
+	    Dimension size = panel.getPreferredSize();
+	    BufferedImage bi = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g = bi.createGraphics();
+
+	    // Render the panel and its components
+	    panel.paint(g);
+	    for (Component component : panel.getComponents()) {
+	        if (component instanceof JComponent) {
+	            JComponent jComponent = (JComponent) component;
+	            jComponent.paint(g);
+	        }
+	    }
+
+	    g.dispose();
+
+	    BufferedImage resizedImage = resize(bi, width, height);
+	    return resizedImage;
 	}
 	/**
 	 * Resizes a given image to the given size
@@ -774,11 +836,14 @@ public class UIController extends JFrame implements IObserver {
 	@Override
 	public void Update(Graphics graphics) {
 		ChangePane(InGame());
-		
+		if(!controller.getGame().getIsRunning()) {
+			JOptionPane.showMessageDialog(null, controller.getGame().EndGame(), "EndGame", JOptionPane.INFORMATION_MESSAGE);
+			ChangePane(MainMenu());
+		}
 	}
 
 	@Override
-	public void setSelected(Boolean s) {
+	public void setSelected(boolean s) {
 		
 	}
 

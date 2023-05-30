@@ -19,7 +19,7 @@ public class Pipe extends FieldElement {
 	
 	private final PipeObserver observer = new PipeObserver(this);
 	
-	public IObserver getObserver() {
+	public PipeObserver getObserver() {
 		return observer;
 	}
 

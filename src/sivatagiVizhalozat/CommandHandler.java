@@ -266,7 +266,6 @@ public class CommandHandler {
 		// Creates a plumber
 		if (command[0].equals("Create")) {
 			Plumber newPlumber = new Plumber(game);
-			game.addPlumber(newPlumber);
 			out.println(cmd + " Success Plumber" + newPlumber.getId() + " created");
 			return;
 		}
@@ -436,7 +435,6 @@ public class CommandHandler {
 		// Creates a Saboteur
 		if (command[0].equals("Create")) {
 			Saboteur newSaboteur = new Saboteur(game);
-			game.addSaboteur(newSaboteur);
 			out.println(cmd + " Success Saboteur" + newSaboteur.getId() + " created");
 			return;
 		}
@@ -915,6 +913,10 @@ public class CommandHandler {
 		return game;
 	}
 
+	public void setGame(Game g) {
+		game = g;
+	}
+	
 	/**
 	 * The method, that reads the input files we want to use to run the tests
 	 */

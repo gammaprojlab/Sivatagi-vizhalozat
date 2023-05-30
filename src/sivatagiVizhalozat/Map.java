@@ -137,6 +137,20 @@ public class Map implements Serializable {
     	fields.addAll(springs);
     	return fields;
     }
+    
+    public ArrayList<Pump> getPumps() {
+    	return pumps;
+    }
+    
+    public ArrayList<Pipe> getPipes() {
+    	return pipes;
+    }
+    public ArrayList<Cistern> getCisterns() {
+    	return cisterns;
+    }
+    public ArrayList<Spring> getSprings() {
+    	return springs;
+    }
 
 }
 

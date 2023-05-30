@@ -4,11 +4,13 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+import  java.time.LocalTime;
 
-public class GamePanel extends JPanel implements MouseListener {
+public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
 	ArrayList<IObserver> observers;
 	private FieldElement selectedObject;
 	private IObserver ui;
@@ -34,7 +36,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		if(!observers.contains(o)) {
 			observers.add(o);
 			if(o.getPosition() == null)
-				o.setPosition(new Point((int)(Math.random() * 450), (int)(Math.random() * 450)));
+				o.setPosition(new Point((int)(Math.random() * 600), (int)(Math.random() * 600)));
 		}
 	}
 
@@ -56,8 +58,6 @@ public class GamePanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Clicked");
-		// TODO Auto-generated method stub
 		FieldElement obj = null;
 		for(IObserver observer : observers) {
         	obj = observer.Clicked(e.getX(), e.getY());
@@ -72,16 +72,23 @@ public class GamePanel extends JPanel implements MouseListener {
 		}
 	}
 
+	FieldElement dragged;
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		FieldElement obj = null;
+		for(IObserver observer : observers) {
+        	obj = observer.Clicked(e.getX(), e.getY());
+        	if(obj != null) break;
+        }
+		if(obj != null) {
+			dragged = obj;
+			if(selectedObject != obj) obj.getObserver().setSelected(false);
+		}
 	}
-
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		dragged = null;
 	}
 
 	@Override
@@ -94,5 +101,22 @@ public class GamePanel extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	} 
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	long lastTime = System.currentTimeMillis();
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		if(dragged == null) return;
+		if(System.currentTimeMillis() - lastTime > 30) {
+			dragged.getObserver().setPosition(getMousePosition());
+			ui.Update(getGraphics());
+			lastTime = System.currentTimeMillis();
+		}
+	}
 }

@@ -150,6 +150,7 @@ public class Plumber extends Player {
 	 */
 	public boolean ConnectPipe() {
 		if (location.Connect(heldPipe)) {
+			heldPipe.setIsGrabbed(false);
 			heldPipe = null;
 			return true;
 		}
@@ -167,6 +168,20 @@ public class Plumber extends Player {
 	public boolean DisconnectPipe(int p) {
 		if (heldPipe == null) {
 			heldPipe = location.Disconnect(p);
+			if(heldPipe != null) {
+				heldPipe.setIsGrabbed(true);
+				heldPipe.getObserver().setEnd2(location.getObserver().getPosition());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean PlayerMove(FieldElement f) {
+		if(super.PlayerMove(f)) {
+			if(heldPipe != null) {
+				heldPipe.getObserver().setEnd2(location.getObserver().getPosition());
+			}
 			return true;
 		}
 		return false;

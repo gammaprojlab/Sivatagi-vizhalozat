@@ -138,7 +138,6 @@ public abstract class Player implements Steppable, Serializable {
 		location = null;
 		game = g;
 		g.addSteppable(this);
-		
 	}
 	
 	/**

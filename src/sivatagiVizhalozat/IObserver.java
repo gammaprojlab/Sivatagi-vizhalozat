@@ -35,5 +35,5 @@ public interface IObserver {
 	
 	public void setPosition(Point pos);
 	
-	public void setSelected(Boolean s);
+	public void setSelected(boolean s);
 }

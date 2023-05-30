@@ -22,11 +22,7 @@ public class Main {
 		
 		Scanner scanner = new Scanner(System.in);
 		// Normal mode
-		if (args.length == 0) {
-			PrintStream out = new PrintStream(OutputStream.nullOutputStream());
-			CommandHandler handler = new CommandHandler(out);
-			runMainGame(handler, scanner);
-		} else {
+		if (args.length != 0) {
 			CommandHandler handler = new CommandHandler();
 			// Start test mode
 			if (args.length == 1 && args[0].equals("-t")) {
