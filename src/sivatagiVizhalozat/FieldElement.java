@@ -23,6 +23,8 @@ import java.io.Serializable;
  */
 public abstract class FieldElement implements Steppable, Serializable {
 	
+	private static final long serialVersionUID = -2711906636741003888L;
+
 	public IObserver getObserver() {
 		return null;
 	}

@@ -11,11 +11,8 @@ package sivatagiVizhalozat;
 //
 //
 
-import java.io.Console;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * The class that implements the Game functionality.
@@ -24,6 +21,8 @@ import java.util.Scanner;
  * Scores during the game are also credited to the teams by this department.
  */
 public class Game implements Serializable {
+
+	private static final long serialVersionUID = -2734089425931126093L;
 
 	/**
 	 * The flag that signs whether the game is running or not.
@@ -442,7 +441,7 @@ public class Game implements Serializable {
 
 		if (collectedWater > spilledWater)
 			ret += "The plumbers have won the game";
-		else if (collectedWater > spilledWater)
+		else if (collectedWater < spilledWater)
 			ret += "The saboteurs have won the game";
 		else if (collectedWater == spilledWater)
 			ret += "The game is a tie";

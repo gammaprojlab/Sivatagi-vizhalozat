@@ -5,11 +5,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import javax.swing.JPanel;
 
+/**
+* The observer class for the Pump type Fields. Its liability is
+* to draw out the Pump on the gamePanel.
+*/
 public class PumpObserver extends NodeObserver {
 
+	private static final long serialVersionUID = 1185529468250815409L;
 	static JPanel panel;
 	protected Pump pump;
 	
@@ -25,13 +29,6 @@ public class PumpObserver extends NodeObserver {
 			return pump;
 		}
 		return null;
-	}
-	
-	@Override
-	public void Move(int x, int y) {
-		if(selected && position.distance(x, y) > radius + epsilon) {
-			position = new Point(x,y);
-		}
 	}
 	
 	@Override

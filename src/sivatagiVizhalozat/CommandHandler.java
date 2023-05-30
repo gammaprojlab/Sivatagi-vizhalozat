@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 /**
- * Class to handle commands
+ * Class, that is liable for the handling of all the test commands.
  */
 public class CommandHandler {
 
@@ -140,7 +140,8 @@ public class CommandHandler {
 	/**
 	 * Read the test input from input.txt, write the test output to output.txt.
 	 *
-	 * @param console The console
+	 * @param console The console from which the data will be read.
+	 * @param filename The name of the test which needs to be ran.
 	 */
 	public void TestMenu(Scanner console, String filename) {
 		if (filename.isBlank()) {

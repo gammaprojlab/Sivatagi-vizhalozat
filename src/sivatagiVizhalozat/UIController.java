@@ -25,25 +25,23 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class UIController extends JFrame implements IObserver {
 	
+	private static final long serialVersionUID = -7808476090807496762L;
 	private CommandHandler controller = new CommandHandler(new PrintStream(OutputStream.nullOutputStream()));
-	
-	private ArrayList<IObserver> Observers;
-	
+	private GamePanel gamePanel = new GamePanel(this);
 	static int playerCount = 2;
 	static int generated = 0;
 	static int turn = 25;
 	static String map = "map2.txt";
 	
-	private GamePanel gamePanel = new GamePanel(this);
-	
 	public UIController() {
 		//window Game Initialize
 		setTitle("Sivatagi Vizhalozat");
-        setSize(1280, 720);
+        setSize(1600, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setBackground(Color.cyan);
         setContentPane(MainMenu());
+        setResizable(false);
         gamePanel.addMouseListener(gamePanel);
 		gamePanel.addMouseMotionListener(gamePanel);
     }
@@ -56,17 +54,10 @@ public class UIController extends JFrame implements IObserver {
         button.setFocusPainted(false);
         return button;
     }
-    
-	public void Redraw() {
-		gamePanel.Clear();
-		for (FieldElement f: controller.getGame().getMap().getFields()) {
-			gamePanel.Add(f.getObserver());
-		}
-		gamePanel.revalidate();
-		gamePanel.repaint();
-	}
 	
 	public JPanel MainMenu() {
+		controller.setGame(new Game());
+		generated = 0;
 		JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(173, 216, 230));
 
@@ -116,23 +107,24 @@ public class UIController extends JFrame implements IObserver {
 		ChangePane(TheMiddle());
 		return null;
 	}
-	
-	public JPanel TheMiddle(){
+
+	public JPanel TheMiddle() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(173, 216, 230));
 
-		JPanel centerPanel = new JPanel(new BorderLayout());
+		JPanel centerPanel = new JPanel();
         centerPanel.setBackground(new Color(173, 216, 230));
 		
-		JPanel wrapperPanel = new JPanel(new GridBagLayout());
-        wrapperPanel.setBackground(new Color(173, 216, 230));
-		wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.Y_AXIS));
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/2, 0 , 0, 0));
 
-		JPanel settingGamePanel = new JPanel(new GridLayout(2,2));
-        settingGamePanel.setBackground(new Color(173, 216, 230));
-		
-		JLabel NameS = new JLabel("Saboteur's Name:");
-		JLabel NameP = new JLabel("Plumber's Name:");
+        JPanel pNameS = new JPanel(); pNameS.setLayout(new BoxLayout(pNameS, BoxLayout.X_AXIS));
+        pNameS.setBorder(BorderFactory.createEmptyBorder(0, 0 , 10, 0));
+        pNameS.setBackground(new Color(173,216,230));
+        JPanel pNameP = new JPanel(); pNameP.setLayout(new BoxLayout(pNameP, BoxLayout.X_AXIS));
+        pNameP.setBackground(new Color(173,216,230));
+		JLabel NameS = new JLabel("Saboteur" + (generated+1) + "'s Name: "); NameS.setFont(new Font("Hack", Font.BOLD, 16));
+		JLabel NameP = new JLabel("Plumber" + (generated+1) + "'s Name: "); NameP.setFont(new Font("Hack", Font.BOLD, 16));
 
 		JTextField SaboteurName = new JTextField();
 		SaboteurName.setColumns(1);
@@ -144,96 +136,90 @@ public class UIController extends JFrame implements IObserver {
 		PlumberName.setPreferredSize(new Dimension(150, 30));
 		PlumberName.setMaximumSize(new Dimension(150, 30));
 		
-		JButton start = new JButton("Next");
-		start.setBackground(Color.green);
-		start.addActionListener(new ActionListener() {
+		pNameS.add(NameS); pNameS.add(SaboteurName);
+		pNameP.add(NameP); pNameP.add(PlumberName);
+		centerPanel.add(pNameS); centerPanel.add(pNameP);
+		
+		JButton btStart = new JButton("Next");
+		btStart.setBackground(Color.green);
+		btStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.ExecuteCommand("Create(Plumber)");
-				controller.ExecuteCommand("SetName(Plumber" + (generated + 1) + "," + PlumberName.getText() + ")");
-				controller.ExecuteCommand("SetLocation(Plumber" + (generated + 1) + ",Cistern1)");
+				if(!PlumberName.getText().isBlank() && !SaboteurName.getText().isBlank()){
+					controller.ExecuteCommand("Create(Plumber)");
+					controller.ExecuteCommand("SetName(Plumber" + (generated + 1) + "," + PlumberName.getText() + ")");
+					controller.ExecuteCommand("SetLocation(Plumber" + (generated + 1) + ",Cistern1)");
 
-				controller.ExecuteCommand("Create(Saboteur)");
-				controller.ExecuteCommand("SetName(Saboteur" + (generated + 1) + "," + SaboteurName.getText() + ")");
-				controller.ExecuteCommand("SetLocation(Saboteur" + (generated + 1) + ",Spring1)");
-				generated++;
-				if(generated < playerCount-1){
-					ChangePane(TheMiddle());
-				}
-				else{
-					ChangePane(SettingGameData());
+					controller.ExecuteCommand("Create(Saboteur)");
+					controller.ExecuteCommand("SetName(Saboteur" + (generated + 1) + "," + SaboteurName.getText() + ")");
+					controller.ExecuteCommand("SetLocation(Saboteur" + (generated + 1) + ",Spring1)");
+					generated++;
+					if(generated < playerCount-1){
+						ChangePane(TheMiddle());
+					}
+					else{
+						ChangePane(SettingGameData());
+					}
 				}
 			}
         });
-		start.setPreferredSize(new Dimension(150, 30));
-		start.setMaximumSize(new Dimension(150, 30));
+		btStart.setPreferredSize(new Dimension(150, 30));
+		btStart.setMaximumSize(new Dimension(150, 30));
 		
-		JButton back = new JButton("Back");
-		back.setBackground(Color.red);
-		back.addActionListener(action -> ChangePane(MainMenu()));
-		back.setPreferredSize(new Dimension(150, 30));
-		back.setMaximumSize(new Dimension(150, 30));
-		
-		settingGamePanel.add(NameS);
-		settingGamePanel.add(SaboteurName);
-		settingGamePanel.add(NameP);
-		settingGamePanel.add(PlumberName);
-		
-		wrapperPanel.add(Box.createVerticalGlue());
-        wrapperPanel.add(settingGamePanel);
-        wrapperPanel.add(Box.createVerticalGlue());
+		JButton btBack = new JButton("Back");
+		btBack.setBackground(Color.red);
+		btBack.addActionListener(action -> ChangePane(MainMenu()));
+		btBack.setPreferredSize(new Dimension(150, 30));
+		btBack.setMaximumSize(new Dimension(150, 30));
 
-        centerPanel.add(wrapperPanel, BorderLayout.CENTER);
-
-		JPanel functionP = new JPanel(); 
-		functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
-		functionP.setBackground(new Color(173, 216, 230));
-		functionP.setBorder(BorderFactory.createEmptyBorder(10, (getWidth() - 300) / 2, 10, 10));
-		functionP.add(back);
-		functionP.add(Box.createRigidArea(new Dimension(10, 10)));
-		functionP.add(start);
+        JPanel functionP = new JPanel(); functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
+        functionP.setBackground(new Color(173, 216, 230));
+        functionP.setBorder(BorderFactory.createEmptyBorder(10, (getWidth() - 300) / 2, 10, 10));
+        functionP.add(btBack);
+        functionP.add(Box.createRigidArea(new Dimension(10, 10)));
+        functionP.add(btStart);
 		
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		mainPanel.add(functionP, BorderLayout.SOUTH);
 		return mainPanel;
 	}
-
+	
 	public JPanel SettingGameData(){
 		controller.getGame().setRemainingRounds(turn);
 		JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(173, 216, 230));
 
-		JPanel centerPanel = new JPanel(new BorderLayout());
+		JPanel centerPanel = new JPanel();
         centerPanel.setBackground(new Color(173, 216, 230));
 		
-		JPanel wrapperPanel = new JPanel(new GridBagLayout());
-        wrapperPanel.setBackground(new Color(173, 216, 230));
-		wrapperPanel.setLayout(new BoxLayout(wrapperPanel, BoxLayout.Y_AXIS));
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/2, 0 , 0, 0));
 
-		JPanel settingGamePanel = new JPanel(new GridLayout(2,2));
-        settingGamePanel.setBackground(new Color(173, 216, 230));
-        
-		JLabel NameS = new JLabel("Saboteur's Name:");
-		NameS.setMaximumSize(new Dimension(150, 30));
+        JPanel pNameS = new JPanel(); pNameS.setLayout(new BoxLayout(pNameS, BoxLayout.X_AXIS));
+        pNameS.setBorder(BorderFactory.createEmptyBorder(0, 0 , 10, 0));
+        pNameS.setBackground(new Color(173,216,230));
+        JPanel pNameP = new JPanel(); pNameP.setLayout(new BoxLayout(pNameP, BoxLayout.X_AXIS));
+        pNameP.setBackground(new Color(173,216,230));
+		JLabel NameS = new JLabel("Saboteur" + (generated+1) + "'s Name: "); NameS.setFont(new Font("Hack", Font.BOLD, 16));
+		JLabel NameP = new JLabel("Plumber" + (generated+1) + "'s Name: "); NameP.setFont(new Font("Hack", Font.BOLD, 16));
 
-		JLabel NameP = new JLabel("Plumber's Name:");
-		NameP.setMaximumSize(new Dimension(150, 30));
-
-        JTextField SaboteurName = new JTextField();
-        SaboteurName.setColumns(1);
+		JTextField SaboteurName = new JTextField();
+		SaboteurName.setColumns(1);
 		SaboteurName.setPreferredSize(new Dimension(150, 30));
 		SaboteurName.setMaximumSize(new Dimension(150, 30));
-		SaboteurName.setMinimumSize(new Dimension(150, 30));
 		
 		JTextField PlumberName = new JTextField();
-        PlumberName.setColumns(1);
+		PlumberName.setColumns(1);
 		PlumberName.setPreferredSize(new Dimension(150, 30));
 		PlumberName.setMaximumSize(new Dimension(150, 30));
-		PlumberName.setMinimumSize(new Dimension(150, 30));
-        
-        JButton start = new JButton("Start Game");
-        start.setBackground(Color.green);
-        start.addActionListener(new ActionListener() {
+		
+		pNameS.add(NameS); pNameS.add(SaboteurName);
+		pNameP.add(NameP); pNameP.add(PlumberName);
+		centerPanel.add(pNameS); centerPanel.add(pNameP);
+		
+		JButton btStart = new JButton("Next");
+		btStart.setBackground(Color.green);
+		btStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.ExecuteCommand("Create(Plumber)");
@@ -250,37 +236,24 @@ public class UIController extends JFrame implements IObserver {
 				ChangePane(InGame());
 			}
         });
-		start.setPreferredSize(new Dimension(150, 30));
-		start.setMaximumSize(new Dimension(150, 30));
-        
-        JButton back = new JButton("Back");
-        back.setBackground(Color.red);
-        back.addActionListener(action -> ChangePane(MainMenu()));
-		back.setPreferredSize(new Dimension(150, 30));
-		back.setMaximumSize(new Dimension(150, 30));
-        
-        settingGamePanel.add(NameS);
-        settingGamePanel.add(SaboteurName);
-        settingGamePanel.add(NameP);
-        settingGamePanel.add(PlumberName);
+		btStart.setPreferredSize(new Dimension(150, 30));
+		btStart.setMaximumSize(new Dimension(150, 30));
 		
-		wrapperPanel.add(Box.createVerticalGlue());
-        wrapperPanel.add(settingGamePanel);
-        wrapperPanel.add(Box.createVerticalGlue());
+		JButton btBack = new JButton("Back");
+		btBack.setBackground(Color.red);
+		btBack.addActionListener(action -> ChangePane(MainMenu()));
+		btBack.setPreferredSize(new Dimension(150, 30));
+		btBack.setMaximumSize(new Dimension(150, 30));
 
-        centerPanel.add(wrapperPanel, BorderLayout.CENTER);
-		
-		JPanel functionP = new JPanel(); 
-		functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
+        JPanel functionP = new JPanel(); functionP.setLayout(new BoxLayout(functionP, BoxLayout.X_AXIS));
         functionP.setBackground(new Color(173, 216, 230));
         functionP.setBorder(BorderFactory.createEmptyBorder(10, (getWidth() - 300) / 2, 10, 10));
-        functionP.add(back);
+        functionP.add(btBack);
         functionP.add(Box.createRigidArea(new Dimension(10, 10)));
-        functionP.add(start);
+        functionP.add(btStart);
 		
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
-        mainPanel.add(functionP, BorderLayout.SOUTH);
-		
+		mainPanel.add(functionP, BorderLayout.SOUTH);
 		return mainPanel;
 	}
 	
@@ -324,7 +297,6 @@ public class UIController extends JFrame implements IObserver {
             @Override
             public void actionPerformed(ActionEvent e) {
                 playerCount = (int)cbPlayer.getSelectedItem();
-                System.out.println("Selected: " + playerCount);
             }
         });
         
@@ -332,7 +304,6 @@ public class UIController extends JFrame implements IObserver {
             @Override
             public void actionPerformed(ActionEvent e) {
             	map = (String)cbMap.getSelectedItem() + ".txt";
-            	System.out.println("Selected: " + map);
             }
         });
         
@@ -349,8 +320,8 @@ public class UIController extends JFrame implements IObserver {
         JButton btReset = createButton("Reset", Color.GREEN, new Dimension(150, 30));
         btReset.addActionListener(action -> {
         	playerCount = 2; cbPlayer.setSelectedItem(2);
-        	map = "map1.txt"; cbMap.setSelectedItem("map2");
-        	turn = 5; cbTurn.setSelectedItem(25);
+        	map = "map2.txt"; cbMap.setSelectedItem("map2");
+        	turn = 25; cbTurn.setSelectedItem(25);
         });
         
         // Add the buttons to the button panel with vertical spacing
@@ -444,7 +415,6 @@ public class UIController extends JFrame implements IObserver {
 					selectedGame.add(label);
 				}
 				labels[0].setBorder(BorderFactory.createEmptyBorder(25, 50, 0, 0));
-				
 					ImageIcon icon = new ImageIcon(createImage(InGame(), getWidth()/2, getHeight()/2));
 					int dist = (selectedGame.getWidth() - icon.getIconWidth()) / 2;
 					JLabel image = new JLabel(icon);
@@ -655,6 +625,7 @@ public class UIController extends JFrame implements IObserver {
 		for (FieldElement f: controller.getGame().getMap().getFields()) {
 			gamePanel.Add(f.getObserver());
 		}
+		gamePanel.Add(controller.getGame().getActivePlayer().getObserver());
 		gamePanel.setBackground(new Color(199,184,135));
 		gamePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		gamePanel.setSize(new Dimension(getWidth() - lPanel.getPreferredSize().width, getHeight()));
@@ -792,7 +763,7 @@ public class UIController extends JFrame implements IObserver {
 	 * @param dir The Path to the directory
 	 * @return The created List containing all files found in the given directory
 	 */
-	public List<String> GetFiles(String dir){
+	public List<String> GetFiles(String dir) {
 
 		try (Stream<Path> stream = Files.list(Paths.get(dir))) {
 
@@ -878,11 +849,6 @@ public class UIController extends JFrame implements IObserver {
 	}
 
 	@Override
-	public void Move(int x, int y) {
-		
-	}
-
-	@Override
 	public void Update(Graphics graphics) {
 		ChangePane(InGame());
 		if(!controller.getGame().getIsRunning()) {
@@ -892,19 +858,13 @@ public class UIController extends JFrame implements IObserver {
 	}
 
 	@Override
-	public void setSelected(boolean s) {
-		
-	}
+	public void setSelected(boolean s) { }
 
 	@Override
 	public Point getPosition() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setPosition(Point pos) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setPosition(Point pos) { }
 }

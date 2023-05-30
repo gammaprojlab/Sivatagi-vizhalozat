@@ -18,6 +18,8 @@ package sivatagiVizhalozat;
  */
 public class Pump extends FieldElement {
 
+	private static final long serialVersionUID = -2953765275508365695L;
+
 	private final IObserver observer = new PumpObserver(this);
 
 	public IObserver getObserver() {

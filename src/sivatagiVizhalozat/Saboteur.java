@@ -17,17 +17,18 @@ package sivatagiVizhalozat;
  */
 public class Saboteur extends Player {
 	
+	private static final long serialVersionUID = 1913393013180202715L;
 	/**
 	 * This class's Observer.
 	 */
-	private SaboteurObserver Observer;
+	private SaboteurObserver observer;
 	
 	/**
 	 * 
 	 * @return Observer This class's observer.
 	 */
-	public SaboteurObserver GetObserver() {
-		return Observer;
+	public IObserver getObserver() {
+		return observer;
 	}
 	
 	/**
@@ -65,7 +66,7 @@ public class Saboteur extends Player {
 	 **/
 	public Saboteur() {
 		super();
-		Observer = new SaboteurObserver();
+		observer = new SaboteurObserver(this);
 		id = nextId++;
 	}
 
@@ -78,6 +79,7 @@ public class Saboteur extends Player {
 		super(g);
 		id = nextId++;
 		g.addSaboteur(this);
+		observer = new SaboteurObserver(this);
 	}
 
 	/**
@@ -108,7 +110,7 @@ public class Saboteur extends Player {
 	 */
 	@Override
 	public void Step2() {
-
+		
 	}
 
 	/**

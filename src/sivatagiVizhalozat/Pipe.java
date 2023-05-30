@@ -17,6 +17,7 @@ package sivatagiVizhalozat;
 */
 public class Pipe extends FieldElement {
 	
+	private static final long serialVersionUID = 1119930235165234379L;
 	private final PipeObserver observer = new PipeObserver(this);
 	
 	public PipeObserver getObserver() {

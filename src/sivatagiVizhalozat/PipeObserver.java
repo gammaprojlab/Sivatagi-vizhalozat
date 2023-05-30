@@ -8,17 +8,21 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.Serializable;
 
-import javax.swing.JPanel;
-
+/**
+ * The observer class for the Pipe type Fields. Its liability is
+ * to draw out the Pipe on the gamePanel.
+ */
 public class PipeObserver implements IObserver, Serializable {
 
-	protected Pipe pipe;
-	private Point end1;
-	private Point end2;
-	private Color mainColor;
-	private Color secondColor;
-	private boolean selected = false;
+	private static final long serialVersionUID = 4259464217506115323L;
+	protected Pipe pipe;				/**The Pipe to which the observer is connected */ 
+	private Point end1;					/**The end of the line*/
+	private Point end2;					/**The other end of the line */
+	private boolean selected = false;	/**The selection of the observer */
 	
+	/**The constructor of the Pipe observer.
+	 * @param n The Pipe to which the observer is going to be linked.
+	 */
 	public PipeObserver(Pipe n) {
 		pipe = n;
 	}
@@ -49,13 +53,6 @@ public class PipeObserver implements IObserver, Serializable {
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public void Move(int x, int y) { }
-	
-	public void setEnd2(Point p) {
-		end2 = p;
 	}
 
 	@Override

@@ -20,6 +20,13 @@ import java.io.Serializable;
  * because of the Steppable's Step function.
  * */
 public abstract class Player implements Steppable, Serializable {
+	
+	private static final long serialVersionUID = -1488293927263051669L;
+
+	public IObserver getObserver() {
+		return null;
+	}
+	
 	/** 
 	 * Tells how long the Player cannot move
 	 * */

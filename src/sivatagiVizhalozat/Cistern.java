@@ -15,6 +15,7 @@ package sivatagiVizhalozat;
 */
 public class Cistern extends FieldElement {
 
+	private static final long serialVersionUID = 2192456259983085350L;
 	private final IObserver observer = new CisternObserver(this);
 
 	public IObserver getObserver() {

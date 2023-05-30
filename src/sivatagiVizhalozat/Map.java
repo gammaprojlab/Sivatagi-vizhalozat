@@ -6,7 +6,9 @@ import java.util.ArrayList;
  * Stores the different fields and returns a fieldelement by a given type and id
  */
 public class Map implements Serializable {
-    /**
+    private static final long serialVersionUID = -1045029823783761155L;
+
+	/**
      * Stores cisterns on the map
      */
     private ArrayList<Cistern> cisterns;
