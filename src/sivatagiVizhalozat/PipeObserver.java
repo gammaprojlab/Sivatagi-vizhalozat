@@ -25,6 +25,7 @@ public class PipeObserver implements IObserver, Serializable {
 	
 	@Override
 	public FieldElement Clicked(int x, int y) {
+		if(end1 == null && end2 == null) return null;
 		int a = end1.y-end2.y;
 		int b = -(end1.x-end2.x);
 		int c = -(end1.x * a + end1.y * b);

@@ -598,6 +598,8 @@ public class UIController extends JFrame implements IObserver {
         	FieldElement f = controller.getGame().getMap().getFieldElement("Pipe1");
         	f.getObserver().setSelected(true);
         	gamePanel.setSelectedObject(f);
+        } else {
+        	gamePanel.getSelectedObject().getObserver().setSelected(true);
         }
         JPanel pP = listPanel(p.toString() + ": " + p.getName(),p.List());
         pP.setPreferredSize(new Dimension(345,90));

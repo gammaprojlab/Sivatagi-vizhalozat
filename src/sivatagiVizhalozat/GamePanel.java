@@ -34,9 +34,20 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	public void Add(IObserver o) {
 		if(!observers.contains(o)) {
+			if(o.getPosition() == null) {
+				FieldElement obj = null;
+				Point newPos = null;
+				do {
+					obj = null;
+					newPos = new Point((int)(Math.random() * 600) + 20, (int)(Math.random() * 600) + 20);
+					obj = Clicked(newPos.x,newPos.y);
+					if(obj != null) {
+						obj.getObserver().setSelected(false);
+					}
+				} while(obj != null);
+				o.setPosition(newPos);
+			}
 			observers.add(o);
-			if(o.getPosition() == null)
-				o.setPosition(new Point((int)(Math.random() * 600), (int)(Math.random() * 600)));
 		}
 	}
 
@@ -55,14 +66,19 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     protected void paintObject(IObserver observer, Graphics g) {
     	observer.Update(g);
     }
+    
+    private FieldElement Clicked(int x, int y) {
+    	FieldElement obj = null;
+		for(IObserver observer : observers) {
+        	obj = observer.Clicked(x, y);
+        	if(obj != null) break;
+        }
+		return obj;
+    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		FieldElement obj = null;
-		for(IObserver observer : observers) {
-        	obj = observer.Clicked(e.getX(), e.getY());
-        	if(obj != null) break;
-        }
+		FieldElement obj = Clicked(e.getX(), e.getY());
 		if(obj != null) {
 			if(obj != selectedObject) {
 				selectedObject.getObserver().setSelected(false);
@@ -75,11 +91,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	FieldElement dragged;
 	@Override
 	public void mousePressed(MouseEvent e) {
-		FieldElement obj = null;
-		for(IObserver observer : observers) {
-        	obj = observer.Clicked(e.getX(), e.getY());
-        	if(obj != null) break;
-        }
+		FieldElement obj = Clicked(e.getX(), e.getY());
 		if(obj != null) {
 			dragged = obj;
 			if(!selectedObject.toString().equals(obj.toString())) obj.getObserver().setSelected(false);
