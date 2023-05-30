@@ -55,7 +55,9 @@ public class PipeObserver implements IObserver, Serializable {
 		end1 = pipe.GetNeighbor().get(0).getObserver().getPosition();
 		if(pipe.GetNeighbor().size() < 2) {
 			if(pipe.getIsGrabbed()) {
-				
+				for(Plumber p : pipe.getGame().getPlumbers()) {
+					if(p.getHeldPipe() == pipe) end2 = p.getLocation().getObserver().getPosition();
+				}
 			}
 			else {
 				end2 = new Point(end1.x-25, end1.y-25);
