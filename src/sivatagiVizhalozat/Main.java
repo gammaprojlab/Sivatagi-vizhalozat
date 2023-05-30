@@ -17,9 +17,6 @@ import java.util.stream.Stream;
 public class Main {
 
 	public static void main(String[] args) {
-		UIController c = new UIController();
-		c.setVisible(true);
-		
 		Scanner scanner = new Scanner(System.in);
 		// Normal mode
 		if (args.length != 0) {
@@ -49,6 +46,9 @@ public class Main {
 					}
 				}
 			}
+		} else {
+			UIController c = new UIController();
+			c.setVisible(true);
 		}
 	}
 

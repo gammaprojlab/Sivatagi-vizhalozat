@@ -6,11 +6,13 @@ Connect(Spring1,Pipe1) Success
 Connect(Cistern1,Pipe1) Success
 Game:
 
-spilledWater: 0
-collectedWater: 0
+Remaining rounds: 40
+Plumbers: 0
+Saboteurs: 0
 Tick() Success
 Tick() Success
 Game:
 
-spilledWater: 0
-collectedWater: 50
+Remaining rounds: 40
+Plumbers: 50
+Saboteurs: 0

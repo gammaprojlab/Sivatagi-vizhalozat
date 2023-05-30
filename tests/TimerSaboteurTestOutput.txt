@@ -7,12 +7,14 @@ Connect(Cistern1,Pipe1) Success
 SetIsPunctured(Pipe1,true) Success
 Game:
 
-spilledWater: 0
-collectedWater: 0
+Remaining rounds: 40
+Plumbers: 0
+Saboteurs: 0
 Tick() Success
 Tick() Success
 Tick() Success
 Game:
 
-spilledWater: 100
-collectedWater: 0
+Remaining rounds: 40
+Plumbers: 0
+Saboteurs: 100
