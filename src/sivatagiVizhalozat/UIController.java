@@ -425,6 +425,8 @@ public class UIController extends JFrame implements IObserver {
 		pGames.setBackground(new Color(173, 216, 230));
 		List<String> games = GetFiles("saves/");
 		games.sort((a,b) -> a.compareTo(b));
+		JButton btBack = createButton("Back", Color.RED, new Dimension(200,50)); btBack.addActionListener(action -> ChangePane(MainMenu()));
+		JButton btLoad = createButton("Load", Color.GREEN, new Dimension(200,50)); btLoad.addActionListener(action -> ChangePane(InGame())); btLoad.setEnabled(false);
 		for(String game : games) {
 			JButton g = createButton(game.substring(0, game.length()-4), Color.WHITE, new Dimension(200, 80));
 			g.addActionListener(action -> {
@@ -448,6 +450,7 @@ public class UIController extends JFrame implements IObserver {
 					JLabel image = new JLabel(icon);
 					image.setBorder(BorderFactory.createEmptyBorder(20, dist+(pGames.getWidth()/2),0,0));
 					selectedGame.add(image);
+					btLoad.setEnabled(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -456,8 +459,6 @@ public class UIController extends JFrame implements IObserver {
 			pGames.add(Box.createRigidArea(new Dimension(0, 10))); // Adds vertical spacing
 		}
 		
-		JButton btBack = createButton("Back", Color.RED, new Dimension(200,50)); btBack.addActionListener(action -> ChangePane(MainMenu()));
-		JButton btLoad = createButton("Load", Color.GREEN, new Dimension(200,50)); btLoad.addActionListener(action -> ChangePane(InGame()));
 		buttonPanel.add(btBack);
 		buttonPanel.add(btLoad);
 		buttonPanel.setBackground(new Color(173, 216, 230));
