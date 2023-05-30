@@ -29,9 +29,9 @@ public class UIController extends JFrame implements IObserver {
 	
 	private ArrayList<IObserver> Observers;
 	
-	static int playerCount = 1;
+	static int playerCount = 2;
 	static int generated = 0;
-	static int turn = 1;
+	static int turn = 25;
 	static String map = "map2.txt";
 	
 	private GamePanel gamePanel = new GamePanel(this);
@@ -349,8 +349,8 @@ public class UIController extends JFrame implements IObserver {
         JButton btReset = createButton("Reset", Color.GREEN, new Dimension(150, 30));
         btReset.addActionListener(action -> {
         	playerCount = 2; cbPlayer.setSelectedItem(2);
-        	map = "map1.txt"; cbMap.setSelectedItem("map1");
-        	turn = 5; cbTurn.setSelectedItem(5);
+        	map = "map1.txt"; cbMap.setSelectedItem("map2");
+        	turn = 5; cbTurn.setSelectedItem(25);
         });
         
         // Add the buttons to the button panel with vertical spacing
@@ -594,6 +594,7 @@ public class UIController extends JFrame implements IObserver {
         
         // UserList panel
         Player p = controller.getGame().getActivePlayer();
+        if(p == null) controller.getGame().NextPlayer();
         if(gamePanel.getSelectedObject() == null) {
         	FieldElement f = controller.getGame().getMap().getFieldElement("Pipe1");
         	f.getObserver().setSelected(true);

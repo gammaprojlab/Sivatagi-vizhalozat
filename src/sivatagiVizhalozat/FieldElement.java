@@ -276,6 +276,7 @@ public abstract class FieldElement implements Steppable, Serializable {
 			if (p.getId() == id) {
 				Pipe ret = p.Disconnect(p.GetNeighbor().indexOf(this));
 				if (ret != null) {
+					Remove(ret);
 					return ret;
 				}
 			}
