@@ -241,7 +241,7 @@ public class UIController extends JFrame implements IObserver {
 		pNameP.add(NameP); pNameP.add(PlumberName);
 		centerPanel.add(pNameS); centerPanel.add(pNameP);
 		
-		JButton btStart = new JButton("Next");
+		JButton btStart = new JButton("Start Game");
 		btStart.setBackground(Color.green);
 		btStart.addActionListener(new ActionListener() {
             @Override
@@ -339,7 +339,6 @@ public class UIController extends JFrame implements IObserver {
             @Override
             public void actionPerformed(ActionEvent e) {
             	turn = (int)cbTurn.getSelectedItem();
-            	System.out.println("Selected: " + turn);
             }
         });
         
