@@ -625,7 +625,6 @@ public class UIController extends JFrame implements IObserver {
 			panel.add(p2);
 			btPanel.add(panel);
 		}
-		//btPanel.setPreferredSize(new Dimension(345,200));
 		lPanel.add(btPanel);
 		
 		// ObjectList - SelectedObject

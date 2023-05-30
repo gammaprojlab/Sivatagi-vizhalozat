@@ -69,8 +69,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     
     private FieldElement Clicked(int x, int y) {
     	FieldElement obj = null;
-    	for(int i = observers.size()-1; i > 0; i--) {
-    		obj = observers.get(i).Clicked(x, y);
+    	for(int i = observers.size(); i > 0; i--) {
+    		obj = observers.get(i-1).Clicked(x, y);
     		if(obj != null) break;
     	}
 		return obj;
