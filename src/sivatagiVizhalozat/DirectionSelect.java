@@ -32,7 +32,7 @@ public class DirectionSelect extends JDialog {
 		super(owner, "Input Dialog", true);
 		connections = con;
 		setTitle("Change Direction of Pump");
-        setSize(400, 100);
+        setSize(400, 150);
         setLocationRelativeTo(owner);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBackground(Color.cyan);
@@ -50,7 +50,7 @@ public class DirectionSelect extends JDialog {
         	cbFirst.addItem(f.toString());
         	cbSecond.addItem(f.toString());
         }
-        Dimension size = new Dimension(150,30);
+        Dimension size = new Dimension(120,30);
         
         JPanel pOk = new JPanel(); pOk.setBorder(BorderFactory.createEmptyBorder(0, 45, 10, 5));
         JButton btOk = new JButton("Ok"); btOk.addActionListener(action -> {
