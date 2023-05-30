@@ -31,11 +31,9 @@ public class PipeObserver implements IObserver, Serializable {
 		int c = -(end1.x * a + end1.y * b);
 		double dist = Math.abs(a*x + b*y + c) / Math.sqrt(a*a + b*b);
 		if(dist < 7) { // Point distance from line
-			if(end1.distance(x, y) > 20 && end2.distance(x, y) > 20) { // Point is near end1/2
-				if((end1.x - x) * (end2.x-x) < 0 && (end1.y - y) * (end2.y-y) < 0) { // 
-					selected = true;
-					return pipe;
-				}
+			if((end1.x - x) * (end2.x-x) < 0 && (end1.y - y) * (end2.y-y) < 0) { // 
+				selected = true;
+				return pipe;
 			}
 		}
 		return null;

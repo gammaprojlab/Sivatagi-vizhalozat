@@ -595,7 +595,7 @@ public class UIController extends JFrame implements IObserver {
         // UserList panel
         Player p = controller.getGame().getActivePlayer();
         if(p == null) controller.getGame().NextPlayer();
-        if(gamePanel.getSelectedObject() == null) {
+        if(gamePanel.getSelectedObject() == null || !controller.getGame().getMap().getFields().contains(gamePanel.getSelectedObject())) {
         	FieldElement f = controller.getGame().getMap().getFieldElement("Pipe1");
         	f.getObserver().setSelected(true);
         	gamePanel.setSelectedObject(f);
