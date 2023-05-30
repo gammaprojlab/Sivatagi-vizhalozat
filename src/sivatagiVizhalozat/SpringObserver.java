@@ -13,8 +13,8 @@ import javax.swing.JPanel;
  */
 public class SpringObserver extends NodeObserver {
 	private static final long serialVersionUID = 7256532664932191508L;
-	static JPanel panel;
-	private Spring spring;
+	static JPanel panel;		/** The panel onto which the Spring will be drawn */
+	private Spring spring;		/** The Spring to which the observer is linked to */
 	
 	/** The constructor of the observer.
 	  *  @param n The Cistern which this observer is going to be linked to.

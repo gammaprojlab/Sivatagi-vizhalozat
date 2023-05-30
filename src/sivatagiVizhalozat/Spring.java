@@ -14,9 +14,12 @@ package sivatagiVizhalozat;
 public class Spring extends FieldElement {
 
 	private static final long serialVersionUID = -6649080444290565176L;
-	private static int nextId = 1;
-	private final IObserver observer = new SpringObserver(this);
-
+	private static int nextId = 1;	/** The Id of the next created Spring */
+	private final IObserver observer = new SpringObserver(this);	/** The observer of the Spring object */
+	/**
+	 * The getter of the observer
+	 * @return IObserver The observer of this Spring
+	 */
 	public IObserver getObserver() {
 		return observer;
 	}

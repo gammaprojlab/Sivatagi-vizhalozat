@@ -14,9 +14,12 @@ import javax.swing.JPanel;
 public class PumpObserver extends NodeObserver {
 
 	private static final long serialVersionUID = 1185529468250815409L;
-	static JPanel panel;
-	protected Pump pump;
-	
+	static JPanel panel;		/** The panel onto which the Pump will be drawn */
+	protected Pump pump;		/** The Pump to which the observer is linked */
+	/**
+	 * The constructor 
+	 * @param n The pump, that the observer is linked to
+	 */
 	public PumpObserver(Pump n) {
 		super(20, new Color(195,195,195), new Color(125,125,125));
 		pump = n;

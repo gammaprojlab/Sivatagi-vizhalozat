@@ -235,6 +235,10 @@ public abstract class Player implements Steppable, Serializable {
 		return ret;
 	}
 	
+	/**
+	 * The toString function of the Player class.
+	 * @return String The type of the player and the id of that player.
+	 */
 	public String toString() {
 		return this.getClass().getSimpleName() + this.getId();
 	}
