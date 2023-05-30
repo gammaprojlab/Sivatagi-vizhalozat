@@ -328,11 +328,11 @@ public class CommandHandler {
 			case "PumpDirection":
 				int pipeId1;
 				int pipeId2;
-				if (arguments[1].equals("close"))
+				if (arguments[1].toLowerCase().equals("close"))
 					pipeId1 = -1;
 				else
 					pipeId1 = Integer.parseInt(arguments[1].replaceAll("[\\D]", ""));
-				if (arguments[2].equals("close"))
+				if (arguments[2].toLowerCase().equals("close"))
 					pipeId2 = -1;
 				else
 					pipeId2 = Integer.parseInt(arguments[2].replaceAll("[\\D]", ""));
@@ -461,7 +461,7 @@ public class CommandHandler {
 			case "PumpDirection":
 				int pipeId1;
 				int pipeId2;
-				if (arguments[1].equals("close")) {
+				if (arguments[1].toLowerCase().equals("close")) {
 					pipeId1 = -1;
 					pipeId2 = -1;
 				} else {

@@ -563,8 +563,9 @@ public class UIController extends JFrame implements IObserver {
 		actions[11].addActionListener(action -> {
 			String name = "";
 			name = JOptionPane.showInputDialog("Please provide name to save game: ");
-			if(!name.isBlank()) {
-				controller.ExecuteCommand("SaveGame("+ name + ")");
+			if(name != null) {
+				if(!name.isBlank())
+					controller.ExecuteCommand("SaveGame("+ name + ")");
 			}
 			Update(getGraphics());
 		});
