@@ -1,6 +1,8 @@
 package sivatagiVizhalozat;
 
-
+/**
+ * The class, that controls the whole UI. This controls the menu and creates the GamePanel too.
+ */
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,13 +28,16 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 public class UIController extends JFrame implements IObserver {
 	
 	private static final long serialVersionUID = -7808476090807496762L;
-	private CommandHandler controller = new CommandHandler(new PrintStream(OutputStream.nullOutputStream()));
-	private GamePanel gamePanel = new GamePanel(this);
-	static int playerCount = 2;
-	static int generated = 0;
-	static int turn = 25;
-	static String map = "map2.txt";
+	private CommandHandler controller = new CommandHandler(new PrintStream(OutputStream.nullOutputStream()));		/**  The Commandhandler, that handles the commands lol :D*/
+	private GamePanel gamePanel = new GamePanel(this);			/** The GamenPanel, that shows the current game's map*/
+	static int playerCount = 2;		/** The number of players needed to start a game*/
+	static int generated = 0;		/** The number of players already in the game*/
+	static int turn = 25;			/** The number of turns until the end of game*/
+	static String map = "map2.txt";	/** The map, that should be loaded in*/
 	
+	/**
+	 * Initializes the game
+	 */
 	public UIController() {
 		//window Game Initialize
 		setTitle("Sivatagi Vizhalozat");
@@ -46,6 +51,12 @@ public class UIController extends JFrame implements IObserver {
 		gamePanel.addMouseMotionListener(gamePanel);
     }
 	
+	/**Creates a JButton
+	 * @param text The text on the button
+	 * @param backgroundColor The background color
+	 * @param size The size of the button
+	 * @return JButton The created button
+	 */
     private JButton createButton(String text, Color backgroundColor, Dimension size) {
         JButton button = new JButton(text);
         button.setBackground(backgroundColor);
@@ -55,6 +66,9 @@ public class UIController extends JFrame implements IObserver {
         return button;
     }
 	
+    /** The initialization of the MainMenu panel
+     * @return JPanel The MainMenu panel
+     */
 	public JPanel MainMenu() {
 		controller.setGame(new Game());
 		generated = 0;
@@ -99,7 +113,10 @@ public class UIController extends JFrame implements IObserver {
         mainPanel.add(horizontalPanel, BorderLayout.CENTER);
         return mainPanel;
 	}
-	
+	/**
+	 * The method, that starts the game by loading the map
+	 * @return JPanel The panel created?
+	 */
 	public JPanel StartGame() {
 		JPanel gamePanel = new JPanel(new BorderLayout());
 		gamePanel.setBackground(new Color(173, 216, 230));
@@ -107,7 +124,10 @@ public class UIController extends JFrame implements IObserver {
 		ChangePane(TheMiddle());
 		return null;
 	}
-
+	
+	/** The middle panel's initialization
+	 * @return JPanel The middle panel
+	 */
 	public JPanel TheMiddle() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(173, 216, 230));
@@ -184,6 +204,10 @@ public class UIController extends JFrame implements IObserver {
 		return mainPanel;
 	}
 	
+	/**
+	 * The settings panel initialization and function
+	 * @return JPanel The panel created
+	 */
 	public JPanel SettingGameData(){
 		controller.getGame().setRemainingRounds(turn);
 		JPanel mainPanel = new JPanel(new BorderLayout());
@@ -257,6 +281,10 @@ public class UIController extends JFrame implements IObserver {
 		return mainPanel;
 	}
 	
+	/**
+	 * The initialization and function of the SettingsMenu panel
+	 * @return JPanel The panel created
+	 */
 	public JPanel SettingsMenu() {
 		JPanel settingsPanel = new JPanel(new BorderLayout());
 		settingsPanel.setBackground(new Color(173, 216, 230));

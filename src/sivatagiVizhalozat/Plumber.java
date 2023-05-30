@@ -177,7 +177,11 @@ public class Plumber extends Player {
 		}
 		return false;
 	}
-	
+	/**
+	 * Moves the Plumber to the target FieldElement
+	 * @param f The FieldElement where the Plumber should be moved.
+	 * @return boolean The successfulness of the moving of the Plumber. 
+	 */
 	public boolean PlayerMove(FieldElement f) {
 		if(super.PlayerMove(f)) {
 			return true;
