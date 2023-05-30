@@ -2,11 +2,8 @@ package sivatagiVizhalozat;
 
 
 import java.awt.*;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -522,7 +519,17 @@ public class UIController extends JFrame implements IObserver {
 		});
 		
 		actions[6] = createButton("PumpDirection", Color.WHITE, new Dimension(170,25));
-		//actions[6].addActionListener(action -> controller.ExecuteCommand("")); TODO
+		actions[6].addActionListener(action -> {
+			if(!controller.getGame().getActivePlayer().getLocation().toString().contains("Pump")) return;
+			DirectionSelect selector = new DirectionSelect(controller.getGame().getActivePlayer().getLocation().GetNeighbor(), this);
+			String[] result = selector.ChangeDirection();
+			if(result[0].equals("Cancelled")) return;
+			else {
+				controller.ExecuteCommand("PumpDirection(" + controller.getGame().getActivePlayer().toString() + "," + result[0] + "," + result[1] + ")");
+				controller.getGame().NextPlayer();
+				Update(getGraphics());
+			}
+		}); 
 		
 		actions[7] = createButton("Puncture", Color.WHITE, new Dimension(170,25));
 		actions[7].addActionListener(action -> {

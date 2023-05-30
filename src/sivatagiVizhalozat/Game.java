@@ -299,9 +299,9 @@ public class Game implements Serializable {
 			return;
 		}
 		if (plumbers.contains(activePlayer)) {
-			activePlayer = saboteurs.get(activePlayer.getId());
-		} else if (saboteurs.contains(activePlayer) && activePlayer.getId() + 1 < Plumber.getNextId()) {
-			activePlayer = plumbers.get(activePlayer.getId() + 1);
+			activePlayer = saboteurs.get(activePlayer.getId()-1);
+		} else if (saboteurs.contains(activePlayer) && activePlayer.getId() < Plumber.getNextId()-1) {
+			activePlayer = plumbers.get(activePlayer.getId());
 		} else {
 			activePlayer = plumbers.get(0);
 			remainingRounds -= 1;

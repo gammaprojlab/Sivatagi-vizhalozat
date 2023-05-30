@@ -37,7 +37,6 @@ public class PipeObserver implements IObserver, Serializable {
 				}
 			}
 		}
-		selected = false;
 		return null;
 	}
 

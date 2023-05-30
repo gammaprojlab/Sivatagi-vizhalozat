@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         }
 		if(obj != null) {
 			dragged = obj;
-			if(selectedObject != obj) obj.getObserver().setSelected(false);
+			if(!selectedObject.toString().equals(obj.toString())) obj.getObserver().setSelected(false);
 		}
 	}
 	
