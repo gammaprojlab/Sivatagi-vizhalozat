@@ -475,50 +475,51 @@ public class UIController extends JFrame implements IObserver {
 	 * @return The created panel of the inGame UI
 	 */
 	public JPanel InGame() {
+		Dimension btSize = new Dimension(170,25);
 		JButton[] actions = new JButton[14];
-		actions[0] = createButton("Move", Color.WHITE, new Dimension(170,25));
+		actions[0] = createButton("Move", Color.WHITE, btSize);
 		actions[0].addActionListener(action -> {
 			controller.ExecuteCommand("Move(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[1] = createButton("Connect", Color.WHITE, new Dimension(170,25));
+		actions[1] = createButton("Connect", Color.WHITE, btSize);
 		actions[1].addActionListener(action -> {
 			controller.ExecuteCommand("ConnectPipe(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[2] = createButton("Disconnect", Color.WHITE, new Dimension(170,25));
+		actions[2] = createButton("Disconnect", Color.WHITE, btSize);
 		actions[2].addActionListener(action -> {
 			controller.ExecuteCommand("DisconnectPipe(" + controller.getGame().getActivePlayer() + "," + gamePanel.getSelectedObject() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[3] = createButton("TakePump", Color.WHITE, new Dimension(170,25));
+		actions[3] = createButton("TakePump", Color.WHITE, btSize);
 		actions[3].addActionListener(action -> {
 			controller.ExecuteCommand("TakePump(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[4] = createButton("PlacePump", Color.WHITE, new Dimension(170,25));
+		actions[4] = createButton("PlacePump", Color.WHITE, btSize);
 		actions[4].addActionListener(action -> {
 			controller.ExecuteCommand("PlacePump(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[5] = createButton("GrabPipe", Color.WHITE, new Dimension(170,25));
+		actions[5] = createButton("GrabPipe", Color.WHITE, btSize);
 		actions[5].addActionListener(action -> {
 			controller.ExecuteCommand("GrabPipe(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[6] = createButton("PumpDirection", Color.WHITE, new Dimension(170,25));
+		actions[6] = createButton("PumpDirection", Color.WHITE, btSize);
 		actions[6].addActionListener(action -> {
 			if(!controller.getGame().getActivePlayer().getLocation().toString().contains("Pump")) return;
 			DirectionSelect selector = new DirectionSelect(controller.getGame().getActivePlayer().getLocation().GetNeighbor(), this);
@@ -531,35 +532,35 @@ public class UIController extends JFrame implements IObserver {
 			}
 		}); 
 		
-		actions[7] = createButton("Puncture", Color.WHITE, new Dimension(170,25));
+		actions[7] = createButton("Puncture", Color.WHITE, btSize);
 		actions[7].addActionListener(action -> {
 			controller.ExecuteCommand("Puncture(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[8] = createButton("MakeSticky", Color.WHITE, new Dimension(170,25));
+		actions[8] = createButton("MakeSticky", Color.WHITE, btSize);
 		actions[8].addActionListener(action -> {
 			controller.ExecuteCommand("MakeSticky(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[9] = createButton("MakeSlippery", Color.WHITE, new Dimension(170,25));
+		actions[9] = createButton("MakeSlippery", Color.WHITE, btSize);
 		actions[9].addActionListener(action -> {
 			controller.ExecuteCommand("MakeSlippery(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[10] = createButton("Repair", Color.WHITE, new Dimension(170,25));
+		actions[10] = createButton("Repair", Color.WHITE, btSize);
 		actions[10].addActionListener(action -> {
 			controller.ExecuteCommand("Repair(" + controller.getGame().getActivePlayer() + ")");
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
 		});
 		
-		actions[11] = createButton("Save", Color.WHITE, new Dimension(170,25));
+		actions[11] = createButton("Save", Color.WHITE, btSize);
 		actions[11].addActionListener(action -> {
 			String name = "";
 			name = JOptionPane.showInputDialog("Please provide name to save game: ");
@@ -570,13 +571,13 @@ public class UIController extends JFrame implements IObserver {
 			Update(getGraphics());
 		});
 		
-		actions[12] = createButton("Exit", Color.WHITE, new Dimension(170,25));
+		actions[12] = createButton("Exit", Color.WHITE, btSize);
 		actions[12].addActionListener(action -> {
 			ChangePane(MainMenu());
 			controller.setGame(new Game());
 		});
 		
-		actions[13] = createButton("Skip", Color.WHITE, new Dimension(170,25));
+		actions[13] = createButton("Skip", Color.WHITE, btSize);
 		actions[13].addActionListener(action -> {
 			controller.getGame().NextPlayer();
 			Update(getGraphics());
@@ -597,7 +598,10 @@ public class UIController extends JFrame implements IObserver {
         	f.getObserver().setSelected(true);
         	gamePanel.setSelectedObject(f);
         }
-        lPanel.add(listPanel(p.toString() + ": " + p.getName(),p.List()));
+        JPanel pP = listPanel(p.toString() + ": " + p.getName(),p.List());
+        pP.setPreferredSize(new Dimension(345,90));
+        pP.setSize(pP.getPreferredSize());
+        lPanel.add(pP);
 		
         // ButtonPanel/Actions List
 		JPanel btPanel = new JPanel();
@@ -606,17 +610,18 @@ public class UIController extends JFrame implements IObserver {
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 			JPanel p1 = new JPanel();
-			p1.setPreferredSize(new Dimension(170,25));
+			p1.setPreferredSize(new Dimension(170,15));
 			p1.setSize(p1.getPreferredSize());
 			p1.add(actions[i++]);
 			panel.add(p1);
 			JPanel p2 = new JPanel();
-			p2.setPreferredSize(new Dimension(170,25));
+			p2.setPreferredSize(new Dimension(170,15));
 			p2.setSize(p2.getPreferredSize());
 			p2.add(actions[i]);
 			panel.add(p2);
 			btPanel.add(panel);
 		}
+		//btPanel.setPreferredSize(new Dimension(345,200));
 		lPanel.add(btPanel);
 		
 		// ObjectList - SelectedObject
@@ -630,11 +635,11 @@ public class UIController extends JFrame implements IObserver {
 		JLabel lSab = new JLabel("   " + controller.getGame().List().split("\n")[2]); lSab.setFont(new Font("Hack", Font.PLAIN, 18));
 		lSab.setPreferredSize(new Dimension(345,45));
 		JPanel pRR = new JPanel();
-		pRR.add(lRR); pRR.setPreferredSize(new Dimension(350,25));
+		pRR.add(lRR); pRR.setPreferredSize(new Dimension(350,30));
 		JPanel pPlu = new JPanel();
-		pPlu.add(lPlu); pPlu.setPreferredSize(new Dimension(350,25));
+		pPlu.add(lPlu); pPlu.setPreferredSize(new Dimension(350,30));
 		JPanel pSab = new JPanel();
-		pSab.add(lSab); pSab.setPreferredSize(new Dimension(350,25));
+		pSab.add(lSab); pSab.setPreferredSize(new Dimension(350,30));
 		lPanel.add(pRR);
 		lPanel.add(pPlu);
 		lPanel.add(pSab);
@@ -713,10 +718,10 @@ public class UIController extends JFrame implements IObserver {
 			JPanel p1 = new JPanel();
 			JLabel l1 = new JLabel("   ".concat(params.get(i)));
 			p1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p1.setPreferredSize(new Dimension(170,25));
+			p1.setPreferredSize(new Dimension(170,23));
 			p1.setSize(p1.getPreferredSize());
 			p1.add(l1);
-			l1.setPreferredSize(new Dimension(170,25));
+			l1.setPreferredSize(new Dimension(170,23));
 			l1.setSize(l1.getPreferredSize());
 			panel.add(p1);
 			if(params.size() == ++i) break;
@@ -725,9 +730,9 @@ public class UIController extends JFrame implements IObserver {
 			JLabel l2 = new JLabel("   ".concat(params.get(i)));
 			l2.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
 			p2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p2.setPreferredSize(new Dimension(170,25));
+			p2.setPreferredSize(new Dimension(170,23));
 			p2.setSize(p2.getPreferredSize());
-			l2.setPreferredSize(new Dimension(170,25));
+			l2.setPreferredSize(new Dimension(170,23));
 			l2.setSize(l2.getPreferredSize());
 			p2.add(l2);
 			panel.add(p2);
@@ -740,19 +745,19 @@ public class UIController extends JFrame implements IObserver {
 			JPanel p1 = new JPanel();
 			JLabel l1 = new JLabel("   connections");
 			p1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p1.setPreferredSize(new Dimension(170,25));
+			p1.setPreferredSize(new Dimension(170,23));
 			p1.setSize(p1.getPreferredSize());
-			l1.setPreferredSize(new Dimension(170,25));
+			l1.setPreferredSize(new Dimension(170,23));
 			l1.setSize(l1.getPreferredSize());
 			p1.add(l1);
 			panel.add(p1);
-			l1.setPreferredSize(new Dimension(170,25));
+			l1.setPreferredSize(new Dimension(170,23));
 			JPanel p2 = new JPanel();
 			JLabel l2 = new JLabel("   players");
 			p2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-			p2.setPreferredSize(new Dimension(170,25));
+			p2.setPreferredSize(new Dimension(170,23));
 			p2.setSize(p2.getPreferredSize());
-			l2.setPreferredSize(new Dimension(170,25));
+			l2.setPreferredSize(new Dimension(170,23));
 			l2.setSize(l2.getPreferredSize());
 			p2.add(l2);
 			panel.add(p2);
@@ -765,7 +770,7 @@ public class UIController extends JFrame implements IObserver {
 				JPanel pCon = new JPanel();
 				pCon.setLayout(new BoxLayout(pCon, BoxLayout.Y_AXIS));
 				JScrollPane spCon = new JScrollPane(pCon);
-				spCon.setPreferredSize(new Dimension(160,25));
+				spCon.setPreferredSize(new Dimension(160,23));
 				spCon.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				while(i < params.size() && !params.get(i).contains("players")) {
 					pCon.add(new JLabel("   ".concat(params.get(i))));
