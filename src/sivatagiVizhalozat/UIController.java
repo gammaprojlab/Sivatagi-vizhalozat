@@ -803,8 +803,8 @@ public class UIController extends JFrame implements IObserver {
 	    g2d.dispose();
 
 	    return dimg;
-	}  
-
+	}
+	
 	/**
 	 * Small inner menu to list and select wich preset map we would like to use
 	 *
