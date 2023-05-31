@@ -152,8 +152,10 @@ public class Plumber extends Player {
 	 */
 	public boolean ConnectPipe() {
 		if (location.Connect(heldPipe)) {
-			heldPipe.setIsGrabbed(false);
-			heldPipe = null;
+			if (heldPipe.connections.size() == 2) {
+				heldPipe.setIsGrabbed(false);
+				heldPipe = null;
+			}
 			return true;
 		}
 		return false;
