@@ -522,7 +522,7 @@ public class UIController extends JFrame implements IObserver {
 			if(!controller.getGame().getActivePlayer().getLocation().toString().contains("Pump")) return;
 			DirectionSelect selector = new DirectionSelect(controller.getGame().getActivePlayer().getLocation().GetNeighbor(), this);
 			String[] result = selector.ChangeDirection();
-			if(result[0].equals("Cancelled")) return;
+			if(result[0] == null || result[0].equals("Cancelled")) return;
 			else {
 				controller.ExecuteCommand("PumpDirection(" + controller.getGame().getActivePlayer().toString() + "," + result[0] + "," + result[1] + ")");
 				controller.getGame().NextPlayer();
